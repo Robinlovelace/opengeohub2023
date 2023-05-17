@@ -3,7 +3,7 @@
 This repo contains code to support my contribution to the OpenGeoHub
 Summer School 2023.
 
-## Geographic data analysis in the tidyverse: using sf, dplyr, ggplot2, and geos
+## Tidy geographic data witch sf, dplyr, ggplot2, geos and friends
 
 ### Abstract
 
