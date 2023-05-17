@@ -37,3 +37,11 @@ The focus throughout will be on practical skills and using packages
 effectively within the wider context of project management tools,
 integrated development environments (we recommend VS Code with
 appropriate extensions or RStudio), and version control systems.
+
+## Processing large OpenStreetMap datasets for geocomputational research
+
+TBC
+
+## Using geocomputation in government
+
+TBC
