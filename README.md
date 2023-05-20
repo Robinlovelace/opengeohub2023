@@ -40,7 +40,41 @@ appropriate extensions or RStudio), and version control systems.
 
 ## Processing large OpenStreetMap datasets for geocomputational research
 
-TBC
+OpenStreetMap (OSM) is a free and openly editable map of the world. Like
+Wikipedia and unlike government or corperation maintained datasets, OSM
+is created and maintained by a community of volunteers, making it the
+premier decentralized and fastest evolving source of geographic vector
+data focussed on features relevant to human activity (e.g. roads,
+buildings, cafes) on planet Earth. Unlike Wikipedia, every data point in
+OSM has a geographic location and attributes must be structured as
+key-value pairs. OSM is a rich source of data for geocomputational
+research, but the decentralized nature of the project and the sheer
+volume of data. ‘Planet.osm’ now has more nodes than there are people on
+Earth, with more than 8 billion
+[nodes](https://wiki.openstreetmap.org/wiki/Node), and the rate of data
+creation is increasing as the community grows, to [10 million
+users](https://wiki.openstreetmap.org/wiki/Stats) in early 2023. The
+size and rapid evolution of OSM are great strengths, democratising
+geographic knowledge and ensuring resilience. However, these features
+can make it difficult to work with OSM data.
+
+This lecture will provide an introduction to working with OSM and will
+cover the following:
+
+- How and where to download OSM data
+- How to process small amounts of OSM data using the `osmdata` R package
+- How to process large OSM ‘extracts’ data with the `osmextract` R
+  package
+- Other command line tools for working with OSM data, including the
+  mature and widely used `osmium` tool, the `pyrosm` Python package and
+  the [`osm2streets`](https://github.com/a-b-street/osm2streets) web
+  application and Rust codebase
+
+Finally, the lecture will outline ideas for using OSM data. It will
+conclude with a call to action, inspiring the use of this rich resource
+to support policy objectives such as the fast and fair decarbonisation
+of the global economy as societies transition away from inefficient,
+polluting and costly fossil fuels.
 
 ## Using geocomputation in government
 
