@@ -6,7 +6,14 @@ editor:
     wrap: sentence
 ---
 
-This repo contains code to support my contribution to the OpenGeoHub Summer School 2023.
+This repo contains code to support sessions that I will deliver for the OpenGeoHub Summer School 2023.
+
+As shown in the course [schedule](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/) I will deliver the following sessions:
+
+- [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/)
+- [Processing large OpenStreetMap datasets for geocomputational research](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ)
+
+Abstracts for these sessions are provided below.
 
 ## Tidy geographic data with sf, dplyr, ggplot2, geos and friends
 
