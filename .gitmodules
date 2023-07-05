@@ -1,0 +1,3 @@
+[submodule "tidy-geo-data-training"]
+	path = tidy-geo-data-training
+	url = https://github.com/robinlovelace/tidy-geo-data-training
