@@ -9,8 +9,10 @@ I will deliver the following sessions:
 
 - [Tidy geographic data with sf, dplyr, ggplot2, geos and
   friends](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/)
+  - 2023-08-28, 11:00–12:30, Room 21 (Sala 21)  
 - [Processing large OpenStreetMap datasets for geocomputational
   research](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ)
+  - 2023-09-01, 09:00–10:30, Room 18 (Sala 18)
 
 Abstracts for these sessions are provided below.
 
