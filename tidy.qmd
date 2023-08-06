@@ -111,7 +111,7 @@ countries_df
 The output above shows information about each country in a tabular.
 A feature of the tidyverse is that its data frame class (the `tibble` which extends base R's `data.frame` as shown below) prints results in an informative and space-efficient way.
 
-```{r}
+```{r}6
 class(countries_df)
 ```
 
@@ -140,4 +140,11 @@ res
 #> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
 ```
 
-## 
+# Attribute operations
+
+# Geometry operations
+
+
+# `tidyverse` + `geos` workflows
+
+41822*
