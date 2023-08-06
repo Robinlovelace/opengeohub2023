@@ -1,1 +1,1 @@
-Sitemap: https://Robinlovelace.github.io/opengeohub2023/sitemap.xml
+Sitemap: https://github.com/Robinlovelace/opengeohub2023/sitemap.xml

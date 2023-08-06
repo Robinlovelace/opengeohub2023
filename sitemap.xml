@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://Robinlovelace.github.io/opengeohub2023/index.html</loc>
-    <lastmod>2023-08-06T12:15:14.666Z</lastmod>
+    <loc>https://github.com/Robinlovelace/opengeohub2023/tidy.html</loc>
+    <lastmod>2023-08-06T21:33:39.414Z</lastmod>
   </url>
   <url>
-    <loc>https://Robinlovelace.github.io/opengeohub2023/osm.html</loc>
-    <lastmod>2023-08-06T12:15:12.822Z</lastmod>
+    <loc>https://github.com/Robinlovelace/opengeohub2023/index.html</loc>
+    <lastmod>2023-08-06T21:33:29.670Z</lastmod>
   </url>
   <url>
-    <loc>https://Robinlovelace.github.io/opengeohub2023/tidy.html</loc>
-    <lastmod>2023-08-06T12:15:14.502Z</lastmod>
+    <loc>https://github.com/Robinlovelace/opengeohub2023/osm.html</loc>
+    <lastmod>2023-08-06T21:33:30.538Z</lastmod>
   </url>
 </urlset>
