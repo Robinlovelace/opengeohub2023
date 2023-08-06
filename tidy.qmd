@@ -10,7 +10,7 @@ These materials were created for the OpenGeoHub Summer School 2023.
 
 See the [parent repo](https://github.com/robinlovelace/opengeohub2023) and [session description in the agenda](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/) for context.
 
-## Abstract {-}
+# Abstract {-}
 
 This lecture will provide an introduction to working with geographic data using R in a 'tidy' way.
 It will focus on using the `sf` package to read, write, manipulate, and plot geographic data in combination with the `tidyverse` metapackage.
@@ -30,7 +30,7 @@ Finally, we will also look at how the 'tidy' philosophy could be implemented in 
 
 The focus throughout will be on practical skills and using packages effectively within the wider context of project management tools, integrated development environments (we recommend VS Code with appropriate extensions or RStudio), and version control systems.
 
-## Learning objectives
+# Learning objectives
 
 By the end of the session, participants will be able to:
 
@@ -39,7 +39,7 @@ By the end of the session, participants will be able to:
 - Use the `geos` package to perform geometric operations on geographic data
 - Understand the strengths and weaknesses of the `tidyverse` for geographic data analysis
 
-## Prerequisites
+# Prerequisites
 
 We recommend you run the code in the practical session with a modern integrated development environment (IDE) such as
 
@@ -78,7 +78,7 @@ remotes::install_cran(pkgs)
 sapply(pkgs, require, character.only = TRUE)
 ```
 
-## An introduction to the tidyverse
+# An introduction to the tidyverse
 
 The `tidyverse` is a collection of packages that provides a unified set of functions for data science.
 A good way to understand it is to get started with a small dataset.
@@ -115,7 +115,7 @@ A feature of the tidyverse is that its data frame class (the `tibble` which exte
 class(countries_df)
 ```
 
-### Exercises
+## Exercises
 
 1. Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
   - Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
@@ -139,3 +139,5 @@ res
 #> 1 base         10.7ms 12.4ms      81.2     208KB     6.58    37     3      456ms
 #> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
 ```
+
+## 
