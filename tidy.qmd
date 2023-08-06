@@ -10,7 +10,7 @@ These materials were created for the OpenGeoHub Summer School 2023.
 
 See the [parent repo](https://github.com/robinlovelace/opengeohub2023) and [session description in the agenda](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/) for context.
 
-## Abstract
+## Abstract {-}
 
 This lecture will provide an introduction to working with geographic data using R in a 'tidy' way.
 It will focus on using the `sf` package to read, write, manipulate, and plot geographic data in combination with the `tidyverse` metapackage.
@@ -100,7 +100,7 @@ countries_df = countries |>
   st_drop_geometry()
 ```
 
-Don't worry about the syntax for now, we'll explain it later.
+Don't worry about the syntax for now.
 The important thing is that we now have a data frame with three columns, representing the name, population and area of four countries.
 We can print out the contents of the data frame by typing its name (this is equivalent to `print(countries_df)`):
 
@@ -115,10 +115,11 @@ A feature of the tidyverse is that its data frame class (the `tibble` which exte
 class(countries_df)
 ```
 
-## Exercises
+### Exercises
 
 1. Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
   - Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
+  - Open question: Is this a good thing to benchmark? Why or why not?
 
 ```{r}
 #| eval: false
