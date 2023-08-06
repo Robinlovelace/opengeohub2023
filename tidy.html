@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -153,6 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#attribute-operations" id="toc-attribute-operations" class="nav-link" data-scroll-target="#attribute-operations"><span class="header-section-number">4</span> Attribute operations</a></li>
   <li><a href="#geometry-operations" id="toc-geometry-operations" class="nav-link" data-scroll-target="#geometry-operations"><span class="header-section-number">5</span> Geometry operations</a></li>
   <li><a href="#tidyverse-geos-workflows" id="toc-tidyverse-geos-workflows" class="nav-link" data-scroll-target="#tidyverse-geos-workflows"><span class="header-section-number">6</span> <code>tidyverse</code> + <code>geos</code> workflows</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -269,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The output above shows information about each country in a tabular. A feature of the tidyverse is that its data frame class (the <code>tibble</code> which extends base R’s <code>data.frame</code> as shown below) prints results in an informative and space-efficient way.</p>
-<pre class="zyv6"><code>class(countries_df)</code></pre>
+<p><code>{r}6 class(countries_df)</code></p>
 <section id="exercises" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.1</span> Exercises</h2>
 <ol type="1">
@@ -289,12 +309,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="tidyverse-geos-workflows" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> <code>tidyverse</code> + <code>geos</code> workflows</h1>
-<p>41822*</p>
+</section>
+<section id="further-reading" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Further reading</h1>
+<p>The following free and open access resources provide a strong foundation for further learning in this space.</p>
+<ul>
+<li><p><span class="citation" data-cites="wickham2023">Wickham, Cetinkaya-Rundel, and Grolemund (<a href="#ref-wickham2023" role="doc-biblioref">2023</a>)</span>, hosted at <a href="https://r4ds.hadley.nz/" class="uri">https://r4ds.hadley.nz/</a>, is a detailed introduction to the tidyverse</p></li>
+<li><p><span class="citation" data-cites="lovelace2019">Lovelace, Nowosad, and Muenchow (<a href="#ref-lovelace2019" role="doc-biblioref">2019</a>)</span> provides a wide ranging yet beginner-friendly introduction to using R for geographic analysis</p></li>
+<li><p>Any other suggestions welcome!</p></li>
+</ul>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-lovelace2019" class="csl-entry" role="listitem">
+Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation with r</em>. CRC Press. <a href="https://geocompr.robinlovelace.net/">https://geocompr.robinlovelace.net/</a>.
+</div>
+<div id="ref-wickham2023" class="csl-entry" role="listitem">
+Wickham, Hadley, Mine Cetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 2nd edition. O’Reilly Media.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
