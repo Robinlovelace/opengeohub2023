@@ -66,3 +66,23 @@ It will conclude with a call to action, inspiring the use of this rich resource 
 ## Using geocomputation in government
 
 TBC
+
+## Reproducibility
+
+To install the dependencies for this repo, run the following command:
+
+```{r}
+#| eval: false
+remotes::install_github("robinlovelace/opengeohub2023")
+```
+
+This repo also uses the `renv` package to manage dependencies.
+We saved the dependencies with the following command:
+
+```{r}
+#| eval: false
+deps = renv::dependencies()
+names(deps)
+deps$Package
+```
+
