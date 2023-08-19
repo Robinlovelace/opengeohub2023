@@ -1,8 +1,96 @@
 ---
 # Slide format:
 format: revealjs 
+title: Tidy geographic data
+subtitle: "with sf, dplyr, ggplot2, geos and friends"
+bibliography: references.bib
 ---
 
-# Session overview
+# Introduction
+
+## Session overview
 
 ![](images/paste-1.png)
+
+## System dependencies
+
+![](images/paste-2.png)
+
+Source: @pebesma2018
+
+## Development environment
+
+![](images/paste-3.png)
+
+![](images/paste-4.png)
+
+# Part 1: sf + dplyr
+
+## Key features of `sf`
+
+![](images/paste-5.png)
+
+Source: @lovelace2019
+
+## `sf` functions
+
+![](images/paste-6.png)
+
+Source: @pebesma2018
+
+## `sf` + `dplyr` workflow
+
+Mermaid graph:
+
+``` mermaid
+graph LR
+  A[Read data] --> B[Transform data]
+  B --> C[Visualize data]
+```
+
+## Practical (\~13:30-14:30)
+
+Work through the code at [ogh23.robinlovelace.net/tidy](https://ogh23.robinlovelace.net/tidy) and answer the questions at your own pace.
+
+```{r}
+#| message: false
+#| warning: false
+# Install remotes if not already installed
+if (!requireNamespace("remotes")) {
+    install.packages("remotes")
+}
+
+```
+
+```{r}
+#| eval: false
+#| echo: true
+remotes::install_cran(pkgs)
+```
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+# The packages we'll use
+pkgs = c(
+    "sf",
+    "tidyverse",
+    "geos",
+    "data.table",
+    "spData"
+)
+sapply(pkgs, require, character.only = TRUE)
+```
+
+# Part 2: and friends
+
+## tidyverse alternatives
+
+...
+
+## geos
+
+...
+
+# References

@@ -1,6 +1,7 @@
 ---
 format: html
 title: Tidy geographic data
+subtitle: "with sf, dplyr, ggplot2, geos and friends"
 number-sections: true
 # editor: 
 #   render-on-save: true
