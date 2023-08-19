@@ -5,3 +5,7 @@ title: "opengeohub23"
 This is a Quarto website.
 
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+The content below was rendered from README.qmd in the [robinlovelace/opengeohub23 GitHub repository](https://github.com/robinlovelace/opengeohub2023).
+
+{{< include README.qmd >}}
