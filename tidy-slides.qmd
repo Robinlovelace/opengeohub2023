@@ -1,0 +1,8 @@
+---
+# Slide format:
+format: revealjs 
+---
+
+# Session overview
+
+![](images/paste-1.png)
