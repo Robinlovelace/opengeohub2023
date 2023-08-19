@@ -10,7 +10,7 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <title>opengeohub23 – tidy-slides</title>
+  <title>opengeohub23 - Tidy geographic data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,7 +28,91 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -323,13 +407,103 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Tidy geographic data</h1>
+  <p class="subtitle">with sf, dplyr, ggplot2, geos and friends</p>
 
-<section id="session-overview" class="title-slide slide level1 center">
-<h1>Session overview</h1>
+<div class="quarto-title-authors">
+</div>
 
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
 
-<img data-src="images/paste-1.png" class="r-stretch"><div class="footer footer-default">
+</section>
+<section id="session-overview" class="slide level2">
+<h2>Session overview</h2>
 
+<img data-src="images/paste-1.png" class="r-stretch"></section>
+<section id="system-dependencies" class="slide level2">
+<h2>System dependencies</h2>
+
+<img data-src="images/paste-2.png" class="r-stretch"><p>Source: <span class="citation" data-cites="pebesma2018">Pebesma (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></p>
+</section>
+<section id="development-environment" class="slide level2">
+<h2>Development environment</h2>
+<p><img data-src="images/paste-3.png"></p>
+<p><img data-src="images/paste-4.png"></p>
+</section></section>
+<section>
+<section id="part-1-sf-dplyr" class="title-slide slide level1 center">
+<h1>Part 1: sf + dplyr</h1>
+
+</section>
+<section id="key-features-of-sf" class="slide level2">
+<h2>Key features of <code>sf</code></h2>
+
+<img data-src="images/paste-5.png" class="r-stretch"><p>Source: <span class="citation" data-cites="lovelace2019">Lovelace, Nowosad, and Muenchow (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span></p>
+</section>
+<section id="sf-functions" class="slide level2">
+<h2><code>sf</code> functions</h2>
+
+<img data-src="images/paste-6.png" class="r-stretch"><p>Source: <span class="citation" data-cites="pebesma2018">Pebesma (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></p>
+</section>
+<section id="sf-dplyr-workflow" class="slide level2">
+<h2><code>sf</code> + <code>dplyr</code> workflow</h2>
+<p>Mermaid graph:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource mermaid number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>graph LR</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  A[Read data] --&gt; B[Transform data]</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  B --&gt; C[Visualize data]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="practical-1330-1430" class="slide level2">
+<h2>Practical (~13:30-14:30)</h2>
+<p>Work through the code at <a href="https://ogh23.robinlovelace.net/tidy">ogh23.robinlovelace.net/tidy</a> and answer the questions at your own pace.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># The packages we'll use</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="st">"sf"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="st">"tidyverse"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="st">"geos"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="st">"data.table"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="st">"spData"</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">sapply</span>(pkgs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        sf  tidyverse       geos data.table     spData 
+      TRUE       TRUE       TRUE       TRUE       TRUE </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="part-2-and-friends" class="title-slide slide level1 center">
+<h1>Part 2: and friends</h1>
+
+</section>
+<section id="tidyverse-alternatives" class="slide level2">
+<h2>tidyverse alternatives</h2>
+<p>…</p>
+</section>
+<section id="geos" class="slide level2">
+<h2>geos</h2>
+<p>…</p>
+</section></section>
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div class="footer footer-default">
+
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-lovelace2019" class="csl-entry" role="listitem">
+Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation with r</em>. CRC Press. <a href="https://geocompr.robinlovelace.net/">https://geocompr.robinlovelace.net/</a>.
+</div>
+<div id="ref-pebesma2018" class="csl-entry" role="listitem">
+Pebesma, Edzer. 2018. <span>“Simple Features for R: Standardized Support for Spatial Vector Data.”</span> <em>The R Journal</em>. <a href="https://journal.r-project.org/archive/2018/RJ-2018-009/index.html">https://journal.r-project.org/archive/2018/RJ-2018-009/index.html</a>.
+</div>
 </div>
 </section>
     </div>
@@ -543,6 +717,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

@@ -14,6 +14,69 @@
     "text": "3.1 Exercises\n\nRe-create the country_centroids object, using world_centroids and poland and inputs, but this time using base R syntax with the [ operator.\n\n\nBonus: use the bench::mark() function to compare the performance of the base R and tidyverse implementation\nOpen question: Is this a good thing to benchmark? Why or why not?"
   },
   {
+    "objectID": "tidy-slides.html#session-overview",
+    "href": "tidy-slides.html#session-overview",
+    "title": "Tidy geographic data",
+    "section": "Session overview",
+    "text": "Session overview"
+  },
+  {
+    "objectID": "tidy-slides.html#system-dependencies",
+    "href": "tidy-slides.html#system-dependencies",
+    "title": "Tidy geographic data",
+    "section": "System dependencies",
+    "text": "System dependencies\n\nSource: Pebesma (2018)"
+  },
+  {
+    "objectID": "tidy-slides.html#development-environment",
+    "href": "tidy-slides.html#development-environment",
+    "title": "Tidy geographic data",
+    "section": "Development environment",
+    "text": "Development environment"
+  },
+  {
+    "objectID": "tidy-slides.html#key-features-of-sf",
+    "href": "tidy-slides.html#key-features-of-sf",
+    "title": "Tidy geographic data",
+    "section": "Key features of sf",
+    "text": "Key features of sf\n\nSource: Lovelace, Nowosad, and Muenchow (2019)"
+  },
+  {
+    "objectID": "tidy-slides.html#sf-functions",
+    "href": "tidy-slides.html#sf-functions",
+    "title": "Tidy geographic data",
+    "section": "sf functions",
+    "text": "sf functions\n\nSource: Pebesma (2018)"
+  },
+  {
+    "objectID": "tidy-slides.html#sf-dplyr-workflow",
+    "href": "tidy-slides.html#sf-dplyr-workflow",
+    "title": "Tidy geographic data",
+    "section": "sf + dplyr workflow",
+    "text": "sf + dplyr workflow\nMermaid graph:\ngraph LR\n  A[Read data] --&gt; B[Transform data]\n  B --&gt; C[Visualize data]"
+  },
+  {
+    "objectID": "tidy-slides.html#practical-1330-1430",
+    "href": "tidy-slides.html#practical-1330-1430",
+    "title": "Tidy geographic data",
+    "section": "Practical (~13:30-14:30)",
+    "text": "Practical (~13:30-14:30)\nWork through the code at ogh23.robinlovelace.net/tidy and answer the questions at your own pace.\n\nremotes::install_cran(pkgs)\n\n\n# The packages we'll use\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"geos\",\n    \"data.table\",\n    \"spData\"\n)\nsapply(pkgs, require, character.only = TRUE)\n\n        sf  tidyverse       geos data.table     spData \n      TRUE       TRUE       TRUE       TRUE       TRUE"
+  },
+  {
+    "objectID": "tidy-slides.html#tidyverse-alternatives",
+    "href": "tidy-slides.html#tidyverse-alternatives",
+    "title": "Tidy geographic data",
+    "section": "tidyverse alternatives",
+    "text": "tidyverse alternatives\n…"
+  },
+  {
+    "objectID": "tidy-slides.html#geos",
+    "href": "tidy-slides.html#geos",
+    "title": "Tidy geographic data",
+    "section": "geos",
+    "text": "geos\n…"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "OpenGeoHub Summer School 2023",
