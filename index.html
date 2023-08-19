@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -105,14 +139,26 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" id="toc-tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" class="nav-link active" data-scroll-target="#tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends">Tidy geographic data with sf, dplyr, ggplot2, geos and friends</a>
+  <ul class="collapse">
+  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
+  </ul></li>
+  <li><a href="#processing-large-openstreetmap-datasets-for-geocomputational-research" id="toc-processing-large-openstreetmap-datasets-for-geocomputational-research" class="nav-link" data-scroll-target="#processing-large-openstreetmap-datasets-for-geocomputational-research">Processing large OpenStreetMap datasets for geocomputational research</a></li>
+  <li><a href="#using-geocomputation-in-government" id="toc-using-geocomputation-in-government" class="nav-link" data-scroll-target="#using-geocomputation-in-government">Using geocomputation in government</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">opengeohub23</h1>
+<h1 class="title">OpenGeoHub Summer School 2023</h1>
 </div>
 
 
@@ -129,8 +175,63 @@ ul.task-list li input[type="checkbox"] {
 
 <p>This is a Quarto website.</p>
 <p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
+<p>The content below was rendered from README.qmd in the <a href="https://github.com/robinlovelace/opengeohub2023">robinlovelace/opengeohub23 GitHub repository</a>.</p>
+<p>This repo contains code to support sessions that I will deliver for the OpenGeoHub Summer School 2023.</p>
+<p>As shown in the course <a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/">schedule</a> I will deliver the following sessions:</p>
+<ul>
+<li><a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/">Tidy geographic data with sf, dplyr, ggplot2, geos and friends</a>
+<ul>
+<li>2023-08-28, 11:00–12:30, Room 21 (Sala 21)<br>
+</li>
+</ul></li>
+<li><a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ">Processing large OpenStreetMap datasets for geocomputational research</a>
+<ul>
+<li>2023-09-01, 09:00–10:30, Room 18 (Sala 18)</li>
+</ul></li>
+</ul>
+<p>Abstracts for these sessions are provided below.</p>
+<section id="tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends">Tidy geographic data with sf, dplyr, ggplot2, geos and friends</h2>
+<section id="abstract" class="level3">
+<h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
+<p>This lecture will provide an introduction to working with geographic data using R in a ‘tidy’ way. It will focus on using the <code>sf</code> package to read, write, manipulate, and plot geographic data in combination with the <code>tidyverse</code> metapackage. Why use the <code>sf</code> package with the <code>tidyverse</code>? The lecture will outline some of the ideas underlying the <code>tidyverse</code> and how they can speed-up data analysis pipelines, while making data analysis code easier to read and write. We will see how the following lines</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>can provide a foundation on which the many geographic data analysis problems can be solved. The lecture will also cover on more recently developed packages that integrate with the <code>tidyverse</code> to a greater and lesser extent. We will look at how the <code>geos</code> package, which provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data, integrates with the <code>tidyverse</code>. The <code>tidyverse</code> is not the right tool for every data analysis task and we touch on alternatives for working with raster data, with reference to the <code>terra</code> package, and alternative frameworks such as <code>data.table</code>. Finally, we will also look at how the ‘tidy’ philosophy could be implemented in other programming languages, such as Python.</p>
+<p>The focus throughout will be on practical skills and using packages effectively within the wider context of project management tools, integrated development environments (we recommend VS Code with appropriate extensions or RStudio), and version control systems.</p>
+</section>
+</section>
+<section id="processing-large-openstreetmap-datasets-for-geocomputational-research" class="level2">
+<h2 class="anchored" data-anchor-id="processing-large-openstreetmap-datasets-for-geocomputational-research">Processing large OpenStreetMap datasets for geocomputational research</h2>
+<p>OpenStreetMap (OSM) is a free and openly editable map of the world. Like Wikipedia and unlike government or corperation maintained datasets, OSM is created and maintained by a community of volunteers, making it the premier decentralized and fastest evolving source of geographic vector data focussed on features relevant to human activity (e.g.&nbsp;roads, buildings, cafes) on planet Earth. Unlike Wikipedia, every data point in OSM has a geographic location and attributes must be structured as key-value pairs. OSM is a rich source of data for geocomputational research, but the decentralized nature of the project and the sheer volume of data. ‘Planet.osm’ now has more nodes than there are people on Earth, with more than 8 billion <a href="https://wiki.openstreetmap.org/wiki/Node">nodes</a>, and the rate of data creation is increasing as the community grows, to <a href="https://wiki.openstreetmap.org/wiki/Stats">10 million users</a> in early 2023. The size and rapid evolution of OSM are great strengths, democratising geographic knowledge and ensuring resilience. However, these features can make it difficult to work with OSM data.</p>
+<p>This lecture will provide an introduction to working with OSM and will cover the following:</p>
+<ul>
+<li>How and where to download OSM data</li>
+<li>How to process small amounts of OSM data using the <code>osmdata</code> R package</li>
+<li>How to process large OSM ‘extracts’ data with the <code>osmextract</code> R package</li>
+<li>Other command line tools for working with OSM data, including the mature and widely used <code>osmium</code> tool, the <code>pyrosm</code> Python package and the <a href="https://github.com/a-b-street/osm2streets"><code>osm2streets</code></a> web application and Rust codebase</li>
+</ul>
+<p>Finally, the lecture will outline ideas for using OSM data. It will conclude with a call to action, inspiring the use of this rich resource to support policy objectives such as the fast and fair decarbonisation of the global economy as societies transition away from inefficient, polluting and costly fossil fuels.</p>
+</section>
+<section id="using-geocomputation-in-government" class="level2">
+<h2 class="anchored" data-anchor-id="using-geocomputation-in-government">Using geocomputation in government</h2>
+<p>TBC</p>
+</section>
+<section id="reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
+<p>To install the dependencies for this repo, run the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"robinlovelace/opengeohub2023"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This repo also uses the <code>renv</code> package to manage dependencies. We saved the dependencies with the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>deps <span class="ot">=</span> renv<span class="sc">::</span><span class="fu">dependencies</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(deps)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>deps<span class="sc">$</span>Package</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
