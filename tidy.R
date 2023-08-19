@@ -16,7 +16,7 @@ pkgs = c(
 
 
 #| eval: false
-## remotes::install_cran(pkgs)
+remotes::install_cran(pkgs)
 
 
 #| message: false
@@ -45,18 +45,18 @@ countries_df
 
 #| eval: false
 #| echo: false
-## country_centroids2 = world_centroids[poland, , op = st_is_within_distance, dist = 2e5]
-## waldo::compare(country_centroids, country_centroids2)
-## #> ✔ No differences
-## res = bench::mark(
-##     base = world_centroids[poland, , op = st_is_within_distance, dist = 2e5],
-##     st_filter = world_centroids |>
-##   st_filter(poland, .predicate = st_is_within_distance, dist = 2e5)
-## )
-## res
-## #> # A tibble: 2 × 13
-## #>   expression      min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time
-## #>   <bch:expr> <bch:tm> <bch:>     <dbl> <bch:byt>    <dbl> <int> <dbl>   <bch:tm>
-## #> 1 base         10.7ms 12.4ms      81.2     208KB     6.58    37     3      456ms
-## #> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
+country_centroids2 = world_centroids[poland, , op = st_is_within_distance, dist = 2e5]
+waldo::compare(country_centroids, country_centroids2)
+#> ✔ No differences
+res = bench::mark(
+    base = world_centroids[poland, , op = st_is_within_distance, dist = 2e5],
+    st_filter = world_centroids |>
+  st_filter(poland, .predicate = st_is_within_distance, dist = 2e5)
+)
+res
+#> # A tibble: 2 × 13
+#>   expression      min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time
+#>   <bch:expr> <bch:tm> <bch:>     <dbl> <bch:byt>    <dbl> <int> <dbl>   <bch:tm>
+#> 1 base         10.7ms 12.4ms      81.2     208KB     6.58    37     3      456ms
+#> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
 

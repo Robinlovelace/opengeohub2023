@@ -1,5 +1,13 @@
 # OpenGeoHub Summer School 2023
 
+<div>
+
+[![](https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml/badge.svg)](https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml)
+
+Quarto Publish
+
+</div>
+
 This repo contains code to support sessions that I will deliver for the
 OpenGeoHub Summer School 2023.
 
@@ -89,6 +97,42 @@ to support policy objectives such as the fast and fair decarbonisation
 of the global economy as societies transition away from inefficient,
 polluting and costly fossil fuels.
 
-## Using geocomputation in government
+<!-- ## Using geocomputation in government
+&#10;TBC -->
 
-TBC
+## Reproducibility
+
+To install the dependencies for this repo, run the following command:
+
+``` r
+remotes::install_github("robinlovelace/opengeohub2023")
+```
+
+This repo also uses the `renv` package to manage dependencies. We saved
+the dependencies with the following command:
+
+``` r
+renv::snapshot()
+```
+
+
+
+    processing file: tidy.qmd
+
+    1/13                   
+    2/13 [unnamed-chunk-5] 
+    3/13                   
+    4/13 [unnamed-chunk-6] 
+    5/13                   
+    6/13 [unnamed-chunk-7] 
+    7/13                   
+    8/13 [unnamed-chunk-8] 
+    9/13                   
+    10/13 [unnamed-chunk-9] 
+    11/13                   
+    12/13 [unnamed-chunk-10]
+    13/13                   
+
+    output file: tidy.R
+
+    [1] "tidy.R"

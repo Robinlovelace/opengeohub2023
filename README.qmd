@@ -6,6 +6,8 @@ editor:
     wrap: sentence
 ---
 
+[![Quarto Publish](https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml/badge.svg)](https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml)
+
 This repo contains code to support sessions that I will deliver for the OpenGeoHub Summer School 2023.
 
 As shown in the course [schedule](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/) I will deliver the following sessions:
@@ -59,13 +61,9 @@ This lecture will provide an introduction to working with OSM and will cover the
 Finally, the lecture will outline ideas for using OSM data.
 It will conclude with a call to action, inspiring the use of this rich resource to support policy objectives such as the fast and fair decarbonisation of the global economy as societies transition away from inefficient, polluting and costly fossil fuels.
 
+<!-- ## Using geocomputation in government
 
-
-
-
-## Using geocomputation in government
-
-TBC
+TBC -->
 
 ## Reproducibility
 
@@ -81,8 +79,20 @@ We saved the dependencies with the following command:
 
 ```{r}
 #| eval: false
+renv::snapshot()
+```
+
+```{r}
+#| eval: false
+#| echo: false
 deps = renv::dependencies()
 names(deps)
 deps$Package
 ```
 
+
+```{r}
+#| echo: false
+knitr::purl("tidy.qmd", output = "tidy.R")
+
+```
