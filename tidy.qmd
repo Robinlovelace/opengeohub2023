@@ -10,6 +10,8 @@ bibliography: references.bib
 
 These materials were created for the OpenGeoHub Summer School 2023.
 
+They can be used with reference to the accompanying slides, available at [ogh23.robinlovelace.net/opengeohub2023](https://ogh23.robinlovelace.net/tidy-slides.html).
+
 See the [parent repo](https://github.com/robinlovelace/opengeohub2023) and [session description in the agenda](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/) for context.
 
 # Abstract {.unnumbered}

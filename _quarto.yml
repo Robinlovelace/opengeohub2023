@@ -8,13 +8,16 @@ website:
       - href: index.qmd
         text: Home
       - tidy.qmd
-      - osm.qmd
+      - href: tidy-slides.qmd
+        text: "Tidy geographic data: slides"
+      - href: osm.qmd
+        text: "Large OSM datasets"
+      - href: osm-slides.qmd
+        text: "Large OSM datasets: slides"
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
-
 
