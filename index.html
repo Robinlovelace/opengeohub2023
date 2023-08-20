@@ -124,8 +124,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Tidy geographic data</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./tidy-slides.html" rel="" target="">
+ <span class="menu-text">Tidy geographic data: slides</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./osm.html" rel="" target="">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">Large OSM datasets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./osm-slides.html" rel="" target="">
+ <span class="menu-text">Large OSM datasets: slides</span></a>
   </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
@@ -148,7 +156,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
   </ul></li>
   <li><a href="#processing-large-openstreetmap-datasets-for-geocomputational-research" id="toc-processing-large-openstreetmap-datasets-for-geocomputational-research" class="nav-link" data-scroll-target="#processing-large-openstreetmap-datasets-for-geocomputational-research">Processing large OpenStreetMap datasets for geocomputational research</a></li>
-  <li><a href="#using-geocomputation-in-government" id="toc-using-geocomputation-in-government" class="nav-link" data-scroll-target="#using-geocomputation-in-government">Using geocomputation in government</a></li>
   <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
   </ul>
 </nav>
@@ -176,6 +183,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This is a Quarto website.</p>
 <p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
 <p>The content below was rendered from README.qmd in the <a href="https://github.com/robinlovelace/opengeohub2023">robinlovelace/opengeohub23 GitHub repository</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml"><img src="https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml/badge.svg" class="img-fluid figure-img"></a></p>
+<figcaption class="figure-caption">Quarto Publish</figcaption>
+</figure>
+</div>
 <p>This repo contains code to support sessions that I will deliver for the OpenGeoHub Summer School 2023.</p>
 <p>As shown in the course <a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/">schedule</a> I will deliver the following sessions:</p>
 <ul>
@@ -212,10 +225,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Other command line tools for working with OSM data, including the mature and widely used <code>osmium</code> tool, the <code>pyrosm</code> Python package and the <a href="https://github.com/a-b-street/osm2streets"><code>osm2streets</code></a> web application and Rust codebase</li>
 </ul>
 <p>Finally, the lecture will outline ideas for using OSM data. It will conclude with a call to action, inspiring the use of this rich resource to support policy objectives such as the fast and fair decarbonisation of the global economy as societies transition away from inefficient, polluting and costly fossil fuels.</p>
-</section>
-<section id="using-geocomputation-in-government" class="level2">
-<h2 class="anchored" data-anchor-id="using-geocomputation-in-government">Using geocomputation in government</h2>
-<p>TBC</p>
+<!-- ## Using geocomputation in government
+
+TBC -->
 </section>
 <section id="reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
@@ -225,9 +237,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>This repo also uses the <code>renv</code> package to manage dependencies. We saved the dependencies with the following command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>deps <span class="ot">=</span> renv<span class="sc">::</span><span class="fu">dependencies</span>()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(deps)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>deps<span class="sc">$</span>Package</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">snapshot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+
+processing file: tidy.qmd</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1/13                   
+2/13 [unnamed-chunk-5] 
+3/13                   
+4/13 [unnamed-chunk-6] 
+5/13                   
+6/13 [unnamed-chunk-7] 
+7/13                   
+8/13 [unnamed-chunk-8] 
+9/13                   
+10/13 [unnamed-chunk-9] 
+11/13                   
+12/13 [unnamed-chunk-10]
+13/13                   </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>output file: tidy.R</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tidy.R"</code></pre>
+</div>
 </div>
 
 

@@ -4,7 +4,7 @@
     "href": "tidy.html",
     "title": "Tidy geographic data",
     "section": "",
-    "text": "These materials were created for the OpenGeoHub Summer School 2023.\nSee the parent repo and session description in the agenda for context."
+    "text": "These materials were created for the OpenGeoHub Summer School 2023.\nThey can be used with reference to the accompanying slides, available at ogh23.robinlovelace.net/opengeohub2023.\nSee the parent repo and session description in the agenda for context."
   },
   {
     "objectID": "tidy.html#exercises",
@@ -18,7 +18,7 @@
     "href": "tidy-slides.html#session-overview",
     "title": "Tidy geographic data",
     "section": "Session overview",
-    "text": "Session overview"
+    "text": "Session overview\n\nSource: pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/"
   },
   {
     "objectID": "tidy-slides.html#system-dependencies",
@@ -28,11 +28,25 @@
     "text": "System dependencies\n\nSource: Pebesma (2018)"
   },
   {
-    "objectID": "tidy-slides.html#development-environment",
-    "href": "tidy-slides.html#development-environment",
+    "objectID": "tidy-slides.html#development-environments",
+    "href": "tidy-slides.html#development-environments",
     "title": "Tidy geographic data",
-    "section": "Development environment",
-    "text": "Development environment"
+    "section": "Development environments",
+    "text": "Development environments"
+  },
+  {
+    "objectID": "tidy-slides.html#rstudio",
+    "href": "tidy-slides.html#rstudio",
+    "title": "Tidy geographic data",
+    "section": "RStudio",
+    "text": "RStudio"
+  },
+  {
+    "objectID": "tidy-slides.html#vs-code",
+    "href": "tidy-slides.html#vs-code",
+    "title": "Tidy geographic data",
+    "section": "VS Code",
+    "text": "VS Code"
   },
   {
     "objectID": "tidy-slides.html#key-features-of-sf",
@@ -77,6 +91,83 @@
     "text": "geos\n…"
   },
   {
+    "objectID": "osm-slides.html#session-overview",
+    "href": "osm-slides.html#session-overview",
+    "title": "Tidy geographic data",
+    "section": "Session overview",
+    "text": "Session overview\n\nSource: pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/"
+  },
+  {
+    "objectID": "osm-slides.html#system-dependencies",
+    "href": "osm-slides.html#system-dependencies",
+    "title": "Tidy geographic data",
+    "section": "System dependencies",
+    "text": "System dependencies\n\nSource: Pebesma (2018)"
+  },
+  {
+    "objectID": "osm-slides.html#development-environments",
+    "href": "osm-slides.html#development-environments",
+    "title": "Tidy geographic data",
+    "section": "Development environments",
+    "text": "Development environments"
+  },
+  {
+    "objectID": "osm-slides.html#rstudio",
+    "href": "osm-slides.html#rstudio",
+    "title": "Tidy geographic data",
+    "section": "RStudio",
+    "text": "RStudio"
+  },
+  {
+    "objectID": "osm-slides.html#vs-code",
+    "href": "osm-slides.html#vs-code",
+    "title": "Tidy geographic data",
+    "section": "VS Code",
+    "text": "VS Code"
+  },
+  {
+    "objectID": "osm-slides.html#key-features-of-sf",
+    "href": "osm-slides.html#key-features-of-sf",
+    "title": "Tidy geographic data",
+    "section": "Key features of sf",
+    "text": "Key features of sf\n\nSource: Lovelace, Nowosad, and Muenchow (2019)"
+  },
+  {
+    "objectID": "osm-slides.html#sf-functions",
+    "href": "osm-slides.html#sf-functions",
+    "title": "Tidy geographic data",
+    "section": "sf functions",
+    "text": "sf functions\n\nSource: Pebesma (2018)"
+  },
+  {
+    "objectID": "osm-slides.html#sf-dplyr-workflow",
+    "href": "osm-slides.html#sf-dplyr-workflow",
+    "title": "Tidy geographic data",
+    "section": "sf + dplyr workflow",
+    "text": "sf + dplyr workflow\nMermaid graph:\ngraph LR\n  A[Read data] --&gt; B[Transform data]\n  B --&gt; C[Visualize data]"
+  },
+  {
+    "objectID": "osm-slides.html#practical-1330-1430",
+    "href": "osm-slides.html#practical-1330-1430",
+    "title": "Tidy geographic data",
+    "section": "Practical (~13:30-14:30)",
+    "text": "Practical (~13:30-14:30)\nWork through the code at ogh23.robinlovelace.net/tidy and answer the questions at your own pace.\n\nremotes::install_cran(pkgs)\n\n\n# The packages we'll use\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"geos\",\n    \"data.table\",\n    \"spData\"\n)\nsapply(pkgs, require, character.only = TRUE)\n\n        sf  tidyverse       geos data.table     spData \n      TRUE       TRUE       TRUE       TRUE       TRUE"
+  },
+  {
+    "objectID": "osm-slides.html#tidyverse-alternatives",
+    "href": "osm-slides.html#tidyverse-alternatives",
+    "title": "Tidy geographic data",
+    "section": "tidyverse alternatives",
+    "text": "tidyverse alternatives\n…"
+  },
+  {
+    "objectID": "osm-slides.html#geos",
+    "href": "osm-slides.html#geos",
+    "title": "Tidy geographic data",
+    "section": "geos",
+    "text": "geos\n…"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "OpenGeoHub Summer School 2023",
@@ -98,24 +189,17 @@
     "text": "Processing large OpenStreetMap datasets for geocomputational research\nOpenStreetMap (OSM) is a free and openly editable map of the world. Like Wikipedia and unlike government or corperation maintained datasets, OSM is created and maintained by a community of volunteers, making it the premier decentralized and fastest evolving source of geographic vector data focussed on features relevant to human activity (e.g. roads, buildings, cafes) on planet Earth. Unlike Wikipedia, every data point in OSM has a geographic location and attributes must be structured as key-value pairs. OSM is a rich source of data for geocomputational research, but the decentralized nature of the project and the sheer volume of data. ‘Planet.osm’ now has more nodes than there are people on Earth, with more than 8 billion nodes, and the rate of data creation is increasing as the community grows, to 10 million users in early 2023. The size and rapid evolution of OSM are great strengths, democratising geographic knowledge and ensuring resilience. However, these features can make it difficult to work with OSM data.\nThis lecture will provide an introduction to working with OSM and will cover the following:\n\nHow and where to download OSM data\nHow to process small amounts of OSM data using the osmdata R package\nHow to process large OSM ‘extracts’ data with the osmextract R package\nOther command line tools for working with OSM data, including the mature and widely used osmium tool, the pyrosm Python package and the osm2streets web application and Rust codebase\n\nFinally, the lecture will outline ideas for using OSM data. It will conclude with a call to action, inspiring the use of this rich resource to support policy objectives such as the fast and fair decarbonisation of the global economy as societies transition away from inefficient, polluting and costly fossil fuels."
   },
   {
-    "objectID": "index.html#using-geocomputation-in-government",
-    "href": "index.html#using-geocomputation-in-government",
-    "title": "OpenGeoHub Summer School 2023",
-    "section": "Using geocomputation in government",
-    "text": "Using geocomputation in government\nTBC"
-  },
-  {
     "objectID": "index.html#reproducibility",
     "href": "index.html#reproducibility",
     "title": "OpenGeoHub Summer School 2023",
     "section": "Reproducibility",
-    "text": "Reproducibility\nTo install the dependencies for this repo, run the following command:\n\nremotes::install_github(\"robinlovelace/opengeohub2023\")\n\nThis repo also uses the renv package to manage dependencies. We saved the dependencies with the following command:\n\ndeps = renv::dependencies()\nnames(deps)\ndeps$Package"
+    "text": "Reproducibility\nTo install the dependencies for this repo, run the following command:\n\nremotes::install_github(\"robinlovelace/opengeohub2023\")\n\nThis repo also uses the renv package to manage dependencies. We saved the dependencies with the following command:\n\nrenv::snapshot()\n\n\n\n\n\nprocessing file: tidy.qmd\n\n\n1/13                   \n2/13 [unnamed-chunk-5] \n3/13                   \n4/13 [unnamed-chunk-6] \n5/13                   \n6/13 [unnamed-chunk-7] \n7/13                   \n8/13 [unnamed-chunk-8] \n9/13                   \n10/13 [unnamed-chunk-9] \n11/13                   \n12/13 [unnamed-chunk-10]\n13/13                   \n\n\noutput file: tidy.R\n\n\n[1] \"tidy.R\""
   },
   {
     "objectID": "osm.html",
     "href": "osm.html",
-    "title": "About",
+    "title": "Processing large OpenStreetMap datasets for research",
     "section": "",
-    "text": "About this site"
+    "text": "TBC."
   }
 ]
