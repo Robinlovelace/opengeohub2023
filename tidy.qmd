@@ -201,8 +201,15 @@ countries_summarised = countries |>
 countries_summarised
 ```
 
-As shown by plotting the output, the operation creates a new variable called `contains_a` that is `TRUE` if the country name contains an "a" and `FALSE` otherwise.
+The operation creates a new variable called `contains_a` that is `TRUE` if the country name contains an "a" and `FALSE` otherwise.
 Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter "a", highlighting `dplyr`'s ability to work with geographic data represented as `sf` objects.
+
+```{r}
+countries_summarised |>
+  ggplot() +
+    geom_sf(aes(fill = contains_a)) +
+    geom_sf(data = countries, fill = NA, linetype = 3) 
+```
 
 ## Exercises
 
@@ -211,9 +218,22 @@ Perhaps more impressively, it also automatically updated the geometry column of 
     - What are the pros and cons of each? 
     - Which do you prefer?
 
+```{r}
+#| eval: false
+#| echo: false
+# with dplyr:
+countries_modified2 = countries |>
+  mutate(pop_density = pop / area_km2) |>
+  select(name_long, pop_density, area_km2) |>
+  filter(pop_density > 100) |>
+  arrange(desc(area_km2))
+# with base R:
+countries_base = countries[countries$pop / countries$area_km2 > 100, ]
+countries_base = countries_base[countries_base$area_km2 > 100, c("name_long", "pop", "area_km2")]
+countries_base = countries_base[order(countries_base$area_km2, decreasing = TRUE), ]
 
-
-
+waldo::compare(countries_modified2$name_long, countries_base$name_long)
+```
 
 # Making maps with ggplot2
 
