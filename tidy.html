@@ -178,7 +178,10 @@ div.csl-indent {
   <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes"><span class="header-section-number">3.1</span> Pipes</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.2</span> Exercises</a></li>
   </ul></li>
-  <li><a href="#attribute-operations-with-dplyr" id="toc-attribute-operations-with-dplyr" class="nav-link" data-scroll-target="#attribute-operations-with-dplyr"><span class="header-section-number">4</span> Attribute operations with dplyr</a></li>
+  <li><a href="#attribute-operations-with-dplyr" id="toc-attribute-operations-with-dplyr" class="nav-link" data-scroll-target="#attribute-operations-with-dplyr"><span class="header-section-number">4</span> Attribute operations with dplyr</a>
+  <ul class="collapse">
+  <li><a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1"><span class="header-section-number">4.1</span> Exercises</a></li>
+  </ul></li>
   <li><a href="#making-maps-with-ggplot2" id="toc-making-maps-with-ggplot2" class="nav-link" data-scroll-target="#making-maps-with-ggplot2"><span class="header-section-number">5</span> Making maps with ggplot2</a></li>
   <li><a href="#geometry-operations" id="toc-geometry-operations" class="nav-link" data-scroll-target="#geometry-operations"><span class="header-section-number">6</span> Geometry operations</a></li>
   <li><a href="#tidyverse-geos-workflows" id="toc-tidyverse-geos-workflows" class="nav-link" data-scroll-target="#tidyverse-geos-workflows"><span class="header-section-number">7</span> <code>tidyverse</code> + <code>geos</code> workflows</a></li>
@@ -398,6 +401,69 @@ all</code></pre>
 </section>
 <section id="attribute-operations-with-dplyr" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Attribute operations with dplyr</h1>
+<p><strong>dplyr</strong> is a large package with many functions for working with data frames. The five key ‘verbs’ <a href="https://dplyr.tidyverse.org/">described</a> as:</p>
+<blockquote class="blockquote">
+<ul>
+<li><code>mutate()</code> adds new variables that are functions of existing variables</li>
+<li><code>select()</code> picks variables based on their names.</li>
+<li><code>filter()</code> picks cases based on their values.</li>
+<li><code>summarise()</code> reduces multiple values down to a single summary.</li>
+<li><code>arrange()</code> changes the ordering of the rows.</li>
+</ul>
+</blockquote>
+<p>Let’s take a brief look at each.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>countries_modified <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_density =</span> pop <span class="sc">/</span> area_km2) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name_long, pop_density) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pop_density <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pop_density))</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>countries_modified</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 3 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 12.24011 ymin: 47.75843 xmax: 24.02999 ymax: 54.85154
+Geodetic CRS:  WGS 84
+# A tibble: 3 × 3
+  name_long      pop_density                                                geom
+  &lt;chr&gt;                &lt;dbl&gt;                                  &lt;MULTIPOLYGON [°]&gt;
+1 Czech Republic        130. (((15.017 51.10667, 14.57072 51.00234, 14.30701 51…
+2 Poland                122. (((23.48413 53.9125, 23.24399 54.22057, 22.7311 54…
+3 Slovakia              115. (((22.55814 49.08574, 21.60781 49.47011, 20.88796 …</code></pre>
+</div>
+</div>
+<p>The <code>summarise()</code> function is often used in combination with <code>group_by()</code>, e.g.&nbsp;as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>countries_summarised <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>countries_summarised</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2 features and 3 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 12.24011 ymin: 47.75843 xmax: 26.58828 ymax: 56.37253
+Geodetic CRS:  WGS 84
+# A tibble: 2 × 4
+  contains_a     n  mean_pop                                                geom
+  &lt;lgl&gt;      &lt;int&gt;     &lt;dbl&gt;                                       &lt;POLYGON [°]&gt;
+1 FALSE          1 10525347  ((15.017 51.10667, 14.57072 51.00234, 14.30701 51.…
+2 TRUE           3 15454250. ((26.49433 55.61511, 25.53305 56.1003, 25.00093 56…</code></pre>
+</div>
+</div>
+<p>As shown by plotting the output, the operation creates a new variable called <code>contains_a</code> that is <code>TRUE</code> if the country name contains an “a” and <code>FALSE</code> otherwise. Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter “a”, highlighting <code>dplyr</code>’s ability to work with geographic data represented as <code>sf</code> objects.</p>
+<section id="exercises-1" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="exercises-1"><span class="header-section-number">4.1</span> Exercises</h2>
+<ol type="1">
+<li>Create a new data frame called <code>countries_modified2</code> that contains the name, population and area of countries with a population density of more than 100 people per km2, sorted by area in descending order.</li>
+<li>Do the same with base R functions and the <code>[</code> operator.
+<ul>
+<li>What are the pros and cons of each?</li>
+<li>Which do you prefer?</li>
+</ul></li>
+</ol>
+</section>
 </section>
 <section id="making-maps-with-ggplot2" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Making maps with ggplot2</h1>
@@ -414,6 +480,7 @@ all</code></pre>
 <ul>
 <li><p><span class="citation" data-cites="wickham2023">Wickham, Cetinkaya-Rundel, and Grolemund (<a href="#ref-wickham2023" role="doc-biblioref">2023</a>)</span>, hosted at <a href="https://r4ds.hadley.nz/" class="uri">https://r4ds.hadley.nz/</a>, is a detailed introduction to the tidyverse</p></li>
 <li><p><span class="citation" data-cites="lovelace2019">Lovelace, Nowosad, and Muenchow (<a href="#ref-lovelace2019" role="doc-biblioref">2019</a>)</span> provides a wide ranging yet beginner-friendly introduction to using R for geographic analysis</p></li>
+<li><p><span class="citation" data-cites="pebesma2023">Pebesma and Bivand (<a href="#ref-pebesma2023" role="doc-biblioref">2023</a>)</span>, a textbook on spatial data science by the developers of <code>sf</code> and other core ‘rspatial’ packages</p></li>
 <li><p>Any other suggestions welcome, there’s much more out there!</p></li>
 </ul>
 
@@ -424,6 +491,9 @@ all</code></pre>
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-lovelace2019" class="csl-entry" role="listitem">
 Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation with <span>R</span></em>. CRC Press. <a href="https://r.geocompx.org/">https://r.geocompx.org/</a>.
+</div>
+<div id="ref-pebesma2023" class="csl-entry" role="listitem">
+Pebesma, Edzer, and Roger Bivand. 2023. <em>Spatial Data Science: With Applications in r</em>. CRC Press. <a href="https://r-spatial.org/book/">https://r-spatial.org/book/</a>.
 </div>
 <div id="ref-wickham2019" class="csl-entry" role="listitem">
 Wickham, Hadley. 2019. <em>Advanced r, Second Edition</em>. 2nd edition. Boca Raton: Chapman; Hall/CRC.
