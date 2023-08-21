@@ -175,12 +175,14 @@ div.csl-indent {
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">2</span> Prerequisites</a></li>
   <li><a href="#an-introduction-to-the-tidyverse" id="toc-an-introduction-to-the-tidyverse" class="nav-link" data-scroll-target="#an-introduction-to-the-tidyverse"><span class="header-section-number">3</span> An introduction to the tidyverse</a>
   <ul class="collapse">
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.1</span> Exercises</a></li>
+  <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes"><span class="header-section-number">3.1</span> Pipes</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.2</span> Exercises</a></li>
   </ul></li>
-  <li><a href="#attribute-operations" id="toc-attribute-operations" class="nav-link" data-scroll-target="#attribute-operations"><span class="header-section-number">4</span> Attribute operations</a></li>
-  <li><a href="#geometry-operations" id="toc-geometry-operations" class="nav-link" data-scroll-target="#geometry-operations"><span class="header-section-number">5</span> Geometry operations</a></li>
-  <li><a href="#tidyverse-geos-workflows" id="toc-tidyverse-geos-workflows" class="nav-link" data-scroll-target="#tidyverse-geos-workflows"><span class="header-section-number">6</span> <code>tidyverse</code> + <code>geos</code> workflows</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7</span> Further reading</a></li>
+  <li><a href="#attribute-operations-with-dplyr" id="toc-attribute-operations-with-dplyr" class="nav-link" data-scroll-target="#attribute-operations-with-dplyr"><span class="header-section-number">4</span> Attribute operations with dplyr</a></li>
+  <li><a href="#making-maps-with-ggplot2" id="toc-making-maps-with-ggplot2" class="nav-link" data-scroll-target="#making-maps-with-ggplot2"><span class="header-section-number">5</span> Making maps with ggplot2</a></li>
+  <li><a href="#geometry-operations" id="toc-geometry-operations" class="nav-link" data-scroll-target="#geometry-operations"><span class="header-section-number">6</span> Geometry operations</a></li>
+  <li><a href="#tidyverse-geos-workflows" id="toc-tidyverse-geos-workflows" class="nav-link" data-scroll-target="#tidyverse-geos-workflows"><span class="header-section-number">7</span> <code>tidyverse</code> + <code>geos</code> workflows</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -252,42 +254,82 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>After running the above commands, you should be able to load the packages with the following command (we will load the packages individually in subsequent sections):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(pkgs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        sf  tidyverse       geos data.table     spData 
-      TRUE       TRUE       TRUE       TRUE       TRUE </code></pre>
-</div>
 </div>
 </section>
 <section id="an-introduction-to-the-tidyverse" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> An introduction to the tidyverse</h1>
-<p>The <code>tidyverse</code> is a collection of packages that provides a unified set of functions for data science. A good way to understand it is to get started with a small dataset.</p>
+<p>The <code>tidyverse</code> is a collection of packages that provides a unified set of functions for data science. Load the <code>tidyverse</code> with the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.3     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>As shown in the output, the package loads 9 sub-packages. In this tutorial we will focus on</p>
+<ul>
+<li><code>dplyr</code>, which provides convenient functions for manipulating data frames</li>
+<li><code>ggplot2</code>, which provides a powerful and flexible system for creating plots</li>
+</ul>
+<p>A good way to understand it is to get started with a small dataset. So let’s load the <code>sf</code> package and the <code>spData</code> package, which contains the <code>world</code> dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
+which was just loaded, will retire in October 2023.
+Please refer to R-spatial evolution reports for details, especially
+https://r-spatial.org/r/2023/05/15/evolution4.html.
+It may be desirable to make the sf package available;
+package maintainers should consider adding sf to Suggests:.
+The sp package is now running under evolution status 2
+     (status 2 uses the sf package in place of rgdal)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>To access larger datasets in this package, install the spDataLarge
+package with: `install.packages('spDataLarge',
+repos='https://nowosad.github.io/drat/', type='source')`</code></pre>
+</div>
+</div>
 <p>After loading the packages run the following commands to create an object called countries, containing countries whose centroids are within 200km of the Polish border:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(world) <span class="co"># check we have the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(world) <span class="co"># check we have the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "iso_a2"    "name_long" "continent" "region_un" "subregion" "type"     
  [7] "area_km2"  "pop"       "lifeExp"   "gdpPercap" "geom"     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>poland <span class="ot">=</span> world <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(name_long <span class="sc">==</span> <span class="st">"Poland"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>world_centroids <span class="ot">=</span> world <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_centroid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>poland <span class="ot">=</span> world <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(name_long <span class="sc">==</span> <span class="st">"Poland"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>world_centroids <span class="ot">=</span> world <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_centroid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: st_centroid assumes attributes are constant over geometries</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>country_centroids <span class="ot">=</span> world_centroids <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_filter</span>(poland, <span class="at">.predicate =</span> st_is_within_distance, <span class="at">dist =</span> <span class="fl">2e5</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">=</span> world <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name_long <span class="sc">%in%</span> country_centroids<span class="sc">$</span>name_long)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>countries_df <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name_long, pop, area_km2) <span class="sc">|&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>country_centroids <span class="ot">=</span> world_centroids <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_filter</span>(poland, <span class="at">.predicate =</span> st_is_within_distance, <span class="at">dist =</span> <span class="fl">2e5</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">=</span> world <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name_long <span class="sc">%in%</span> country_centroids<span class="sc">$</span>name_long)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>countries_df <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name_long, pop, area_km2) <span class="sc">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Don’t worry about the syntax for now. The important thing is that we now have a data frame with three columns, representing the name, population and area of four countries. We can print out the contents of the data frame by typing its name (this is equivalent to <code>print(countries_df)</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>countries_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>countries_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   name_long           pop area_km2
@@ -300,13 +342,51 @@ div.csl-indent {
 </div>
 <p>The output above shows information about each country in a tabular. A feature of the tidyverse is that its default data frame class (the <code>tibble</code> which extends base R’s <code>data.frame</code> as shown below) prints results in an informative and space-efficient way.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(countries_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(countries_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
 </div>
-<section id="exercises" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.1</span> Exercises</h2>
+<p><code>ggplot2</code> is dedicated plotting package that is loaded when you load the <code>tidyverse</code>. It has native support for geographic objects, as shown in the figure below which shows the output of <code>plot(countries)</code> next to the equivalent <code>ggplot2</code> code.</p>
+<div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: plotting the first 9 out of 10 attributes; use max.plot = 10 to plot
+all</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>countries <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="tidy_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="tidy_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+<section id="pipes" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="pipes"><span class="header-section-number">3.1</span> Pipes</h2>
+<p>A characteristic feature of the tidyverse is the use of the pipe operator. You can use R’s new native pipe operator (<code>|&gt;</code>), first available in R 4.1.0, or the magrittr pipe operator (<code>%&gt;%</code>). The pipe operator is used to chain together functions, making it easier to read and write code. It can be particularly useful when used in combination with RStudio’s intellisense feature, which provides suggestions for column names as you type. Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action. It will allow you to select the variable you’re interested in without quote marks, using a feature called non-standard evaluation (NSE) <span class="citation" data-cites="wickham2019">(<a href="#ref-wickham2019" role="doc-biblioref">Wickham 2019</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>countries_df <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  name_long           pop area_km2
+  &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;
+1 Poland         38011735  310402.
+2 Lithuania       2932367   63831.
+3 Slovakia        5418649   47068.
+4 Czech Republic 10525347   81208.</code></pre>
+</div>
+</div>
+</section>
+<section id="exercises" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.2</span> Exercises</h2>
 <ol type="1">
 <li>Re-create the <code>country_centroids</code> object, using <code>world_centroids</code> and <code>poland</code> and inputs, but this time using base R syntax with the <code>[</code> operator.</li>
 </ol>
@@ -316,22 +396,25 @@ div.csl-indent {
 </ul>
 </section>
 </section>
-<section id="attribute-operations" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Attribute operations</h1>
+<section id="attribute-operations-with-dplyr" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Attribute operations with dplyr</h1>
 </section>
-<section id="geometry-operations" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Geometry operations</h1>
+<section id="making-maps-with-ggplot2" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Making maps with ggplot2</h1>
 </section>
-<section id="tidyverse-geos-workflows" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> <code>tidyverse</code> + <code>geos</code> workflows</h1>
+<section id="geometry-operations" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Geometry operations</h1>
 </section>
-<section id="further-reading" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Further reading</h1>
+<section id="tidyverse-geos-workflows" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> <code>tidyverse</code> + <code>geos</code> workflows</h1>
+</section>
+<section id="further-reading" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Further reading</h1>
 <p>The following free and open access resources provide a strong foundation for further learning in this space.</p>
 <ul>
 <li><p><span class="citation" data-cites="wickham2023">Wickham, Cetinkaya-Rundel, and Grolemund (<a href="#ref-wickham2023" role="doc-biblioref">2023</a>)</span>, hosted at <a href="https://r4ds.hadley.nz/" class="uri">https://r4ds.hadley.nz/</a>, is a detailed introduction to the tidyverse</p></li>
 <li><p><span class="citation" data-cites="lovelace2019">Lovelace, Nowosad, and Muenchow (<a href="#ref-lovelace2019" role="doc-biblioref">2019</a>)</span> provides a wide ranging yet beginner-friendly introduction to using R for geographic analysis</p></li>
-<li><p>Any other suggestions welcome!</p></li>
+<li><p>Any other suggestions welcome, there’s much more out there!</p></li>
 </ul>
 
 
@@ -340,7 +423,10 @@ div.csl-indent {
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-lovelace2019" class="csl-entry" role="listitem">
-Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation with r</em>. CRC Press. <a href="https://geocompr.robinlovelace.net/">https://geocompr.robinlovelace.net/</a>.
+Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation with <span>R</span></em>. CRC Press. <a href="https://r.geocompx.org/">https://r.geocompx.org/</a>.
+</div>
+<div id="ref-wickham2019" class="csl-entry" role="listitem">
+Wickham, Hadley. 2019. <em>Advanced r, Second Edition</em>. 2nd edition. Boca Raton: Chapman; Hall/CRC.
 </div>
 <div id="ref-wickham2023" class="csl-entry" role="listitem">
 Wickham, Hadley, Mine Cetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 2nd edition. O’Reilly Media.

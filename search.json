@@ -193,7 +193,7 @@
     "href": "index.html#reproducibility",
     "title": "OpenGeoHub Summer School 2023",
     "section": "Reproducibility",
-    "text": "Reproducibility\nTo install the dependencies for this repo, run the following command:\n\nremotes::install_github(\"robinlovelace/opengeohub2023\")\n\nThis repo also uses the renv package to manage dependencies. We saved the dependencies with the following command:\n\nrenv::snapshot()\n\n\n\n\n\nprocessing file: tidy.qmd\n\n\n1/15                   \n2/15 [unnamed-chunk-5] \n3/15                   \n4/15 [unnamed-chunk-6] \n5/15                   \n6/15 [unnamed-chunk-7] \n7/15                   \n8/15 [unnamed-chunk-8] \n9/15                   \n10/15 [unnamed-chunk-9] \n11/15                   \n12/15 [unnamed-chunk-10]\n13/15                   \n14/15 [unnamed-chunk-11]\n15/15                   \n\n\noutput file: tidy.R\n\n\n[1] \"tidy.R\""
+    "text": "Reproducibility\nTo install the dependencies for this repo, run the following command:\n\nremotes::install_github(\"robinlovelace/opengeohub2023\")\n\nThis repo also uses the renv package to manage dependencies. We saved the dependencies with the following command:\n\nrenv::snapshot()\n\n\n\n\n\nprocessing file: tidy.qmd\n\n\n1/23                   \n2/23 [unnamed-chunk-5] \n3/23                   \n4/23 [unnamed-chunk-6] \n5/23                   \n6/23 [unnamed-chunk-7] \n7/23                   \n8/23 [unnamed-chunk-8] \n9/23                   \n10/23 [unnamed-chunk-9] \n11/23                   \n12/23 [unnamed-chunk-10]\n13/23                   \n14/23 [unnamed-chunk-11]\n15/23                   \n16/23 [unnamed-chunk-12]\n17/23                   \n18/23 [unnamed-chunk-13]\n19/23                   \n20/23 [unnamed-chunk-14]\n21/23                   \n22/23 [unnamed-chunk-15]\n23/23                   \n\n\noutput file: tidy.R\n\n\n[1] \"tidy.R\""
   },
   {
     "objectID": "tidy.html",
@@ -203,11 +203,18 @@
     "text": "These materials were created for the OpenGeoHub Summer School 2023.\nThey can be used with reference to the accompanying slides, available at ogh23.robinlovelace.net/opengeohub2023.\nSee the parent repo and session description in the agenda for context."
   },
   {
+    "objectID": "tidy.html#pipes",
+    "href": "tidy.html#pipes",
+    "title": "Tidy geographic data",
+    "section": "3.1 Pipes",
+    "text": "3.1 Pipes\nA characteristic feature of the tidyverse is the use of the pipe operator. You can use R’s new native pipe operator (|&gt;), first available in R 4.1.0, or the magrittr pipe operator (%&gt;%). The pipe operator is used to chain together functions, making it easier to read and write code. It can be particularly useful when used in combination with RStudio’s intellisense feature, which provides suggestions for column names as you type. Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action. It will allow you to select the variable you’re interested in without quote marks, using a feature called non-standard evaluation (NSE) (Wickham 2019).\n\ncountries_df |&gt;\n  filter()\n\n# A tibble: 4 × 3\n  name_long           pop area_km2\n  &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;\n1 Poland         38011735  310402.\n2 Lithuania       2932367   63831.\n3 Slovakia        5418649   47068.\n4 Czech Republic 10525347   81208."
+  },
+  {
     "objectID": "tidy.html#exercises",
     "href": "tidy.html#exercises",
     "title": "Tidy geographic data",
-    "section": "3.1 Exercises",
-    "text": "3.1 Exercises\n\nRe-create the country_centroids object, using world_centroids and poland and inputs, but this time using base R syntax with the [ operator.\n\n\nBonus: use the bench::mark() function to compare the performance of the base R and tidyverse implementation\nOpen question: Is this a good thing to benchmark? Why or why not?"
+    "section": "3.2 Exercises",
+    "text": "3.2 Exercises\n\nRe-create the country_centroids object, using world_centroids and poland and inputs, but this time using base R syntax with the [ operator.\n\n\nBonus: use the bench::mark() function to compare the performance of the base R and tidyverse implementation\nOpen question: Is this a good thing to benchmark? Why or why not?"
   },
   {
     "objectID": "osm.html",
