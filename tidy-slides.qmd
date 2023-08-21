@@ -6,6 +6,10 @@ subtitle: "with sf, dplyr, ggplot2, geos and friends"
 bibliography: references.bib
 ---
 
+::: notes
+Intro slide
+:::
+
 # Introduction
 
 ## Session overview
@@ -14,18 +18,64 @@ bibliography: references.bib
 
 Source: [pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/)
 
+::: notes
+Parallel to the Python session.
+:::
+
 ## System dependencies
 
 ![](images/paste-2.png)
 
 Source: @pebesma2018
 
-## Development environments
+::: notes
+System dependencies.
+:::
 
-<!-- 2 columns in Quarto doc: -->
+## System dependencies: code
 
+-   `sf` startup message:
 
+```{r}
+#| echo: true
+sf::sf_extSoftVersion()
+```
 
+-   On Linux `sf` uses system installations of GDAL, GEOS and PROJ.4:
+
+```{bash}
+#| echo: true
+gdalinfo --version
+which gdal-config
+```
+
+-   On Windows, `sf` ships with binary versions installed
+
+## Development environments {.smaller}
+
+::: columns
+::: {.column width="50%"}
+### RStudio
+
+-   Pro: works out of the box
+-   Pro: Great R autocomplete
+-   Pro: Features for data science + R package development
+-   Con: A bit R specific
+
+### VS Code
+
+-   Pro: Works with many languages
+-   Pro: Unbeatable ecosystem of extensions
+-   Pro: Advanced features such as copilot + works in Codespaces
+-   Con: A bit fiddly to set up, rough edges when using R
+:::
+
+::: {.column width="50%"}
+![](images/paste-4.png)
+
+![](images/paste-3.png)
+:::
+:::
 
 ## RStudio
 
@@ -35,7 +85,49 @@ Source: @pebesma2018
 
 ![](images/paste-3.png)
 
-# Part 1: sf + dplyr
+# Which IDE to you use? {.incremental}
+
+::: columns
+::: {.column width="50%"}
+<iframe src="https://fosstodon.org/@robinlovelace/110920501943601698/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400" allowfullscreen="allowfullscreen">
+
+</iframe>
+
+```{=html}
+<script src="https://fosstodon.org/embed.js" async="async"></script>
+```
+:::
+
+::: column
+::: incremental
+-   ![](images/paste-7.png)
+:::
+:::
+:::
+
+## Results
+
+::: columns
+::: {.column width="50%"}
+-   On Twitter:
+
+![](images/paste-8.png)
+:::
+
+::: column
+::: incremental
+-   On Mastodon:
+
+-   ![](images/paste-9.png)
+:::
+:::
+:::
+
+## On Mattermost
+
+![](images/paste-10.png)
+
+# Part 1: sf + dplyr + ggplot2
 
 ## Key features of `sf`
 
@@ -48,16 +140,6 @@ Source: @lovelace2019
 ![](images/paste-6.png)
 
 Source: @pebesma2018
-
-## `sf` + `dplyr` workflow
-
-Mermaid graph:
-
-``` mermaid
-graph LR
-  A[Read data] --> B[Transform data]
-  B --> C[Visualize data]
-```
 
 ## Practical (\~13:30-14:30)
 
