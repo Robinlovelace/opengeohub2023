@@ -415,6 +415,22 @@
 </div>
 
 </section>
+<section class="slide level2">
+
+<aside class="notes">
+<p>Intro slide</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section>
 <section id="introduction" class="title-slide slide level1 center">
 <h1>Introduction</h1>
@@ -424,27 +440,141 @@
 <h2>Session overview</h2>
 
 <img data-src="images/paste-1.png" class="r-stretch"><p>Source: <a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/">pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/</a></p>
+<aside class="notes">
+<p>Parallel to the Python session.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="system-dependencies" class="slide level2">
 <h2>System dependencies</h2>
 
 <img data-src="images/paste-2.png" class="r-stretch"><p>Source: <span class="citation" data-cites="pebesma2018">Pebesma (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></p>
+<aside class="notes">
+<p>System dependencies.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="development-environments" class="slide level2">
+<section id="system-dependencies-code" class="slide level2">
+<h2>System dependencies: code</h2>
+<ul>
+<li><code>sf</code> startup message:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>sf<span class="sc">::</span><span class="fu">sf_extSoftVersion</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          GEOS           GDAL         proj.4 GDAL_with_GEOS     USE_PROJ_H 
+      "3.10.2"        "3.4.1"        "8.2.1"         "true"         "true" 
+          PROJ 
+       "8.2.1" </code></pre>
+</div>
+</div>
+<ul>
+<li>On Linux <code>sf</code> uses system installations of GDAL, GEOS and PROJ.4:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">gdalinfo</span> <span class="at">--version</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">which</span> gdal-config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GDAL 3.4.1, released 2021/12/27
+/usr/bin/gdal-config</code></pre>
+</div>
+</div>
+<ul>
+<li>On Windows, <code>sf</code> ships with binary versions installed</li>
+</ul>
+</section>
+<section id="development-environments" class="slide level2 smaller">
 <h2>Development environments</h2>
-<!-- 2 columns in Quarto doc: -->
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="rstudio">RStudio</h3>
+<ul>
+<li>Pro: works out of the box</li>
+<li>Pro: Great R autocomplete</li>
+<li>Pro: Features for data science + R package development</li>
+<li>Con: A bit R specific</li>
+</ul>
+<h3 id="vs-code">VS Code</h3>
+<ul>
+<li>Pro: Works with many languages</li>
+<li>Pro: Unbeatable ecosystem of extensions</li>
+<li>Pro: Advanced features such as copilot + works in Codespaces</li>
+<li>Con: A bit fiddly to set up, rough edges when using R</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/paste-4.png"></p>
+<p><img data-src="images/paste-3.png"></p>
+</div>
+</div>
 </section>
-<section id="rstudio" class="slide level2">
+<section id="rstudio-1" class="slide level2">
 <h2>RStudio</h2>
 
 <img data-src="images/paste-4.png" class="r-stretch"></section>
-<section id="vs-code" class="slide level2">
+<section id="vs-code-1" class="slide level2">
 <h2>VS Code</h2>
 
 <img data-src="images/paste-3.png" class="r-stretch"></section></section>
 <section>
-<section id="part-1-sf-dplyr" class="title-slide slide level1 center">
-<h1>Part 1: sf + dplyr</h1>
+<section id="which-ide-to-you-use" class="title-slide slide level1 incremental center">
+<h1>Which IDE to you use?</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<iframe src="https://fosstodon.org/@robinlovelace/110920501943601698/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400" allowfullscreen="allowfullscreen">
+</iframe>
+<script src="https://fosstodon.org/embed.js" async="async"></script>
+</div><div class="column">
+<div>
+<ul>
+<li class="fragment"><img data-src="images/paste-7.png"></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="results" class="slide level2">
+<h2>Results</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>On Twitter:</li>
+</ul>
+<p><img data-src="images/paste-8.png"></p>
+</div><div class="column">
+<div>
+<ul>
+<li class="fragment"><p>On Mastodon:</p></li>
+<li class="fragment"><p><img data-src="images/paste-9.png"></p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="on-mattermost" class="slide level2">
+<h2>On Mattermost</h2>
+
+<img data-src="images/paste-10.png" class="r-stretch"></section></section>
+<section>
+<section id="part-1-sf-dplyr-ggplot2" class="title-slide slide level1 center">
+<h1>Part 1: sf + dplyr + ggplot2</h1>
 
 </section>
 <section id="key-features-of-sf" class="slide level2">
@@ -457,29 +587,22 @@
 
 <img data-src="images/paste-6.png" class="r-stretch"><p>Source: <span class="citation" data-cites="pebesma2018">Pebesma (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></p>
 </section>
-<section id="sf-dplyr-workflow" class="slide level2">
-<h2><code>sf</code> + <code>dplyr</code> workflow</h2>
-<p>Mermaid graph:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource mermaid number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1"></a>graph LR</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  A[Read data] --&gt; B[Transform data]</span>
-<span id="cb1-3"><a href="#cb1-3"></a>  B --&gt; C[Visualize data]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
 <section id="practical-1330-1430" class="slide level2">
 <h2>Practical (~13:30-14:30)</h2>
 <p>Work through the code at <a href="https://ogh23.robinlovelace.net/tidy">ogh23.robinlovelace.net/tidy</a> and answer the questions at your own pace.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># The packages we'll use</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="st">"sf"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="st">"tidyverse"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    <span class="st">"geos"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="st">"data.table"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="st">"spData"</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">sapply</span>(pkgs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># The packages we'll use</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="st">"sf"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="st">"tidyverse"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="st">"geos"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="st">"data.table"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="st">"spData"</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="fu">sapply</span>(pkgs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        sf  tidyverse       geos data.table     spData 
       TRUE       TRUE       TRUE       TRUE       TRUE </code></pre>

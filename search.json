@@ -1,96 +1,5 @@
 [
   {
-    "objectID": "tidy.html",
-    "href": "tidy.html",
-    "title": "Tidy geographic data",
-    "section": "",
-    "text": "These materials were created for the OpenGeoHub Summer School 2023.\nThey can be used with reference to the accompanying slides, available at ogh23.robinlovelace.net/opengeohub2023.\nSee the parent repo and session description in the agenda for context."
-  },
-  {
-    "objectID": "tidy.html#exercises",
-    "href": "tidy.html#exercises",
-    "title": "Tidy geographic data",
-    "section": "3.1 Exercises",
-    "text": "3.1 Exercises\n\nRe-create the country_centroids object, using world_centroids and poland and inputs, but this time using base R syntax with the [ operator.\n\n\nBonus: use the bench::mark() function to compare the performance of the base R and tidyverse implementation\nOpen question: Is this a good thing to benchmark? Why or why not?"
-  },
-  {
-    "objectID": "tidy-slides.html#session-overview",
-    "href": "tidy-slides.html#session-overview",
-    "title": "Tidy geographic data",
-    "section": "Session overview",
-    "text": "Session overview\n\nSource: pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/"
-  },
-  {
-    "objectID": "tidy-slides.html#system-dependencies",
-    "href": "tidy-slides.html#system-dependencies",
-    "title": "Tidy geographic data",
-    "section": "System dependencies",
-    "text": "System dependencies\n\nSource: Pebesma (2018)"
-  },
-  {
-    "objectID": "tidy-slides.html#development-environments",
-    "href": "tidy-slides.html#development-environments",
-    "title": "Tidy geographic data",
-    "section": "Development environments",
-    "text": "Development environments"
-  },
-  {
-    "objectID": "tidy-slides.html#rstudio",
-    "href": "tidy-slides.html#rstudio",
-    "title": "Tidy geographic data",
-    "section": "RStudio",
-    "text": "RStudio"
-  },
-  {
-    "objectID": "tidy-slides.html#vs-code",
-    "href": "tidy-slides.html#vs-code",
-    "title": "Tidy geographic data",
-    "section": "VS Code",
-    "text": "VS Code"
-  },
-  {
-    "objectID": "tidy-slides.html#key-features-of-sf",
-    "href": "tidy-slides.html#key-features-of-sf",
-    "title": "Tidy geographic data",
-    "section": "Key features of sf",
-    "text": "Key features of sf\n\nSource: Lovelace, Nowosad, and Muenchow (2019)"
-  },
-  {
-    "objectID": "tidy-slides.html#sf-functions",
-    "href": "tidy-slides.html#sf-functions",
-    "title": "Tidy geographic data",
-    "section": "sf functions",
-    "text": "sf functions\n\nSource: Pebesma (2018)"
-  },
-  {
-    "objectID": "tidy-slides.html#sf-dplyr-workflow",
-    "href": "tidy-slides.html#sf-dplyr-workflow",
-    "title": "Tidy geographic data",
-    "section": "sf + dplyr workflow",
-    "text": "sf + dplyr workflow\nMermaid graph:\ngraph LR\n  A[Read data] --&gt; B[Transform data]\n  B --&gt; C[Visualize data]"
-  },
-  {
-    "objectID": "tidy-slides.html#practical-1330-1430",
-    "href": "tidy-slides.html#practical-1330-1430",
-    "title": "Tidy geographic data",
-    "section": "Practical (~13:30-14:30)",
-    "text": "Practical (~13:30-14:30)\nWork through the code at ogh23.robinlovelace.net/tidy and answer the questions at your own pace.\n\nremotes::install_cran(pkgs)\n\n\n# The packages we'll use\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"geos\",\n    \"data.table\",\n    \"spData\"\n)\nsapply(pkgs, require, character.only = TRUE)\n\n        sf  tidyverse       geos data.table     spData \n      TRUE       TRUE       TRUE       TRUE       TRUE"
-  },
-  {
-    "objectID": "tidy-slides.html#tidyverse-alternatives",
-    "href": "tidy-slides.html#tidyverse-alternatives",
-    "title": "Tidy geographic data",
-    "section": "tidyverse alternatives",
-    "text": "tidyverse alternatives\n…"
-  },
-  {
-    "objectID": "tidy-slides.html#geos",
-    "href": "tidy-slides.html#geos",
-    "title": "Tidy geographic data",
-    "section": "geos",
-    "text": "geos\n…"
-  },
-  {
     "objectID": "osm-slides.html#session-overview",
     "href": "osm-slides.html#session-overview",
     "title": "Tidy geographic data",
@@ -168,6 +77,97 @@
     "text": "geos\n…"
   },
   {
+    "objectID": "tidy-slides.html#session-overview",
+    "href": "tidy-slides.html#session-overview",
+    "title": "Tidy geographic data",
+    "section": "Session overview",
+    "text": "Session overview\n\nSource: pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/\n\nParallel to the Python session."
+  },
+  {
+    "objectID": "tidy-slides.html#system-dependencies",
+    "href": "tidy-slides.html#system-dependencies",
+    "title": "Tidy geographic data",
+    "section": "System dependencies",
+    "text": "System dependencies\n\nSource: Pebesma (2018)\n\nSystem dependencies."
+  },
+  {
+    "objectID": "tidy-slides.html#system-dependencies-code",
+    "href": "tidy-slides.html#system-dependencies-code",
+    "title": "Tidy geographic data",
+    "section": "System dependencies: code",
+    "text": "System dependencies: code\n\nsf startup message:\n\n\nsf::sf_extSoftVersion()\n\n          GEOS           GDAL         proj.4 GDAL_with_GEOS     USE_PROJ_H \n      \"3.10.2\"        \"3.4.1\"        \"8.2.1\"         \"true\"         \"true\" \n          PROJ \n       \"8.2.1\" \n\n\n\nOn Linux sf uses system installations of GDAL, GEOS and PROJ.4:\n\n\ngdalinfo --version\nwhich gdal-config\n\nGDAL 3.4.1, released 2021/12/27\n/usr/bin/gdal-config\n\n\n\nOn Windows, sf ships with binary versions installed"
+  },
+  {
+    "objectID": "tidy-slides.html#development-environments",
+    "href": "tidy-slides.html#development-environments",
+    "title": "Tidy geographic data",
+    "section": "Development environments",
+    "text": "Development environments\n\n\nRStudio\n\nPro: works out of the box\nPro: Great R autocomplete\nPro: Features for data science + R package development\nCon: A bit R specific\n\nVS Code\n\nPro: Works with many languages\nPro: Unbeatable ecosystem of extensions\nPro: Advanced features such as copilot + works in Codespaces\nCon: A bit fiddly to set up, rough edges when using R"
+  },
+  {
+    "objectID": "tidy-slides.html#rstudio-1",
+    "href": "tidy-slides.html#rstudio-1",
+    "title": "Tidy geographic data",
+    "section": "RStudio",
+    "text": "RStudio"
+  },
+  {
+    "objectID": "tidy-slides.html#vs-code-1",
+    "href": "tidy-slides.html#vs-code-1",
+    "title": "Tidy geographic data",
+    "section": "VS Code",
+    "text": "VS Code"
+  },
+  {
+    "objectID": "tidy-slides.html#results",
+    "href": "tidy-slides.html#results",
+    "title": "Tidy geographic data",
+    "section": "Results",
+    "text": "Results\n\n\n\nOn Twitter:\n\n\n\n\n\nOn Mastodon:"
+  },
+  {
+    "objectID": "tidy-slides.html#on-mattermost",
+    "href": "tidy-slides.html#on-mattermost",
+    "title": "Tidy geographic data",
+    "section": "On Mattermost",
+    "text": "On Mattermost"
+  },
+  {
+    "objectID": "tidy-slides.html#key-features-of-sf",
+    "href": "tidy-slides.html#key-features-of-sf",
+    "title": "Tidy geographic data",
+    "section": "Key features of sf",
+    "text": "Key features of sf\n\nSource: Lovelace, Nowosad, and Muenchow (2019)"
+  },
+  {
+    "objectID": "tidy-slides.html#sf-functions",
+    "href": "tidy-slides.html#sf-functions",
+    "title": "Tidy geographic data",
+    "section": "sf functions",
+    "text": "sf functions\n\nSource: Pebesma (2018)"
+  },
+  {
+    "objectID": "tidy-slides.html#practical-1330-1430",
+    "href": "tidy-slides.html#practical-1330-1430",
+    "title": "Tidy geographic data",
+    "section": "Practical (~13:30-14:30)",
+    "text": "Practical (~13:30-14:30)\nWork through the code at ogh23.robinlovelace.net/tidy and answer the questions at your own pace.\n\nremotes::install_cran(pkgs)\n\n\n# The packages we'll use\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"geos\",\n    \"data.table\",\n    \"spData\"\n)\nsapply(pkgs, require, character.only = TRUE)\n\n        sf  tidyverse       geos data.table     spData \n      TRUE       TRUE       TRUE       TRUE       TRUE"
+  },
+  {
+    "objectID": "tidy-slides.html#tidyverse-alternatives",
+    "href": "tidy-slides.html#tidyverse-alternatives",
+    "title": "Tidy geographic data",
+    "section": "tidyverse alternatives",
+    "text": "tidyverse alternatives\n…"
+  },
+  {
+    "objectID": "tidy-slides.html#geos",
+    "href": "tidy-slides.html#geos",
+    "title": "Tidy geographic data",
+    "section": "geos",
+    "text": "geos\n…"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "OpenGeoHub Summer School 2023",
@@ -193,7 +193,21 @@
     "href": "index.html#reproducibility",
     "title": "OpenGeoHub Summer School 2023",
     "section": "Reproducibility",
-    "text": "Reproducibility\nTo install the dependencies for this repo, run the following command:\n\nremotes::install_github(\"robinlovelace/opengeohub2023\")\n\nThis repo also uses the renv package to manage dependencies. We saved the dependencies with the following command:\n\nrenv::snapshot()\n\n\n\n\n\nprocessing file: tidy.qmd\n\n\n1/13                   \n2/13 [unnamed-chunk-5] \n3/13                   \n4/13 [unnamed-chunk-6] \n5/13                   \n6/13 [unnamed-chunk-7] \n7/13                   \n8/13 [unnamed-chunk-8] \n9/13                   \n10/13 [unnamed-chunk-9] \n11/13                   \n12/13 [unnamed-chunk-10]\n13/13                   \n\n\noutput file: tidy.R\n\n\n[1] \"tidy.R\""
+    "text": "Reproducibility\nTo install the dependencies for this repo, run the following command:\n\nremotes::install_github(\"robinlovelace/opengeohub2023\")\n\nThis repo also uses the renv package to manage dependencies. We saved the dependencies with the following command:\n\nrenv::snapshot()\n\n\n\n\n\nprocessing file: tidy.qmd\n\n\n1/15                   \n2/15 [unnamed-chunk-5] \n3/15                   \n4/15 [unnamed-chunk-6] \n5/15                   \n6/15 [unnamed-chunk-7] \n7/15                   \n8/15 [unnamed-chunk-8] \n9/15                   \n10/15 [unnamed-chunk-9] \n11/15                   \n12/15 [unnamed-chunk-10]\n13/15                   \n14/15 [unnamed-chunk-11]\n15/15                   \n\n\noutput file: tidy.R\n\n\n[1] \"tidy.R\""
+  },
+  {
+    "objectID": "tidy.html",
+    "href": "tidy.html",
+    "title": "Tidy geographic data",
+    "section": "",
+    "text": "These materials were created for the OpenGeoHub Summer School 2023.\nThey can be used with reference to the accompanying slides, available at ogh23.robinlovelace.net/opengeohub2023.\nSee the parent repo and session description in the agenda for context."
+  },
+  {
+    "objectID": "tidy.html#exercises",
+    "href": "tidy.html#exercises",
+    "title": "Tidy geographic data",
+    "section": "3.1 Exercises",
+    "text": "3.1 Exercises\n\nRe-create the country_centroids object, using world_centroids and poland and inputs, but this time using base R syntax with the [ operator.\n\n\nBonus: use the bench::mark() function to compare the performance of the base R and tidyverse implementation\nOpen question: Is this a good thing to benchmark? Why or why not?"
   },
   {
     "objectID": "osm.html",

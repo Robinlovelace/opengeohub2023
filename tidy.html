@@ -298,8 +298,13 @@ div.csl-indent {
 4 Czech Republic 10525347   81208.</code></pre>
 </div>
 </div>
-<p>The output above shows information about each country in a tabular. A feature of the tidyverse is that its data frame class (the <code>tibble</code> which extends base R’s <code>data.frame</code> as shown below) prints results in an informative and space-efficient way.</p>
-<p><code>{r}6 class(countries_df)</code></p>
+<p>The output above shows information about each country in a tabular. A feature of the tidyverse is that its default data frame class (the <code>tibble</code> which extends base R’s <code>data.frame</code> as shown below) prints results in an informative and space-efficient way.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(countries_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
 <section id="exercises" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.1</span> Exercises</h2>
 <ol type="1">
