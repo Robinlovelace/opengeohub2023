@@ -172,6 +172,49 @@ res
 
 # Attribute operations with dplyr
 
+**dplyr** is a large package with many functions for working with data frames.
+The five key 'verbs' [described](https://dplyr.tidyverse.org/) as:
+
+> * `mutate()` adds new variables that are functions of existing variables
+* `select()` picks variables based on their names.
+* `filter()` picks cases based on their values.
+* `summarise()` reduces multiple values down to a single summary.
+* `arrange()` changes the ordering of the rows.
+
+Let's take a brief look at each.
+
+```{r}
+countries_modified = countries |>
+  mutate(pop_density = pop / area_km2) |>
+  select(name_long, pop_density) |>
+  filter(pop_density > 100) |>
+  arrange(desc(pop_density))
+countries_modified
+```
+
+The `summarise()` function is often used in combination with `group_by()`, e.g. as follows:
+
+```{r}
+countries_summarised = countries |>
+  group_by(contains_a = str_detect(name_long, "a")) |>
+  summarise(n = n(), mean_pop = mean(pop))
+countries_summarised
+```
+
+As shown by plotting the output, the operation creates a new variable called `contains_a` that is `TRUE` if the country name contains an "a" and `FALSE` otherwise.
+Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter "a", highlighting `dplyr`'s ability to work with geographic data represented as `sf` objects.
+
+## Exercises
+
+1.  Create a new data frame called `countries_modified2` that contains the name, population and area of countries with a population density of more than 100 people per km2, sorted by area in descending order.
+2. Do the same with base R functions and the `[` operator.
+    - What are the pros and cons of each? 
+    - Which do you prefer?
+
+
+
+
+
 # Making maps with ggplot2
 
 # Geometry operations
@@ -185,5 +228,7 @@ The following free and open access resources provide a strong foundation for fur
 -   @wickham2023, hosted at <https://r4ds.hadley.nz/>, is a detailed introduction to the tidyverse
 
 -   @lovelace2019 provides a wide ranging yet beginner-friendly introduction to using R for geographic analysis
+
+-   @pebesma2023, a textbook on spatial data science by the developers of `sf` and other core 'rspatial' packages
 
 -   Any other suggestions welcome, there's much more out there!
