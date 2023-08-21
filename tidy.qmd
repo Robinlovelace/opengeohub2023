@@ -68,15 +68,33 @@ pkgs = c(
 remotes::install_cran(pkgs)
 ```
 
+After running the above commands, you should be able to load the packages with the following command (we will load the packages individually in subsequent sections):
+
 ```{r}
-#| message: false
+#| eval: false
 #| warning: false
 sapply(pkgs, require, character.only = TRUE)
 ```
 
 # An introduction to the tidyverse
 
-The `tidyverse` is a collection of packages that provides a unified set of functions for data science. A good way to understand it is to get started with a small dataset.
+The `tidyverse` is a collection of packages that provides a unified set of functions for data science. Load the `tidyverse` with the following command:
+
+```{r}
+library(tidyverse)
+```
+
+As shown in the output, the package loads 9 sub-packages. In this tutorial we will focus on
+
+-   `dplyr`, which provides convenient functions for manipulating data frames
+-   `ggplot2`, which provides a powerful and flexible system for creating plots
+
+A good way to understand it is to get started with a small dataset. So let's load the `sf` package and the `spData` package, which contains the `world` dataset:
+
+```{r}
+library(sf)
+library(spData)
+```
 
 After loading the packages run the following commands to create an object called countries, containing countries whose centroids are within 200km of the Polish border:
 
@@ -107,6 +125,25 @@ The output above shows information about each country in a tabular. A feature of
 class(countries_df)
 ```
 
+`ggplot2` is dedicated plotting package that is loaded when you load the `tidyverse`. It has native support for geographic objects, as shown in the figure below which shows the output of `plot(countries)` next to the equivalent `ggplot2` code.
+
+```{r}
+#| layout-ncol: 2
+plot(countries)
+countries |>
+  ggplot() +
+    geom_sf()
+```
+
+## Pipes
+
+A characteristic feature of the tidyverse is the use of the pipe operator. You can use R's new native pipe operator (`|>`), first available in R 4.1.0, or the magrittr pipe operator (`%>%`). The pipe operator is used to chain together functions, making it easier to read and write code. It can be particularly useful when used in combination with RStudio's intellisense feature, which provides suggestions for column names as you type. Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action. It will allow you to select the variable you're interested in without quote marks, using a feature called non-standard evaluation (NSE) [@wickham2019].
+
+```{r}
+countries_df |>
+  filter()
+```
+
 ## Exercises
 
 1.  Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
@@ -133,7 +170,9 @@ res
 #> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
 ```
 
-# Attribute operations
+# Attribute operations with dplyr
+
+# Making maps with ggplot2
 
 # Geometry operations
 
@@ -147,4 +186,4 @@ The following free and open access resources provide a strong foundation for fur
 
 -   @lovelace2019 provides a wide ranging yet beginner-friendly introduction to using R for geographic analysis
 
--   Any other suggestions welcome!
+-   Any other suggestions welcome, there's much more out there!
