@@ -58,7 +58,7 @@ pkgs = c(
     "sf",
     "tidyverse",
     "geos",
-    "data.table",
+    "ggspatial",
     "spData"
 )
 ```
@@ -140,6 +140,7 @@ countries |>
 A characteristic feature of the tidyverse is the use of the pipe operator. You can use R's new native pipe operator (`|>`), first available in R 4.1.0, or the magrittr pipe operator (`%>%`). The pipe operator is used to chain together functions, making it easier to read and write code. It can be particularly useful when used in combination with RStudio's intellisense feature, which provides suggestions for column names as you type. Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action. It will allow you to select the variable you're interested in without quote marks, using a feature called non-standard evaluation (NSE) [@wickham2019].
 
 ```{r}
+#| eval: false
 countries_df |>
   filter()
 ```
@@ -277,6 +278,42 @@ waldo::compare(countries_modified2$name_long, countries_base$name_long)
 ```
 
 # Making maps with ggplot2
+
+As shown above, `geom_sf()` works 'out of the box' with geographic data.
+We can modify plotting commands to control outputs and generate publishable maps.
+
+```{r}
+library(ggspatial)
+countries |>
+  ggplot() +
+    geom_sf(fill = "grey80", color = "black") +
+    geom_sf(data = countries_modified, aes(fill = pop_density)) +
+    scale_fill_viridis_c() +
+    theme_minimal()
+```
+
+Map making is an iterative and time consuming process.
+Iterate on the code above, e.g. by changing the color palette, adding a title, and adding a legend.
+
+There are many add-ons to `ggplot2` and one that is highly recommended is `ggspatial`, which can be used to add a basemap to a plot with `annotation_map_tile()`.
+
+```{r}
+#| message: false
+rosm::osm.types()
+ggplot() +
+  annotation_map_tile() +
+  layer_spatial(countries_modified, aes(fill = pop_density), linewidth = 3, alpha = 0.3) +
+  scale_fill_viridis_c()
+
+```
+
+## Exercises
+
+1. With reference to the documentation at [ggplot2.tidyverse.org/index.html](https://ggplot2.tidyverse.org/index.html), modify the code above to create a map with a title, legend and a different color palette.
+2. With reference to [paleolimbot.github.io/ggspatial/](https://paleolimbot.github.io/ggspatial/), add annotations including scale bar, north arrow and a text label to the map.
+3. Bonus: try map making with `tmap` and test out the interactive mode (set with `tmap_mode("interactive")`)."
+4. Bonus: try reproducing maps presented in [Chapter 9](https://r.geocompx.org/adv-map.html) of Geocomputation with R with `ggplot2` and `ggspatial`. Which mapping framework do you prefer and why?
+
 
 # Geometry operations
 
