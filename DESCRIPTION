@@ -16,4 +16,5 @@ Imports:
     sf,
     spData,
     tidyverse,
-    waldo
+    waldo,
+    ggspatial
