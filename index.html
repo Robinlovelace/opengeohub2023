@@ -151,11 +151,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" id="toc-tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" class="nav-link active" data-scroll-target="#tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends">Tidy geographic data with sf, dplyr, ggplot2, geos and friends</a>
-  <ul class="collapse">
-  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract">Abstract</a></li>
-  </ul></li>
-  <li><a href="#processing-large-openstreetmap-datasets-for-geocomputational-research" id="toc-processing-large-openstreetmap-datasets-for-geocomputational-research" class="nav-link" data-scroll-target="#processing-large-openstreetmap-datasets-for-geocomputational-research">Processing large OpenStreetMap datasets for geocomputational research</a></li>
+  <li><a href="#tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" id="toc-tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" class="nav-link active" data-scroll-target="#tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends">Tidy geographic data with sf, dplyr, ggplot2, geos and friends</a></li>
+  <li><a href="#processing-large-openstreetmap-datasets-for-geocomputation" id="toc-processing-large-openstreetmap-datasets-for-geocomputation" class="nav-link" data-scroll-target="#processing-large-openstreetmap-datasets-for-geocomputation">Processing large OpenStreetMap datasets for geocomputation</a></li>
   <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
   </ul>
 </nav>
@@ -180,9 +177,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>This is a Quarto website.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
-<p>The content below was rendered from README.qmd in the <a href="https://github.com/robinlovelace/opengeohub2023">robinlovelace/opengeohub23 GitHub repository</a>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml"><img src="https://github.com/Robinlovelace/opengeohub2023/actions/workflows/publish.yml/badge.svg" class="img-fluid figure-img"></a></p>
@@ -197,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>2023-08-28, 11:00–12:30, Room 21 (Sala 21)<br>
 </li>
 </ul></li>
-<li><a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ">Processing large OpenStreetMap datasets for geocomputational research</a>
+<li><a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ">Processing large OpenStreetMap datasets for geocomputation</a>
 <ul>
 <li>2023-09-01, 09:00–10:30, Room 18 (Sala 18)</li>
 </ul></li>
@@ -205,18 +199,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Abstracts for these sessions are provided below.</p>
 <section id="tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" class="level2">
 <h2 class="anchored" data-anchor-id="tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends">Tidy geographic data with sf, dplyr, ggplot2, geos and friends</h2>
-<section id="abstract" class="level3">
-<h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
+<!-- ### Abstract -->
 <p>This lecture will provide an introduction to working with geographic data using R in a ‘tidy’ way. It will focus on using the <code>sf</code> package to read, write, manipulate, and plot geographic data in combination with the <code>tidyverse</code> metapackage. Why use the <code>sf</code> package with the <code>tidyverse</code>? The lecture will outline some of the ideas underlying the <code>tidyverse</code> and how they can speed-up data analysis pipelines, while making data analysis code easier to read and write. We will see how the following lines</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>can provide a foundation on which the many geographic data analysis problems can be solved. The lecture will also cover on more recently developed packages that integrate with the <code>tidyverse</code> to a greater and lesser extent. We will look at how the <code>geos</code> package, which provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data, integrates with the <code>tidyverse</code>. The <code>tidyverse</code> is not the right tool for every data analysis task and we touch on alternatives for working with raster data, with reference to the <code>terra</code> package, and alternative frameworks such as <code>data.table</code>. Finally, we will also look at how the ‘tidy’ philosophy could be implemented in other programming languages, such as Python.</p>
 <p>The focus throughout will be on practical skills and using packages effectively within the wider context of project management tools, integrated development environments (we recommend VS Code with appropriate extensions or RStudio), and version control systems.</p>
 </section>
-</section>
-<section id="processing-large-openstreetmap-datasets-for-geocomputational-research" class="level2">
-<h2 class="anchored" data-anchor-id="processing-large-openstreetmap-datasets-for-geocomputational-research">Processing large OpenStreetMap datasets for geocomputational research</h2>
-<p>OpenStreetMap (OSM) is a free and openly editable map of the world. Like Wikipedia and unlike government or corperation maintained datasets, OSM is created and maintained by a community of volunteers, making it the premier decentralized and fastest evolving source of geographic vector data focussed on features relevant to human activity (e.g.&nbsp;roads, buildings, cafes) on planet Earth. Unlike Wikipedia, every data point in OSM has a geographic location and attributes must be structured as key-value pairs. OSM is a rich source of data for geocomputational research, but the decentralized nature of the project and the sheer volume of data. ‘Planet.osm’ now has more nodes than there are people on Earth, with more than 8 billion <a href="https://wiki.openstreetmap.org/wiki/Node">nodes</a>, and the rate of data creation is increasing as the community grows, to <a href="https://wiki.openstreetmap.org/wiki/Stats">10 million users</a> in early 2023. The size and rapid evolution of OSM are great strengths, democratising geographic knowledge and ensuring resilience. However, these features can make it difficult to work with OSM data.</p>
+<section id="processing-large-openstreetmap-datasets-for-geocomputation" class="level2">
+<h2 class="anchored" data-anchor-id="processing-large-openstreetmap-datasets-for-geocomputation">Processing large OpenStreetMap datasets for geocomputation</h2>
+<p>OpenStreetMap (OSM) is a free and openly editable map of the world. Like Wikipedia and unlike government or corperation maintained datasets, OSM is created and maintained by a community of volunteers, making it the premier decentralized and fastest evolving source of geographic vector data focussed on features relevant to human activity (e.g.&nbsp;roads, buildings, cafes) on planet Earth. Unlike Wikipedia, every data point in OSM has a geographic location and attributes must be structured as key-value pairs. OSM is a rich source of data for geocomputation, but the decentralized nature of the project and the sheer volume of data. ‘Planet.osm’ now has more nodes than there are people on Earth, with more than 8 billion <a href="https://wiki.openstreetmap.org/wiki/Node">nodes</a>, and the rate of data creation is increasing as the community grows, to <a href="https://wiki.openstreetmap.org/wiki/Stats">10 million users</a> in early 2023. The size and rapid evolution of OSM are great strengths, democratising geographic knowledge and ensuring resilience. However, these features can make it difficult to work with OSM data.</p>
 <p>This lecture will provide an introduction to working with OSM and will cover the following:</p>
 <ul>
 <li>How and where to download OSM data</li>
@@ -232,59 +224,22 @@ TBC -->
 <section id="reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
 <p>To install the dependencies for this repo, run the following command:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"robinlovelace/opengeohub2023"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"robinlovelace/opengeohub2023"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This repo also uses the <code>renv</code> package to manage dependencies. We saved the dependencies with the following command:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">snapshot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Code was generated from the <code>.qmd</code> files using the following commands:</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>
-
-processing file: tidy.qmd</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"tidy.qmd"</span>, <span class="st">"osm.qmd"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>f_r <span class="ot">=</span> <span class="fu">gsub</span>(<span class="st">".qmd"</span>, <span class="st">".R"</span>, f)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(f)) {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">purl</span>(f[i], f_r[i])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>1/31                   
-2/31 [unnamed-chunk-5] 
-3/31                   
-4/31 [unnamed-chunk-6] 
-5/31                   
-6/31 [unnamed-chunk-7] 
-7/31                   
-8/31 [unnamed-chunk-8] 
-9/31                   
-10/31 [unnamed-chunk-9] 
-11/31                   
-12/31 [unnamed-chunk-10]
-13/31                   
-14/31 [unnamed-chunk-11]
-15/31                   
-16/31 [unnamed-chunk-12]
-17/31                   
-18/31 [unnamed-chunk-13]
-19/31                   
-20/31 [unnamed-chunk-14]
-21/31                   
-22/31 [unnamed-chunk-15]
-23/31                   
-24/31 [unnamed-chunk-16]
-25/31                   
-26/31 [unnamed-chunk-17]
-27/31                   
-28/31 [unnamed-chunk-18]
-29/31                   
-30/31 [unnamed-chunk-19]
-31/31                   </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>output file: tidy.R</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "tidy.R"</code></pre>
-</div>
-</div>
+<p>This is a Quarto website.</p>
+<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
+<p>The content below was rendered from README.qmd in the <a href="https://github.com/robinlovelace/opengeohub2023">robinlovelace/opengeohub23 GitHub repository</a> where you can find the source code for this website.</p>
 
 
 </section>
