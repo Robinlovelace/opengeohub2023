@@ -76,9 +76,9 @@ After running the above commands, you should be able to load the packages with t
 sapply(pkgs, require, character.only = TRUE)
 ```
 
-# An introduction to the tidyverse
+# An introduction to tidy geographic data
 
-The `tidyverse` is a collection of packages that provides a unified set of functions for data science. Load the `tidyverse` with the following command:
+The `tidyverse` is a collection of packages that provides a unified set of functions for data science. The name 'tidyverse' is a reference to the 'tidy data' concept, which means simple data that is in the form of one observation per row and one variable per column [@wickham2014]. The meaning has broadened to refer to a way of doing data analysis, that tends to make heavy use of tidyverse packages. Load the `tidyverse` with the following command:
 
 ```{r}
 library(tidyverse)
@@ -144,12 +144,51 @@ countries_df |>
   filter()
 ```
 
+## Reading and writing geographic data
+
+You can read and write a wide range of vector geographic data with `sf`. Save the `countries` object to a file called `countries.geojson` and inspect the result.
+
+```{r}
+sf::write_sf(countries, "countries.geojson")
+```
+
+You can read the file in again with `read_sf()` (which returns a 'tidyverse compliant' `tibble` data frame) or `st_read()`, as shown below.
+
+```{r}
+countries_new1 = sf::read_sf("countries.geojson")
+countries_new2 = sf::st_read("countries.geojson")
+```
+
+For most purposes the two representations are the same, although the 'tibble' version's `print` outpout is slightly different.
+
+```{r}
+countries_new1 |>
+  head(2)
+countries_new2 |>
+  head(2)
+```
+
+A nice function to explore the differences between the two objects is `waldo::compare()`.
+It shows that, other than their classes, the two objects are identical:
+
+```{r}
+waldo::compare(countries_new1, countries_new2)
+```
+
+See the full list of file formats that you can read and write with `sf` with the following commands:
+
+```{r}
+drvs = sf::st_drivers() |>
+  as_tibble()
+head(drvs)
+```
+
 ## Exercises
 
 1.  Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
 
--   Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
--   Open question: Is this a good thing to benchmark? Why or why not?
+    -   Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
+    -   Open question: Is this a good thing to benchmark? Why or why not?
 
 ```{r}
 #| eval: false
@@ -170,16 +209,19 @@ res
 #> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
 ```
 
+2. Inspect the full list of drivers, e.g. with the command `View(drvs)`. 
+    - Which formats are you likely to use and why?
+    - Bonus: take a look at [Chapter 8](https://r.geocompx.org/read-write) of Geocomputation with R for more on reading and writing geographic (including raster) data with R.
+    
 # Attribute operations with dplyr
 
-**dplyr** is a large package with many functions for working with data frames.
-The five key 'verbs' [described](https://dplyr.tidyverse.org/) as:
+**dplyr** is a large package with many functions for working with data frames. The five key 'verbs' [described](https://dplyr.tidyverse.org/) as:
 
-> * `mutate()` adds new variables that are functions of existing variables
-* `select()` picks variables based on their names.
-* `filter()` picks cases based on their values.
-* `summarise()` reduces multiple values down to a single summary.
-* `arrange()` changes the ordering of the rows.
+> -   `mutate()` adds new variables that are functions of existing variables
+> -   `select()` picks variables based on their names.
+> -   `filter()` picks cases based on their values.
+> -   `summarise()` reduces multiple values down to a single summary.
+> -   `arrange()` changes the ordering of the rows.
 
 Let's take a brief look at each.
 
@@ -201,8 +243,7 @@ countries_summarised = countries |>
 countries_summarised
 ```
 
-The operation creates a new variable called `contains_a` that is `TRUE` if the country name contains an "a" and `FALSE` otherwise.
-Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter "a", highlighting `dplyr`'s ability to work with geographic data represented as `sf` objects.
+The operation creates a new variable called `contains_a` that is `TRUE` if the country name contains an "a" and `FALSE` otherwise. Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter "a", highlighting `dplyr`'s ability to work with geographic data represented as `sf` objects.
 
 ```{r}
 countries_summarised |>
@@ -214,9 +255,9 @@ countries_summarised |>
 ## Exercises
 
 1.  Create a new data frame called `countries_modified2` that contains the name, population and area of countries with a population density of more than 100 people per km2, sorted by area in descending order.
-2. Do the same with base R functions and the `[` operator.
-    - What are the pros and cons of each? 
-    - Which do you prefer?
+2.  Do the same with base R functions and the `[` operator.
+    -   What are the pros and cons of each?
+    -   Which do you prefer?
 
 ```{r}
 #| eval: false
