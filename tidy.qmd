@@ -313,6 +313,7 @@ ggplot() +
 2. With reference to [paleolimbot.github.io/ggspatial/](https://paleolimbot.github.io/ggspatial/), add annotations including scale bar, north arrow and a text label to the map.
 3. Bonus: try map making with `tmap` and test out the interactive mode (set with `tmap_mode("interactive")`)."
 4. Bonus: try reproducing maps presented in [Chapter 9](https://r.geocompx.org/adv-map.html) of Geocomputation with R with `ggplot2` and `ggspatial`. Which mapping framework do you prefer and why?
+5. If you use raster data, take a look at the [`tidyterra`](https://dieghernan.github.io/tidyterra/) documentation.
 
 
 # Geometry operations

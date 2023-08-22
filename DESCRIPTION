@@ -15,4 +15,5 @@ Imports:
     geos,
     sf,
     spData,
-    tidyverse
+    tidyverse,
+    waldo
