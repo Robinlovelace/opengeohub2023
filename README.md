@@ -59,7 +59,7 @@ effectively within the wider context of project management tools,
 integrated development environments (we recommend VS Code with
 appropriate extensions or RStudio), and version control systems.
 
-## Processing large OpenStreetMap datasets for geocomputational research
+## Processing large OpenStreetMap datasets for geocomputation
 
 OpenStreetMap (OSM) is a free and openly editable map of the world. Like
 Wikipedia and unlike government or corperation maintained datasets, OSM

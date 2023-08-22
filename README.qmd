@@ -14,14 +14,14 @@ As shown in the course [schedule](https://pretalx.earthmonitor.org/opengeohub-su
 
 - [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/)
   - 2023-08-28, 11:00–12:30, Room 21 (Sala 21)  
-- [Processing large OpenStreetMap datasets for geocomputational research](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ) 
+- [Processing large OpenStreetMap datasets for geocomputation](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ) 
   - 2023-09-01, 09:00–10:30, Room 18 (Sala 18)
 
 Abstracts for these sessions are provided below.
 
 ## Tidy geographic data with sf, dplyr, ggplot2, geos and friends
 
-### Abstract
+<!-- ### Abstract -->
 
 This lecture will provide an introduction to working with geographic data using R in a 'tidy' way.
 It will focus on using the `sf` package to read, write, manipulate, and plot geographic data in combination with the `tidyverse` metapackage.
@@ -41,12 +41,12 @@ Finally, we will also look at how the 'tidy' philosophy could be implemented in 
 
 The focus throughout will be on practical skills and using packages effectively within the wider context of project management tools, integrated development environments (we recommend VS Code with appropriate extensions or RStudio), and version control systems.
 
-## Processing large OpenStreetMap datasets for geocomputational research
+## Processing large OpenStreetMap datasets for geocomputation
 
 OpenStreetMap (OSM) is a free and openly editable map of the world.
 Like Wikipedia and unlike government or corperation maintained datasets, OSM is created and maintained by a community of volunteers, making it the premier decentralized and fastest evolving source of geographic vector data focussed on features relevant to human activity (e.g. roads, buildings, cafes) on planet Earth.
 Unlike Wikipedia, every data point in OSM has a geographic location and attributes must be structured as key-value pairs.
-OSM is a rich source of data for geocomputational research, but the decentralized nature of the project and the sheer volume of data.
+OSM is a rich source of data for geocomputation, but the decentralized nature of the project and the sheer volume of data.
 'Planet.osm' now has more nodes than there are people on Earth, with more than 8 billion [nodes](https://wiki.openstreetmap.org/wiki/Node), and the rate of data creation is increasing as the community grows, to [10 million users](https://wiki.openstreetmap.org/wiki/Stats) in early 2023.
 The size and rapid evolution of OSM are great strengths, democratising geographic knowledge and ensuring resilience.
 However, these features can make it difficult to work with OSM data.
@@ -69,8 +69,7 @@ TBC -->
 
 To install the dependencies for this repo, run the following command:
 
-```{r}
-#| eval: false
+```r
 remotes::install_github("robinlovelace/opengeohub2023")
 ```
 
@@ -78,11 +77,13 @@ This repo also uses the `renv` package to manage dependencies.
 We saved the dependencies with the following command:
 
 ```{r}
+#| label: snapshot
 #| eval: false
 renv::snapshot()
 ```
 
 ```{r}
+#| label: deps
 #| eval: false
 #| echo: false
 deps = renv::dependencies()
@@ -90,9 +91,14 @@ names(deps)
 deps$Package
 ```
 
+Code was generated from the `.qmd` files using the following commands:
 
 ```{r}
-#| echo: false
-knitr::purl("tidy.qmd", output = "tidy.R")
-
+#| label: purl
+#| output: false
+f = c("tidy.qmd", "osm.qmd")
+f_r = gsub(".qmd", ".R", f)
+for(i in seq_along(f)) {
+  knitr::purl(f[i], f_r[i])
+}
 ```
