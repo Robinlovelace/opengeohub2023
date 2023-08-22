@@ -173,16 +173,20 @@ div.csl-indent {
   <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">1</span> Learning objectives</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">2</span> Prerequisites</a></li>
-  <li><a href="#an-introduction-to-the-tidyverse" id="toc-an-introduction-to-the-tidyverse" class="nav-link" data-scroll-target="#an-introduction-to-the-tidyverse"><span class="header-section-number">3</span> An introduction to the tidyverse</a>
+  <li><a href="#an-introduction-to-tidy-geographic-data" id="toc-an-introduction-to-tidy-geographic-data" class="nav-link" data-scroll-target="#an-introduction-to-tidy-geographic-data"><span class="header-section-number">3</span> An introduction to tidy geographic data</a>
   <ul class="collapse">
   <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes"><span class="header-section-number">3.1</span> Pipes</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.2</span> Exercises</a></li>
+  <li><a href="#reading-and-writing-geographic-data" id="toc-reading-and-writing-geographic-data" class="nav-link" data-scroll-target="#reading-and-writing-geographic-data"><span class="header-section-number">3.2</span> Reading and writing geographic data</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.3</span> Exercises</a></li>
   </ul></li>
   <li><a href="#attribute-operations-with-dplyr" id="toc-attribute-operations-with-dplyr" class="nav-link" data-scroll-target="#attribute-operations-with-dplyr"><span class="header-section-number">4</span> Attribute operations with dplyr</a>
   <ul class="collapse">
   <li><a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1"><span class="header-section-number">4.1</span> Exercises</a></li>
   </ul></li>
-  <li><a href="#making-maps-with-ggplot2" id="toc-making-maps-with-ggplot2" class="nav-link" data-scroll-target="#making-maps-with-ggplot2"><span class="header-section-number">5</span> Making maps with ggplot2</a></li>
+  <li><a href="#making-maps-with-ggplot2" id="toc-making-maps-with-ggplot2" class="nav-link" data-scroll-target="#making-maps-with-ggplot2"><span class="header-section-number">5</span> Making maps with ggplot2</a>
+  <ul class="collapse">
+  <li><a href="#exercises-2" id="toc-exercises-2" class="nav-link" data-scroll-target="#exercises-2"><span class="header-section-number">5.1</span> Exercises</a></li>
+  </ul></li>
   <li><a href="#geometry-operations" id="toc-geometry-operations" class="nav-link" data-scroll-target="#geometry-operations"><span class="header-section-number">6</span> Geometry operations</a></li>
   <li><a href="#tidyverse-geos-workflows" id="toc-tidyverse-geos-workflows" class="nav-link" data-scroll-target="#tidyverse-geos-workflows"><span class="header-section-number">7</span> <code>tidyverse</code> + <code>geos</code> workflows</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8</span> Further reading</a></li>
@@ -250,7 +254,7 @@ div.csl-indent {
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sf"</span>,</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tidyverse"</span>,</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"geos"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data.table"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ggspatial"</span>,</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"spData"</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -262,9 +266,9 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(pkgs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="an-introduction-to-the-tidyverse" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> An introduction to the tidyverse</h1>
-<p>The <code>tidyverse</code> is a collection of packages that provides a unified set of functions for data science. Load the <code>tidyverse</code> with the following command:</p>
+<section id="an-introduction-to-tidy-geographic-data" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> An introduction to tidy geographic data</h1>
+<p>The <code>tidyverse</code> is a collection of packages that provides a unified set of functions for data science. The name ‘tidyverse’ is a reference to the ‘tidy data’ concept, which means simple data that is in the form of one observation per row and one variable per column <span class="citation" data-cites="wickham2014">(<a href="#ref-wickham2014" role="doc-biblioref">Wickham 2014</a>)</span>. The meaning has broadened to refer to a way of doing data analysis, that tends to make heavy use of tidyverse packages. Load the <code>tidyverse</code> with the following command:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -377,26 +381,109 @@ all</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>countries_df <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="reading-and-writing-geographic-data" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="reading-and-writing-geographic-data"><span class="header-section-number">3.2</span> Reading and writing geographic data</h2>
+<p>You can read and write a wide range of vector geographic data with <code>sf</code>. Save the <code>countries</code> object to a file called <code>countries.geojson</code> and inspect the result.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sf<span class="sc">::</span><span class="fu">write_sf</span>(countries, <span class="st">"countries.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in CPL_write_ogr(obj, dsn, layer, driver,
+as.character(dataset_options), : GDAL Error 6: DeleteLayer() not supported by
+this dataset.</code></pre>
+</div>
+</div>
+<p>You can read the file in again with <code>read_sf()</code> (which returns a ‘tidyverse compliant’ <code>tibble</code> data frame) or <code>st_read()</code>, as shown below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>countries_new1 <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="st">"countries.geojson"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>countries_new2 <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">st_read</span>(<span class="st">"countries.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
-  name_long           pop area_km2
-  &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;
-1 Poland         38011735  310402.
-2 Lithuania       2932367   63831.
-3 Slovakia        5418649   47068.
-4 Czech Republic 10525347   81208.</code></pre>
+<pre><code>Reading layer `countries' from data source 
+  `/home/runner/work/opengeohub2023/opengeohub2023/countries.geojson' 
+  using driver `GeoJSON'
+Simple feature collection with 80 features and 10 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 12.24011 ymin: 47.75843 xmax: 26.58828 ymax: 56.37253
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+</div>
+<p>For most purposes the two representations are the same, although the ‘tibble’ version’s <code>print</code> outpout is slightly different.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>countries_new1 <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2 features and 10 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 14.07452 ymin: 49.0274 xmax: 26.58828 ymax: 56.37253
+Geodetic CRS:  WGS 84
+# A tibble: 2 × 11
+  iso_a2 name_long continent region_un subregion   type  area_km2    pop lifeExp
+  &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 PL     Poland    Europe    Europe    Eastern Eu… Sove…  310402. 3.80e7    77.6
+2 LT     Lithuania Europe    Europe    Northern E… Sove…   63831. 2.93e6    74.5
+# ℹ 2 more variables: gdpPercap &lt;dbl&gt;, geometry &lt;MULTIPOLYGON [°]&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>countries_new2 <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2 features and 10 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 14.07452 ymin: 49.0274 xmax: 26.58828 ymax: 56.37253
+Geodetic CRS:  WGS 84
+  iso_a2 name_long continent region_un       subregion              type
+1     PL    Poland    Europe    Europe  Eastern Europe Sovereign country
+2     LT Lithuania    Europe    Europe Northern Europe Sovereign country
+   area_km2      pop  lifeExp gdpPercap                       geometry
+1 310402.33 38011735 77.60244  24347.07 MULTIPOLYGON (((23.48413 53...
+2  63831.09  2932367 74.51707  26258.21 MULTIPOLYGON (((26.49433 55...</code></pre>
+</div>
+</div>
+<p>A nice function to explore the differences between the two objects is <code>waldo::compare()</code>. It shows that, other than their classes, the two objects are identical:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>waldo<span class="sc">::</span><span class="fu">compare</span>(countries_new1, countries_new2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>`class(old)`: "sf" "tbl_df" "tbl" "data.frame"
+`class(new)`: "sf"                "data.frame"</code></pre>
+</div>
+</div>
+<p>See the full list of file formats that you can read and write with <code>sf</code> with the following commands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>drvs <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">st_drivers</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(drvs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  name   long_name                       write copy  is_raster is_vector vsi  
+  &lt;chr&gt;  &lt;chr&gt;                           &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;     &lt;lgl&gt;     &lt;lgl&gt;
+1 ESRIC  Esri Compact Cache              FALSE FALSE TRUE      TRUE      TRUE 
+2 FITS   Flexible Image Transport System TRUE  FALSE TRUE      TRUE      FALSE
+3 PCIDSK PCIDSK Database File            TRUE  FALSE TRUE      TRUE      TRUE 
+4 netCDF Network Common Data Format      TRUE  TRUE  TRUE      TRUE      TRUE 
+5 PDS4   NASA Planetary Data System 4    TRUE  TRUE  TRUE      TRUE      TRUE 
+6 VICAR  MIPL VICAR file                 TRUE  TRUE  TRUE      TRUE      TRUE </code></pre>
 </div>
 </div>
 </section>
-<section id="exercises" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.2</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.3</span> Exercises</h2>
 <ol type="1">
-<li>Re-create the <code>country_centroids</code> object, using <code>world_centroids</code> and <code>poland</code> and inputs, but this time using base R syntax with the <code>[</code> operator.</li>
-</ol>
+<li><p>Re-create the <code>country_centroids</code> object, using <code>world_centroids</code> and <code>poland</code> and inputs, but this time using base R syntax with the <code>[</code> operator.</p>
 <ul>
 <li>Bonus: use the <code>bench::mark()</code> function to compare the performance of the base R and tidyverse implementation</li>
 <li>Open question: Is this a good thing to benchmark? Why or why not?</li>
-</ul>
+</ul></li>
+</ol>
+<ol start="2" type="1">
+<li>Inspect the full list of drivers, e.g.&nbsp;with the command <code>View(drvs)</code>.
+<ul>
+<li>Which formats are you likely to use and why?</li>
+<li>Bonus: take a look at <a href="https://r.geocompx.org/read-write">Chapter 8</a> of Geocomputation with R for more on reading and writing geographic (including raster) data with R.</li>
+</ul></li>
+</ol>
 </section>
 </section>
 <section id="attribute-operations-with-dplyr" class="level1" data-number="4">
@@ -413,12 +500,12 @@ all</code></pre>
 </blockquote>
 <p>Let’s take a brief look at each.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>countries_modified <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_density =</span> pop <span class="sc">/</span> area_km2) <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name_long, pop_density) <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pop_density <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pop_density))</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>countries_modified</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>countries_modified <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_density =</span> pop <span class="sc">/</span> area_km2) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name_long, pop_density) <span class="sc">|&gt;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pop_density <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pop_density))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>countries_modified</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 3 features and 2 fields
 Geometry type: MULTIPOLYGON
@@ -435,10 +522,10 @@ Geodetic CRS:  WGS 84
 </div>
 <p>The <code>summarise()</code> function is often used in combination with <code>group_by()</code>, e.g.&nbsp;as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>countries_summarised <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop))</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>countries_summarised</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>countries_summarised <span class="ot">=</span> countries <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>countries_summarised</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 2 features and 3 fields
 Geometry type: POLYGON
@@ -454,12 +541,12 @@ Geodetic CRS:  WGS 84
 </div>
 <p>The operation creates a new variable called <code>contains_a</code> that is <code>TRUE</code> if the country name contains an “a” and <code>FALSE</code> otherwise. Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter “a”, highlighting <code>dplyr</code>’s ability to work with geographic data represented as <code>sf</code> objects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>countries_summarised <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> contains_a)) <span class="sc">+</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> countries, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">linetype =</span> <span class="dv">3</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>countries_summarised <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> contains_a)) <span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> countries, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">linetype =</span> <span class="dv">3</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="tidy_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="tidy_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <section id="exercises-1" class="level2" data-number="4.1">
@@ -476,6 +563,61 @@ Geodetic CRS:  WGS 84
 </section>
 <section id="making-maps-with-ggplot2" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Making maps with ggplot2</h1>
+<p>As shown above, <code>geom_sf()</code> works ‘out of the box’ with geographic data. We can modify plotting commands to control outputs and generate publishable maps.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>countries <span class="sc">|&gt;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"grey80"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> countries_modified, <span class="fu">aes</span>(<span class="at">fill =</span> pop_density)) <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidy_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Map making is an iterative and time consuming process. Iterate on the code above, e.g.&nbsp;by changing the color palette, adding a title, and adding a legend.</p>
+<p>There are many add-ons to <code>ggplot2</code> and one that is highly recommended is <code>ggspatial</code>, which can be used to add a basemap to a plot with <code>annotation_map_tile()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>rosm<span class="sc">::</span><span class="fu">osm.types</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "osm"                    "opencycle"              "hotstyle"              
+ [4] "loviniahike"            "loviniacycle"           "hikebike"              
+ [7] "hillshade"              "osmgrayscale"           "stamenbw"              
+[10] "stamenwatercolor"       "osmtransport"           "thunderforestlandscape"
+[13] "thunderforestoutdoors"  "cartodark"              "cartolight"            </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotation_map_tile</span>() <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_spatial</span>(countries_modified, <span class="fu">aes</span>(<span class="at">fill =</span> pop_density), <span class="at">linewidth =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidy_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |====================================================                  |  75%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+</div>
+<section id="exercises-2" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="exercises-2"><span class="header-section-number">5.1</span> Exercises</h2>
+<ol type="1">
+<li>With reference to the documentation at <a href="https://ggplot2.tidyverse.org/index.html">ggplot2.tidyverse.org/index.html</a>, modify the code above to create a map with a title, legend and a different color palette.</li>
+<li>With reference to <a href="https://paleolimbot.github.io/ggspatial/">paleolimbot.github.io/ggspatial/</a>, add annotations including scale bar, north arrow and a text label to the map.</li>
+<li>Bonus: try map making with <code>tmap</code> and test out the interactive mode (set with <code>tmap_mode("interactive")</code>).”</li>
+<li>Bonus: try reproducing maps presented in <a href="https://r.geocompx.org/adv-map.html">Chapter 9</a> of Geocomputation with R with <code>ggplot2</code> and <code>ggspatial</code>. Which mapping framework do you prefer and why?</li>
+<li>If you use raster data, take a look at the <a href="https://dieghernan.github.io/tidyterra/"><code>tidyterra</code></a> documentation.</li>
+</ol>
+</section>
 </section>
 <section id="geometry-operations" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Geometry operations</h1>
@@ -504,8 +646,11 @@ Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation wi
 <div id="ref-pebesma2023" class="csl-entry" role="listitem">
 Pebesma, Edzer, and Roger Bivand. 2023. <em>Spatial Data Science: With Applications in r</em>. CRC Press. <a href="https://r-spatial.org/book/">https://r-spatial.org/book/</a>.
 </div>
+<div id="ref-wickham2014" class="csl-entry" role="listitem">
+Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <em>The Journal of Statistical Software</em> 14 (5). <a href="https://vita.had.co.nz/papers/tidy-data.pdf">https://vita.had.co.nz/papers/tidy-data.pdf</a>.
+</div>
 <div id="ref-wickham2019" class="csl-entry" role="listitem">
-Wickham, Hadley. 2019. <em>Advanced r, Second Edition</em>. 2nd edition. Boca Raton: Chapman; Hall/CRC.
+———. 2019. <em>Advanced r, Second Edition</em>. 2nd edition. Boca Raton: Chapman; Hall/CRC.
 </div>
 <div id="ref-wickham2023" class="csl-entry" role="listitem">
 Wickham, Hadley, Mine Cetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 2nd edition. O’Reilly Media.
