@@ -17,4 +17,5 @@ Imports:
     spData,
     tidyverse,
     waldo,
-    ggspatial
+    ggspatial,
+    rsgeo
