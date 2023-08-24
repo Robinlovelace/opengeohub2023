@@ -330,7 +330,7 @@ library(geos)
 `geos` works well with the `tidyverse` and `sf` packages, as shown below.
 
 ```{r}
-countries_geos = as_geos_geometry(countries)
+countries_geos = as_geos_geometry(sf::st_geometry(countries))
 countries_geos
 ```
 
