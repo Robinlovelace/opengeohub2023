@@ -406,8 +406,45 @@ bench::mark(check = FALSE,
 
 # + friends
 
-A work in progress is `rsgeo`, which provides an interface between R and the `geo` Rust crate.
-This also opens up the possiblity of calling other high-performance Rust libraries from R.
+There are many packages that integrate with the `tidyverse`, or which are inspired by it.
+Options include:
+
+- [`tidyterra`](https://dieghernan.github.io/tidyterra/) for working with raster data
+- [DuckDB](https://duckdb.org/docs/api/r.html), a high-performance in-memory database that can be used with `dplyr`
+- [dtplyr](https://github.com/tidyverse/dtplyr/), a `dplyr`-compliant interface to [`data.table`](https://rdatatable.gitlab.io/data.table/) for working with large datasets
+- [`tidypolars`](), an R interface to the [`polars`](https://github.com/pola-rs/polars) Rust crate (note: there is also a popular [Python interface](https://pola-rs.github.io/polars-book/user-guide/installation/)
+
+How to assess which to use?
+My advice would be to focus on solving the problem, rather than the tools.
+Developer time is more valuable than computer time, so a major factor in deciding which tool to use should be how reliable it is.
+Time spent debugging issues can be a major time sink, especially for new packages that are not yet well tested or documented.
+And for most purposes, the tools outlined in the previous sections are more than adequate, solving perhaps 90% of the problems you're likely to encounter.
+
+There are times when performance is important but as the saying goes, premature optimisation is the root of all evil, so don't worry about performance until you have a working solution.
+
+If you *do* need to wait longer than is feasible for your code to run, it is worth trying to identify the bottleneck (is there are a solution involving changing input datasets or workflows?) before having a look at alternatives.
+Established benchmarks for *non-spatial data* are https://duckdblabs.github.io/db-benchmark/ and https://www.pola.rs/benchmarks.html .
+
+
+This section is offered more as a place to experiment than any concrete advice.
+My concrete advice is focus on the problem and solving it with the software is most appropriate for your use case.
+
+## `tidypolars`
+
+If you want to give this package a spin, run the following command:
+
+```{r}
+#| eval: false
+install.packages(
+  'tidypolars', 
+  repos = c('https://etiennebacher.r-universe.dev/bin/linux/jammy/4.3', getOption("repos"))
+)
+```
+
+## `rsgeo`
+
+A work in progress is the [`rsgeo` package](https://github.com/JosiahParry/rsgeo), which aims to provide an seamless interface between R and the `geo` Rust crate.
+This could open the possiblity of calling other high-performance Rust libraries from R, although the package is at an early stage of development and probably not ready for production use.
 
 We can check the installation works as follows:
 
@@ -427,8 +464,6 @@ bench::mark(check = FALSE,
 )
 
 ```
-
-
 
 # Further reading
 
