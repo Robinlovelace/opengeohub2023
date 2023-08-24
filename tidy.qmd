@@ -150,7 +150,7 @@ countries_df |>
 You can read and write a wide range of vector geographic data with `sf`. Save the `countries` object to a file called `countries.geojson` and inspect the result.
 
 ```{r}
-sf::write_sf(countries, "countries.geojson")
+sf::write_sf(countries, "countries.geojson", delete_dsn = TRUE)
 ```
 
 You can read the file in again with `read_sf()` (which returns a 'tidyverse compliant' `tibble` data frame) or `st_read()`, as shown below.
