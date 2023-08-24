@@ -404,6 +404,31 @@ bench::mark(check = FALSE,
 )
 ```
 
+# + friends
+
+A work in progress is `rsgeo`, which provides an interface between R and the `geo` Rust crate.
+This also opens up the possiblity of calling other high-performance Rust libraries from R.
+
+We can check the installation works as follows:
+
+```{r}
+#| eval: false
+install.packages('rsgeo', repos = c('https://josiahparry.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+```{r}
+library(rsgeo)
+countries_rs  = as_rsgeom(sf::st_geometry(countries))
+countries_rs
+bench::mark(check = FALSE,
+  sf = sf::st_union(countries),
+  geos = geos::geos_make_collection(geos::geos_unary_union(countries_geos)),
+  rsgeo = rsgeo::union_geoms(countries_rs)
+)
+
+```
+
+
 
 # Further reading
 
