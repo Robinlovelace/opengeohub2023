@@ -412,6 +412,7 @@ Options include:
 - [`tidyterra`](https://dieghernan.github.io/tidyterra/) for working with raster data
 - [DuckDB](https://duckdb.org/docs/api/r.html) is a high-performance in-memory database that can be used with `dplyr` that is mature, well documented, and has a [spatial extension](https://duckdb.org/docs/extensions/spatial)
 - [dtplyr](https://github.com/tidyverse/dtplyr/), a `dplyr`-compliant interface to [`data.table`](https://rdatatable.gitlab.io/data.table/) for working with large datasets
+- The `collapse` package, which supports `tidyverse` syntax and which has some [integration with `sf`](https://sebkrantz.github.io/collapse/articles/collapse_and_sf.html)
 - [`tidypolars`](https://github.com/etiennebacher/tidypolars), an R interface to the [`polars`](https://github.com/pola-rs/polars) Rust crate (note: there is also a popular [Python interface](https://pola-rs.github.io/polars-book/user-guide/installation/)
 - [The geoarrow spec](https://github.com/geoarrow) and nascent implementations, none of which are yet ready for production use
 
