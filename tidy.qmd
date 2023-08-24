@@ -410,12 +410,15 @@ There are many packages that integrate with the `tidyverse`, or which are inspir
 Options include:
 
 - [`tidyterra`](https://dieghernan.github.io/tidyterra/) for working with raster data
-- [DuckDB](https://duckdb.org/docs/api/r.html), a high-performance in-memory database that can be used with `dplyr`
+- [DuckDB](https://duckdb.org/docs/api/r.html) is a high-performance in-memory database that can be used with `dplyr` that is mature, well documented, and has a [spatial extension](https://duckdb.org/docs/extensions/spatial)
 - [dtplyr](https://github.com/tidyverse/dtplyr/), a `dplyr`-compliant interface to [`data.table`](https://rdatatable.gitlab.io/data.table/) for working with large datasets
-- [`tidypolars`](), an R interface to the [`polars`](https://github.com/pola-rs/polars) Rust crate (note: there is also a popular [Python interface](https://pola-rs.github.io/polars-book/user-guide/installation/)
+- [`tidypolars`](https://github.com/etiennebacher/tidypolars), an R interface to the [`polars`](https://github.com/pola-rs/polars) Rust crate (note: there is also a popular [Python interface](https://pola-rs.github.io/polars-book/user-guide/installation/)
+- [The geoarrow spec](https://github.com/geoarrow) and nascent implementations, none of which are yet ready for production use
 
 How to assess which to use?
-My advice would be to focus on solving the problem, rather than the tools.
+My advice would be to focus on solving the problem, rather than the tools, in which case the `tidyverse` + `sf` + `terra` or `stars` should be more than adequate for most purposes.
+There can be major time savings made by sticking to established tools that are well documented and which have a large user base.
+
 Developer time is more valuable than computer time, so a major factor in deciding which tool to use should be how reliable it is.
 Time spent debugging issues can be a major time sink, especially for new packages that are not yet well tested or documented.
 And for most purposes, the tools outlined in the previous sections are more than adequate, solving perhaps 90% of the problems you're likely to encounter.
