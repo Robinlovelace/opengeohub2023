@@ -723,11 +723,13 @@ Geodetic CRS:  WGS 84
 <p>There are many packages that integrate with the <code>tidyverse</code>, or which are inspired by it. Options include:</p>
 <ul>
 <li><a href="https://dieghernan.github.io/tidyterra/"><code>tidyterra</code></a> for working with raster data</li>
-<li><a href="https://duckdb.org/docs/api/r.html">DuckDB</a>, a high-performance in-memory database that can be used with <code>dplyr</code></li>
+<li><a href="https://duckdb.org/docs/api/r.html">DuckDB</a> is a high-performance in-memory database that can be used with <code>dplyr</code> that is mature, well documented, and has a <a href="https://duckdb.org/docs/extensions/spatial">spatial extension</a></li>
 <li><a href="https://github.com/tidyverse/dtplyr/">dtplyr</a>, a <code>dplyr</code>-compliant interface to <a href="https://rdatatable.gitlab.io/data.table/"><code>data.table</code></a> for working with large datasets</li>
-<li><a href=""><code>tidypolars</code></a>, an R interface to the <a href="https://github.com/pola-rs/polars"><code>polars</code></a> Rust crate (note: there is also a popular <a href="https://pola-rs.github.io/polars-book/user-guide/installation/">Python interface</a></li>
+<li><a href="https://github.com/etiennebacher/tidypolars"><code>tidypolars</code></a>, an R interface to the <a href="https://github.com/pola-rs/polars"><code>polars</code></a> Rust crate (note: there is also a popular <a href="https://pola-rs.github.io/polars-book/user-guide/installation/">Python interface</a></li>
+<li><a href="https://github.com/geoarrow">The geoarrow spec</a> and nascent implementations, none of which are yet ready for production use</li>
 </ul>
-<p>How to assess which to use? My advice would be to focus on solving the problem, rather than the tools. Developer time is more valuable than computer time, so a major factor in deciding which tool to use should be how reliable it is. Time spent debugging issues can be a major time sink, especially for new packages that are not yet well tested or documented. And for most purposes, the tools outlined in the previous sections are more than adequate, solving perhaps 90% of the problems you’re likely to encounter.</p>
+<p>How to assess which to use? My advice would be to focus on solving the problem, rather than the tools, in which case the <code>tidyverse</code> + <code>sf</code> + <code>terra</code> or <code>stars</code> should be more than adequate for most purposes. There can be major time savings made by sticking to established tools that are well documented and which have a large user base.</p>
+<p>Developer time is more valuable than computer time, so a major factor in deciding which tool to use should be how reliable it is. Time spent debugging issues can be a major time sink, especially for new packages that are not yet well tested or documented. And for most purposes, the tools outlined in the previous sections are more than adequate, solving perhaps 90% of the problems you’re likely to encounter.</p>
 <p>There are times when performance is important but as the saying goes, premature optimisation is the root of all evil, so don’t worry about performance until you have a working solution.</p>
 <p>If you <em>do</em> need to wait longer than is feasible for your code to run, it is worth trying to identify the bottleneck (is there are a solution involving changing input datasets or workflows?) before having a look at alternatives. Established benchmarks for <em>non-spatial data</em> are https://duckdblabs.github.io/db-benchmark/ and https://www.pola.rs/benchmarks.html .</p>
 <p>This section is offered more as a place to experiment than any concrete advice. My concrete advice is focus on the problem and solving it with the software is most appropriate for your use case.</p>
@@ -812,9 +814,9 @@ Attaching package: 'rsgeo'</code></pre>
 <pre><code># A tibble: 3 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 sf           7.17ms   7.54ms      132.     121KB     2.07
-2 geos         66.6µs   94.8µs    10482.        0B     6.82
-3 rsgeo       357.8µs 464.81µs     2175.        0B     0   </code></pre>
+1 sf           6.31ms   6.37ms      157.     121KB     2.04
+2 geos           75µs   79.5µs    12222.        0B     6.45
+3 rsgeo       390.7µs  409.5µs     2439.        0B     0   </code></pre>
 </div>
 </div>
 </section>
