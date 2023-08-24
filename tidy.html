@@ -725,6 +725,7 @@ Geodetic CRS:  WGS 84
 <li><a href="https://dieghernan.github.io/tidyterra/"><code>tidyterra</code></a> for working with raster data</li>
 <li><a href="https://duckdb.org/docs/api/r.html">DuckDB</a> is a high-performance in-memory database that can be used with <code>dplyr</code> that is mature, well documented, and has a <a href="https://duckdb.org/docs/extensions/spatial">spatial extension</a></li>
 <li><a href="https://github.com/tidyverse/dtplyr/">dtplyr</a>, a <code>dplyr</code>-compliant interface to <a href="https://rdatatable.gitlab.io/data.table/"><code>data.table</code></a> for working with large datasets</li>
+<li>The <code>collapse</code> package, which supports <code>tidyverse</code> syntax and which has some <a href="https://sebkrantz.github.io/collapse/articles/collapse_and_sf.html">integration with <code>sf</code></a></li>
 <li><a href="https://github.com/etiennebacher/tidypolars"><code>tidypolars</code></a>, an R interface to the <a href="https://github.com/pola-rs/polars"><code>polars</code></a> Rust crate (note: there is also a popular <a href="https://pola-rs.github.io/polars-book/user-guide/installation/">Python interface</a></li>
 <li><a href="https://github.com/geoarrow">The geoarrow spec</a> and nascent implementations, none of which are yet ready for production use</li>
 </ul>
@@ -814,9 +815,9 @@ Attaching package: 'rsgeo'</code></pre>
 <pre><code># A tibble: 3 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 sf           6.31ms   6.37ms      157.     121KB     2.04
-2 geos           75µs   79.5µs    12222.        0B     6.45
-3 rsgeo       390.7µs  409.5µs     2439.        0B     0   </code></pre>
+1 sf           6.59ms   6.71ms      148.     121KB     2.05
+2 geos         79.8µs   87.8µs    11160.        0B     6.91
+3 rsgeo      430.01µs  437.5µs     2280.        0B     0   </code></pre>
 </div>
 </div>
 </section>
