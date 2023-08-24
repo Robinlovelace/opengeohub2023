@@ -192,7 +192,8 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#exercises-3" id="toc-exercises-3" class="nav-link" data-scroll-target="#exercises-3"><span class="header-section-number">7.1</span> Exercises</a></li>
   </ul></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8</span> Further reading</a></li>
+  <li><a href="#friends" id="toc-friends" class="nav-link" data-scroll-target="#friends"><span class="header-section-number">8</span> + friends</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">9</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -713,8 +714,85 @@ Geodetic CRS:  WGS 84
 </ol>
 </section>
 </section>
-<section id="further-reading" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Further reading</h1>
+<section id="friends" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> + friends</h1>
+<p>A work in progress is <code>rsgeo</code>, which provides an interface between R and the <code>geo</code> Rust crate. This also opens up the possiblity of calling other high-performance Rust libraries from R.</p>
+<p>We can check the installation works as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'rsgeo'</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://josiahparry.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsgeo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Can't find generic `is_geometry` in package sf to register S3 method.
+ℹ This message is only shown to developers using devtools.
+ℹ Do you need to update sf to the latest version?
+Can't find generic `is_geometry` in package sf to register S3 method.
+ℹ This message is only shown to developers using devtools.
+ℹ Do you need to update sf to the latest version?
+Can't find generic `is_geometry` in package sf to register S3 method.
+ℹ This message is only shown to developers using devtools.
+ℹ Do you need to update sf to the latest version?
+Can't find generic `is_geometry` in package sf to register S3 method.
+ℹ This message is only shown to developers using devtools.
+ℹ Do you need to update sf to the latest version?
+Can't find generic `is_geometry` in package sf to register S3 method.
+ℹ This message is only shown to developers using devtools.
+ℹ Do you need to update sf to the latest version?
+Can't find generic `is_geometry` in package sf to register S3 method.
+ℹ This message is only shown to developers using devtools.
+ℹ Do you need to update sf to the latest version?</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rsgeo'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    contains</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tidyr':
+
+    contains</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:ggplot2':
+
+    geom_point, geom_polygon</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    within</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>countries_rs  <span class="ot">=</span> <span class="fu">as_rsgeom</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>countries_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;rs_MULTIPOLYGON[4]&gt;
+[1] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 23.4841276384498...
+[2] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 26.4943314958837...
+[3] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 22.5581376482117...
+[4] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 15.0169958838586...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(<span class="at">check =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sf =</span> sf<span class="sc">::</span><span class="fu">st_union</span>(countries),</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">geos =</span> geos<span class="sc">::</span><span class="fu">geos_make_collection</span>(geos<span class="sc">::</span><span class="fu">geos_unary_union</span>(countries_geos)),</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsgeo =</span> rsgeo<span class="sc">::</span><span class="fu">union_geoms</span>(countries_rs)</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  expression      min   median `itr/sec` mem_alloc `gc/sec`
+  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+1 sf            9.1ms     11ms      89.6     121KB     2.08
+2 geos        137.6µs    156µs    5423.         0B     2.09
+3 rsgeo       508.7µs    568µs    1677.         0B     0   </code></pre>
+</div>
+</div>
+</section>
+<section id="further-reading" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Further reading</h1>
 <p>The following free and open access resources provide a strong foundation for further learning in this space.</p>
 <ul>
 <li><p><span class="citation" data-cites="wickham2023">Wickham, Cetinkaya-Rundel, and Grolemund (<a href="#ref-wickham2023" role="doc-biblioref">2023</a>)</span>, hosted at <a href="https://r4ds.hadley.nz/" class="uri">https://r4ds.hadley.nz/</a>, is a detailed introduction to the tidyverse</p></li>
