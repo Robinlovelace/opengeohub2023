@@ -18,4 +18,6 @@ Imports:
     tidyverse,
     waldo,
     ggspatial,
-    rsgeo
+    rsgeo,
+    bench,
+    collapse
