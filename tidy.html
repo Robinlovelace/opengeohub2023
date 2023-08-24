@@ -628,7 +628,7 @@ Geodetic CRS:  WGS 84
 </div>
 <p><code>geos</code> works well with the <code>tidyverse</code> and <code>sf</code> packages, as shown below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>countries_geos <span class="ot">=</span> <span class="fu">as_geos_geometry</span>(countries)</span>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>countries_geos <span class="ot">=</span> <span class="fu">as_geos_geometry</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>countries_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;geos_geometry[4] with CRS=WGS 84&gt;
