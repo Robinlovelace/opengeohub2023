@@ -78,7 +78,7 @@ After running the above commands, you should be able to load the packages with t
 sapply(pkgs, require, character.only = TRUE)
 ```
 
-## An introduction to tidy geographic data
+# An introduction to geographic data in the tidyverse
 
 The `tidyverse` is a collection of packages that provides a unified set of functions for data science. The name 'tidyverse' is a reference to the 'tidy data' concept, which means simple data that is in the form of one observation per row and one variable per column [@wickham2014]. The meaning has broadened to refer to a way of doing data analysis, that tends to make heavy use of tidyverse packages. Load the `tidyverse` with the following command:
 
@@ -137,9 +137,10 @@ countries |>
     geom_sf()
 ```
 
-## Pipes
+A characteristic feature of the tidyverse is the use of the pipe operator.
+You can use R's new native pipe operator (`|>`), first available in R 4.1.0, or the magrittr pipe operator (`%>%`).
 
-A characteristic feature of the tidyverse is the use of the pipe operator. You can use R's new native pipe operator (`|>`), first available in R 4.1.0, or the magrittr pipe operator (`%>%`). The pipe operator is used to chain together functions, making it easier to read and write code. It can be particularly useful when used in combination with RStudio's intellisense feature, which provides suggestions for column names as you type. Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action. It will allow you to select the variable you're interested in without quote marks, using a feature called non-standard evaluation (NSE) [@wickham2019].
+The pipes chain together functions, making it easier to read and write code. It can be particularly useful when used in combination with RStudio's intellisense feature, which provides suggestions for column names as you type. Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action. It will allow you to select the variable you're interested in without quote marks, using a feature called non-standard evaluation (NSE) [@wickham2019].
 
 ```{r}
 #| eval: false
@@ -186,37 +187,7 @@ drvs = sf::st_drivers() |>
 head(drvs)
 ```
 
-## Exercises
-
-1.  Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
-
-    -   Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
-    -   Open question: Is this a good thing to benchmark? Why or why not?
-
-```{r}
-#| eval: false
-#| echo: false
-country_centroids2 = world_centroids[poland, , op = st_is_within_distance, dist = 2e5]
-waldo::compare(country_centroids, country_centroids2)
-#> ✔ No differences
-res = bench::mark(
-    base = world_centroids[poland, , op = st_is_within_distance, dist = 2e5],
-    st_filter = world_centroids |>
-  st_filter(poland, .predicate = st_is_within_distance, dist = 2e5)
-)
-res
-#> # A tibble: 2 × 13
-#>   expression      min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time
-#>   <bch:expr> <bch:tm> <bch:>     <dbl> <bch:byt>    <dbl> <int> <dbl>   <bch:tm>
-#> 1 base         10.7ms 12.4ms      81.2     208KB     6.58    37     3      456ms
-#> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
-```
-
-2. Inspect the full list of drivers, e.g. with the command `View(drvs)`. 
-    - Which formats are you likely to use and why?
-    - Bonus: take a look at [Chapter 8](https://r.geocompx.org/read-write) of Geocomputation with R for more on reading and writing geographic (including raster) data with R.
-    
-# Attribute operations with dplyr
+## Attribute operations with dplyr
 
 **dplyr** is a large package with many functions for working with data frames. The five key 'verbs' [described](https://dplyr.tidyverse.org/) as:
 
@@ -257,8 +228,38 @@ countries_summarised |>
 
 ## Exercises
 
-1.  Create a new data frame called `countries_modified2` that contains the name, population and area of countries with a population density of more than 100 people per km2, sorted by area in descending order.
-2.  Do the same with base R functions and the `[` operator.
+    
+
+1.  Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
+
+    -   Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
+    -   Open question: Is this a good thing to benchmark? Why or why not?
+
+```{r}
+#| eval: false
+#| echo: false
+country_centroids2 = world_centroids[poland, , op = st_is_within_distance, dist = 2e5]
+waldo::compare(country_centroids, country_centroids2)
+#> ✔ No differences
+res = bench::mark(
+    base = world_centroids[poland, , op = st_is_within_distance, dist = 2e5],
+    st_filter = world_centroids |>
+  st_filter(poland, .predicate = st_is_within_distance, dist = 2e5)
+)
+res
+#> # A tibble: 2 × 13
+#>   expression      min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time
+#>   <bch:expr> <bch:tm> <bch:>     <dbl> <bch:byt>    <dbl> <int> <dbl>   <bch:tm>
+#> 1 base         10.7ms 12.4ms      81.2     208KB     6.58    37     3      456ms
+#> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
+```
+
+2. Inspect the full list of drivers, e.g. with the command `View(drvs)`. 
+    - Which formats are you likely to use and why?
+    - Bonus: take a look at [Chapter 8](https://r.geocompx.org/read-write) of Geocomputation with R for more on reading and writing geographic (including raster) data with R.
+
+3.  Create a new data frame called `countries_modified2` that contains the name, population and area of countries with a population density of more than 100 people per km2, sorted by area in descending order.
+4.  Do the same with base R functions and the `[` operator.
     -   What are the pros and cons of each?
     -   Which do you prefer?
 
@@ -279,7 +280,7 @@ countries_base = countries_base[order(countries_base$area_km2, decreasing = TRUE
 waldo::compare(countries_modified2$name_long, countries_base$name_long)
 ```
 
-# Making maps with ggplot2
+## Making maps with ggplot2
 
 As shown above, `geom_sf()` works 'out of the box' with geographic data.
 We can modify plotting commands to control outputs and generate publishable maps.
