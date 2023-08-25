@@ -27,7 +27,9 @@ can provide a foundation on which the many geographic data analysis problems can
 
 The focus throughout will be on practical skills and using packages effectively within the wider context of project management tools, integrated development environments (we recommend VS Code with appropriate extensions or RStudio), and version control systems.
 
-# Learning objectives
+# Introduction
+
+## Learning objectives
 
 By the end of the session, participants will be able to:
 
@@ -36,7 +38,7 @@ By the end of the session, participants will be able to:
 -   Use the `geos` package to perform geometric operations on geographic data
 -   Understand the strengths and weaknesses of the `tidyverse` for geographic data analysis
 
-# Prerequisites
+## Prerequisites
 
 We recommend you run the code in the practical session with a modern integrated development environment (IDE) such as
 
@@ -76,7 +78,7 @@ After running the above commands, you should be able to load the packages with t
 sapply(pkgs, require, character.only = TRUE)
 ```
 
-# An introduction to tidy geographic data
+## An introduction to tidy geographic data
 
 The `tidyverse` is a collection of packages that provides a unified set of functions for data science. The name 'tidyverse' is a reference to the 'tidy data' concept, which means simple data that is in the form of one observation per row and one variable per column [@wickham2014]. The meaning has broadened to refer to a way of doing data analysis, that tends to make heavy use of tidyverse packages. Load the `tidyverse` with the following command:
 
@@ -316,7 +318,10 @@ ggplot() +
 5. If you use raster data, take a look at the [`tidyterra`](https://dieghernan.github.io/tidyterra/) documentation.
 
 
-# Geometry operations
+# Worked example: mapping transport stops and more in Poznan
+
+For many people 'learning by doing' is the most effective way to pick up new technical skills.
+So let's read in a larger dataset.
 
 # `tidyverse` + `geos` workflows
 
