@@ -112,6 +112,15 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-binding-2.1.2/leaflet.js"></script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -188,7 +197,11 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#exercises-2" id="toc-exercises-2" class="nav-link" data-scroll-target="#exercises-2"><span class="header-section-number">3.1</span> Exercises</a></li>
   </ul></li>
-  <li><a href="#worked-example-mapping-transport-stops-and-more-in-poznan" id="toc-worked-example-mapping-transport-stops-and-more-in-poznan" class="nav-link" data-scroll-target="#worked-example-mapping-transport-stops-and-more-in-poznan"><span class="header-section-number">4</span> Worked example: mapping transport stops and more in Poznan</a></li>
+  <li><a href="#worked-example-data-from-poznan" id="toc-worked-example-data-from-poznan" class="nav-link" data-scroll-target="#worked-example-data-from-poznan"><span class="header-section-number">4</span> Worked example: data from Poznan</a>
+  <ul class="collapse">
+  <li><a href="#getting-and-reading-in-the-data" id="toc-getting-and-reading-in-the-data" class="nav-link" data-scroll-target="#getting-and-reading-in-the-data"><span class="header-section-number">4.1</span> Getting and reading-in the data</a></li>
+  <li><a href="#vector-data" id="toc-vector-data" class="nav-link" data-scroll-target="#vector-data"><span class="header-section-number">4.2</span> Vector data</a></li>
+  </ul></li>
   <li><a href="#tidyverse-geos-workflows" id="toc-tidyverse-geos-workflows" class="nav-link" data-scroll-target="#tidyverse-geos-workflows"><span class="header-section-number">5</span> <code>tidyverse</code> + <code>geos</code> workflows</a>
   <ul class="collapse">
   <li><a href="#exercises-3" id="toc-exercises-3" class="nav-link" data-scroll-target="#exercises-3"><span class="header-section-number">5.1</span> Exercises</a></li>
@@ -203,7 +216,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -626,20 +639,78 @@ Geodetic CRS:  WGS 84
 </ol>
 </section>
 </section>
-<section id="worked-example-mapping-transport-stops-and-more-in-poznan" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Worked example: mapping transport stops and more in Poznan</h1>
-<p>For many people ‘learning by doing’ is the most effective way to pick up new technical skills. So let’s read in a larger dataset.</p>
+<section id="worked-example-data-from-poznan" class="level1 page-columns page-full" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Worked example: data from Poznan</h1>
+<p>For many people ‘learning by doing’ is the most effective way to pick up new technical skills. So let’s work with some larger datasets. Note: the input data and code below are adapted from Michael Dorman’s tutorial on <a href="https://geobgu.xyz/presentations/p_2023_ogh">Working with Spatial Data in Python</a>.</p>
+<section id="getting-and-reading-in-the-data" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="getting-and-reading-in-the-data"><span class="header-section-number">4.1</span> Getting and reading-in the data</h2>
+<p>To get the data for this session, download and unzip the <a href="https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip">data.zip</a> file in the releases. You can do that in R with the following commands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>u <span class="ot">=</span> <span class="st">"https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">basename</span>(u)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"data"</span>)) {</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(u, f)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unzip</span>(f)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Check you have downloaded the files with the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">"data"</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA NA NA</code></pre>
+</div>
+</div>
+</section>
+<section id="vector-data" class="level2 page-columns page-full" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="vector-data"><span class="header-section-number">4.2</span> Vector data</h2>
+<p>We’ll start with a dataset that we’ll create ourselves.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>opengeo_df <span class="ot">=</span> <span class="fu">tribble</span>(</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>name, <span class="sc">~</span>lon, <span class="sc">~</span>lat,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Faculty"</span>,        <span class="fl">16.9418</span>, <span class="fl">52.4643</span>,</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Hotel ForZa"</span>,    <span class="fl">16.9474</span>, <span class="fl">52.4436</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Hotel Lechicka"</span>, <span class="fl">16.9308</span>, <span class="fl">52.4437</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"FairPlayce"</span>,     <span class="fl">16.9497</span>, <span class="fl">52.4604</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>opengeo_sf <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(opengeo_df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>))</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>sf<span class="sc">::</span><span class="fu">st_crs</span>(opengeo_sf) <span class="ot">=</span> <span class="st">"EPSG:4326"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- 
+```python
+#| echo: false
+#| eval: false
+# Python equivalent:
+pnt1 = shapely.Point([16.9418, 52.4643]) #   'Faculty', 
+pnt2 = shapely.Point([16.9474, 52.4436]) #    'Hotel ForZa', 
+pnt3 = shapely.Point([16.9308, 52.4437]) #    'HL Hotel Lechicka'
+pnt4 = shapely.Point([16.9497, 52.4604]) #    'FairPlayce Hotel'
+``` -->
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span>  <span class="co"># Add default OpenStreetMap map tiles</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lng =</span> opengeo_df<span class="sc">$</span>lon,</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat =</span> opengeo_df<span class="sc">$</span>lat,</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> opengeo_df<span class="sc">$</span>name</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display column-screen-inset-shaded">
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e85587453ce8f3e3e881" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e85587453ce8f3e3e881">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[52.4643,52.4436,52.4437,52.4604],[16.9418,16.9474,16.9308,16.9497],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Faculty","Hotel ForZa","Hotel Lechicka","FairPlayce"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[52.4436,52.4643],"lng":[16.9308,16.9497]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
 </section>
 <section id="tidyverse-geos-workflows" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> <code>tidyverse</code> + <code>geos</code> workflows</h1>
 <p>The <a href="https://paleolimbot.github.io/geos/"><code>geos</code> package</a> provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data. Load it as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>geos</code> works well with the <code>tidyverse</code> and <code>sf</code> packages, as shown below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>countries_geos <span class="ot">=</span> <span class="fu">as_geos_geometry</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>countries_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>countries_geos <span class="ot">=</span> <span class="fu">as_geos_geometry</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>countries_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;geos_geometry[4] with CRS=WGS 84&gt;
 [1] &lt;MULTIPOLYGON [14.075 49.027...24.030 54.852]&gt;
@@ -650,11 +721,11 @@ Geodetic CRS:  WGS 84
 </div>
 <p>The package only deals with geometries: the attribute data is removed when you convert an <code>sf</code> object to a <code>geos</code> object. You can store <code>geos</code> objects in a data frame and still use <code>dplyr</code> functions to process them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>countries_geos_df <span class="ot">=</span> <span class="fu">bind_cols</span>(countries_df, <span class="at">geos =</span> countries_geos)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>countries_summarised_df <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop))</span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>countries_geos_df <span class="ot">=</span> <span class="fu">bind_cols</span>(countries_df, <span class="at">geos =</span> countries_geos)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>countries_summarised_df <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop))</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   contains_a     n  mean_pop
@@ -665,31 +736,31 @@ Geodetic CRS:  WGS 84
 </div>
 <p>Note: the <code>geos</code> column has gone! This is because <code>geos</code> columns are not ‘sticky’ like <code>sf</code> columns. Let’s see how to get them back.</p>
 <div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>countries_union1 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union1)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>countries_union2 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_make_collection</span>() <span class="sc">|&gt;</span></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>countries_union1 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union1)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>countries_union2 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_make_collection</span>() <span class="sc">|&gt;</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="tidy_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<p><img src="tidy_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="tidy_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid" width="672"></p>
+<p><img src="tidy_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 </div>
 <p>However, you can add the union of the grouped columns as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> <span class="fu">geos_unary_union</span>(<span class="fu">geos_make_collection</span>(geos)))</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> <span class="fu">geos_unary_union</span>(<span class="fu">geos_make_collection</span>(geos)))</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   contains_a     n  mean_pop geometry                                 
@@ -697,18 +768,18 @@ Geodetic CRS:  WGS 84
 1 FALSE          1 10525347  &lt;POLYGON [12.240 48.555...18.853 51.117]&gt;
 2 TRUE           3 15454250. &lt;POLYGON [14.075 47.758...26.588 56.373]&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_summarised_geos<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_summarised_geos<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="tidy_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<p><img src="tidy_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Convert back to an <code>sf</code> object as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(countries_summarised_geos)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># waldo::compare(</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised,</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised_geos_sf</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(countries_summarised_geos)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># waldo::compare(</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised,</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised_geos_sf</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Aside from geometry names and minor differences in the geometries, the two objects are identical. This raises the question: why use <code>geos</code> at all? The answer can be found by following the exercises below.</p>
 <section id="exercises-3" class="level2" data-number="5.1">
@@ -743,10 +814,10 @@ Geodetic CRS:  WGS 84
 <h2 data-number="6.1" class="anchored" data-anchor-id="tidypolars"><span class="header-section-number">6.1</span> <code>tidypolars</code></h2>
 <p>If you want to give this package a spin, run the following command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'tidypolars'</span>, </span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://etiennebacher.r-universe.dev/bin/linux/jammy/4.3'</span>, <span class="fu">getOption</span>(<span class="st">"repos"</span>))</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'tidypolars'</span>, </span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://etiennebacher.r-universe.dev/bin/linux/jammy/4.3'</span>, <span class="fu">getOption</span>(<span class="st">"repos"</span>))</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="rsgeo" class="level2" data-number="6.2">
@@ -754,10 +825,10 @@ Geodetic CRS:  WGS 84
 <p>A work in progress is the <a href="https://github.com/JosiahParry/rsgeo"><code>rsgeo</code> package</a>, which aims to provide an seamless interface between R and the <code>geo</code> Rust crate. This could open the possiblity of calling other high-performance Rust libraries from R, although the package is at an early stage of development and probably not ready for production use.</p>
 <p>We can check the installation works as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'rsgeo'</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://josiahparry.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'rsgeo'</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://josiahparry.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsgeo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsgeo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Can't find generic `is_geometry` in package sf to register S3 method.
 ℹ This message is only shown to developers using devtools.
@@ -802,8 +873,8 @@ Attaching package: 'rsgeo'</code></pre>
 
     within</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>countries_rs  <span class="ot">=</span> <span class="fu">as_rsgeom</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>countries_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>countries_rs  <span class="ot">=</span> <span class="fu">as_rsgeom</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>countries_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;rs_MULTIPOLYGON[4]&gt;
 [1] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 23.4841276384498...
@@ -811,18 +882,18 @@ Attaching package: 'rsgeo'</code></pre>
 [3] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 22.5581376482117...
 [4] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 15.0169958838586...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(<span class="at">check =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sf =</span> sf<span class="sc">::</span><span class="fu">st_union</span>(countries),</span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">geos =</span> geos<span class="sc">::</span><span class="fu">geos_make_collection</span>(geos<span class="sc">::</span><span class="fu">geos_unary_union</span>(countries_geos)),</span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsgeo =</span> rsgeo<span class="sc">::</span><span class="fu">union_geoms</span>(countries_rs)</span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(<span class="at">check =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sf =</span> sf<span class="sc">::</span><span class="fu">st_union</span>(countries),</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">geos =</span> geos<span class="sc">::</span><span class="fu">geos_make_collection</span>(geos<span class="sc">::</span><span class="fu">geos_unary_union</span>(countries_geos)),</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsgeo =</span> rsgeo<span class="sc">::</span><span class="fu">union_geoms</span>(countries_rs)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 sf           7.51ms   7.81ms      128.     121KB     2.06
-2 geos        78.91µs  98.41µs    10004.        0B     4.35
-3 rsgeo      475.53µs 518.63µs     1928.        0B     0   </code></pre>
+1 sf           7.66ms   7.87ms      127.     121KB     2.05
+2 geos         87.7µs 101.41µs     9661.        0B     6.82
+3 rsgeo      485.13µs 526.23µs     1897.        0B     0   </code></pre>
 </div>
 </div>
 </section>
