@@ -102,3 +102,4 @@ for(i in seq_along(f)) {
   knitr::purl(f[i], f_r[i])
 }
 ```
+

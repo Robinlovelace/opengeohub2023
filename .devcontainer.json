@@ -1,0 +1,26 @@
+{
+    "name": "Quarto Dev Container",
+    "image": "opengeohub2023:latest", // Update with your Docker image name
+    "extensions": ["ms-vscode.vscode-typescript-tslint-plugin"],
+    "postCreateCommand": "chmod -R a+rwx /workspace",
+    "remoteUser": "vscode",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash",
+      "terminal.integrated.shellArgs.linux": ["-c", "zsh"],
+      "editor.tabSize": 2
+    },
+    "runArgs": [
+      "-v", "/var/run/docker.sock:/var/run/docker.sock"
+    ],
+    "containerUser": "root",
+    "postStartCommand": "sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev",
+    "forwardPorts": [3000, 8888],
+    "overrideCommand": false,
+    "remoteEnv": {
+      "GITHUB_TOKEN": "${secrets.GITHUB_TOKEN}"
+    },
+    "extensions": ["quarto.quarto", "REditorSupport.r"],
+    "dockerFile": "Dockerfile" // Specify the path to your Dockerfile
+  }
+  

@@ -176,6 +176,8 @@ pkgs = c(
 sapply(pkgs, require, character.only = TRUE)
 ```
 
+## 
+
 # Part 2: and friends
 
 ## tidyverse alternatives
