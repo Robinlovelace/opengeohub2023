@@ -20,4 +20,7 @@ Imports:
     ggspatial,
     rsgeo,
     bench,
-    collapse
+    collapse,
+    tmap
+
+Remotes: r-tmap/tmap@v4
