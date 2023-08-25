@@ -201,16 +201,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
 <p>You can reproduce all of the results and run all the code in this repo. The quickest way to get started if you don’t already have the dependencies is with codespaces.</p>
-<p><a href="https://codespaces.new/Robinlovelace/opengeohub2023" <img="" src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" style="max-width: 100%;"></a></p>
+<p><a href="https://codespaces.new/Robinlovelace/opengeohub2023"><img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" style="max-width: 100%;"></a></p>
 <p>If it works you should see something like this:</p>
 <p><img src="images/paste-11.png" class="img-fluid"></p>
+<p>To run the code locally download the code, e.g.&nbsp;with the following command after installing GitHub’s CLI tool:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> repo clone Robinlovelace/opengeohub2023</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then open the project in RStudio, VS Code, and start looking at and running the code. You should be able to reproduce the rendered website interactively with the following command:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can also run the code in this repo in the Docker image hosted at https://github.com/Robinlovelace/opengeohub2023/pkgs/container/opengeohub2023 as follows, with the -v flag to mount the current directory in the container:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-it</span> <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/workspace opengeohub2023:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you have VS Code installed you should be able to ‘Reopen in Container’ (not fully tested locally).</p>
 </section>
 <section id="tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends" class="level2">
 <h2 class="anchored" data-anchor-id="tidy-geographic-data-with-sf-dplyr-ggplot2-geos-and-friends">Tidy geographic data with sf, dplyr, ggplot2, geos and friends</h2>
 <!-- ### Abstract -->
 <p>This lecture will provide an introduction to working with geographic data using R in a ‘tidy’ way. It will focus on using the <code>sf</code> package to read, write, manipulate, and plot geographic data in combination with the <code>tidyverse</code> metapackage. Why use the <code>sf</code> package with the <code>tidyverse</code>? The lecture will outline some of the ideas underlying the <code>tidyverse</code> and how they can speed-up data analysis pipelines, while making data analysis code easier to read and write. We will see how the following lines</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>can provide a foundation on which the many geographic data analysis problems can be solved. The lecture will also cover on more recently developed packages that integrate with the <code>tidyverse</code> to a greater and lesser extent. We will look at how the <code>geos</code> package, which provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data, integrates with the <code>tidyverse</code>. The <code>tidyverse</code> is not the right tool for every data analysis task and we touch on alternatives for working with raster data, with reference to the <code>terra</code> package, and alternative frameworks such as <code>data.table</code>. Finally, we will also look at how the ‘tidy’ philosophy could be implemented in other programming languages, such as Python.</p>
 <p>The focus throughout will be on practical skills and using packages effectively within the wider context of project management tools, integrated development environments (we recommend VS Code with appropriate extensions or RStudio), and version control systems.</p>
 </section>
@@ -232,18 +239,18 @@ TBC -->
 <section id="reproducibility-1" class="level2">
 <h2 class="anchored" data-anchor-id="reproducibility-1">Reproducibility</h2>
 <p>To install the dependencies for this repo, run the following command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"robinlovelace/opengeohub2023"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"robinlovelace/opengeohub2023"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This repo also uses the <code>renv</code> package to manage dependencies. We saved the dependencies with the following command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">snapshot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">snapshot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Code was generated from the <code>.qmd</code> files using the following commands:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"tidy.qmd"</span>, <span class="st">"osm.qmd"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>f_r <span class="ot">=</span> <span class="fu">gsub</span>(<span class="st">".qmd"</span>, <span class="st">".R"</span>, f)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(f)) {</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">purl</span>(f[i], f_r[i])</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"tidy.qmd"</span>, <span class="st">"osm.qmd"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>f_r <span class="ot">=</span> <span class="fu">gsub</span>(<span class="st">".qmd"</span>, <span class="st">".R"</span>, f)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(f)) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">purl</span>(f[i], f_r[i])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is a Quarto website.</p>
 <p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
