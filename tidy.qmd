@@ -318,10 +318,92 @@ ggplot() +
 5. If you use raster data, take a look at the [`tidyterra`](https://dieghernan.github.io/tidyterra/) documentation.
 
 
-# Worked example: mapping transport stops and more in Poznan
+# Worked example: data from Poznan
 
 For many people 'learning by doing' is the most effective way to pick up new technical skills.
-So let's read in a larger dataset.
+So let's work with some larger datasets.
+Note: the input data and code below are adapted from Michael Dorman's tutorial on [Working with Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh).
+
+## Getting and reading-in the data
+
+```{bash}
+#| eval: false
+#| echo: false
+# Zip the data folder:
+zip -r data.zip data
+gh release list
+# Create release labelled data and upload the zip file:
+gh release create data data.zip
+```
+
+To get the data for this session, download and unzip the [data.zip](https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip) file in the releases.
+You can do that in R with the following commands:
+
+```{r}
+#| eval: false
+u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
+f = basename(u)
+if (!dir.exists("data")) {
+  download.file(u, f)
+  unzip(f)
+}
+```
+
+Check you have downloaded the files with the following command:
+
+```{r}
+list.files("data")[1:3]
+```
+
+## Vector data
+
+We'll start with a dataset that we'll create ourselves.
+
+```{r}
+#| eval: false
+#| echo: false
+fair_playce_poznan = stplanr::geo_code("FairPlayce, Poznan")
+fair_playce_poznan
+
+```
+
+```{r}
+```
+
+```{r}
+opengeo_df = tribble(
+  ~name, ~lon, ~lat,
+  "Faculty",        16.9418, 52.4643,
+  "Hotel ForZa",    16.9474, 52.4436,
+  "Hotel Lechicka", 16.9308, 52.4437,
+  "FairPlayce",     16.9497, 52.4604
+)
+opengeo_sf = sf::st_as_sf(opengeo_df, coords = c("lon", "lat"))
+sf::st_crs(opengeo_sf) = "EPSG:4326"
+```
+
+```{python}
+#| echo: false
+#| eval: false
+# Python equivalent:
+pnt1 = shapely.Point([16.9418, 52.4643]) #   'Faculty', 
+pnt2 = shapely.Point([16.9474, 52.4436]) #    'Hotel ForZa', 
+pnt3 = shapely.Point([16.9308, 52.4437]) #    'HL Hotel Lechicka'
+pnt4 = shapely.Point([16.9497, 52.4604]) #    'FairPlayce Hotel'
+```
+
+```{r}
+#| column: screen-inset-shaded
+
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(
+    lng = opengeo_df$lon,
+    lat = opengeo_df$lat,
+    popup = opengeo_df$name
+  )
+```
 
 # `tidyverse` + `geos` workflows
 
