@@ -18,8 +18,11 @@ Imports:
     tidyverse,
     waldo,
     ggspatial,
-    rsgeo,
     bench,
     collapse,
     tmap
-Remotes: r-tmap/tmap@v4
+Suggests:
+    rsgeo
+Remotes: 
+    r-tmap/tmap@v4,
+    JosiahParry/rsgeo
