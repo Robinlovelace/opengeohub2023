@@ -3,3 +3,7 @@ _site/
 .Rproj.user
 .Rhistory
 rosm.cache/
+vector.qmd
+data/
+data.zip
+*.gpkg
