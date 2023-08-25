@@ -322,6 +322,7 @@ ggplot() +
 
 For many people 'learning by doing' is the most effective way to pick up new technical skills.
 So let's read in a larger dataset.
+Note: the input data and code below are adapted from Michael Dorman's tutorial on [Working with Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh).
 
 # `tidyverse` + `geos` workflows
 
