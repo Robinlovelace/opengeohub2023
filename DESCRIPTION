@@ -20,7 +20,8 @@ Imports:
     ggspatial,
     bench,
     collapse,
-    tmap
+    tmap,
+    languageserver
 Suggests:
     rsgeo
 Remotes: 
