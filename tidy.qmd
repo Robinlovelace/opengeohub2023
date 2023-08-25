@@ -8,6 +8,10 @@ number-sections: true
 bibliography: references.bib
 ---
 
+```{r setup-knitr}
+# knitr::opts_chunk$set(cache = TRUE)
+```
+
 These materials were created for the OpenGeoHub Summer School 2023.
 
 They can be used with reference to the accompanying slides, available at [ogh23.robinlovelace.net/opengeohub2023](https://ogh23.robinlovelace.net/tidy-slides.html).
@@ -16,14 +20,22 @@ See the [parent repo](https://github.com/robinlovelace/opengeohub2023) and [sess
 
 # Abstract {.unnumbered}
 
-This lecture will provide an introduction to working with geographic data using R in a 'tidy' way. It will focus on using the `sf` package to read, write, manipulate, and plot geographic data in combination with the `tidyverse` metapackage. Why use the `sf` package with the `tidyverse`? The lecture will outline some of the ideas underlying the `tidyverse` and how they can speed-up data analysis pipelines, while making data analysis code easier to read and write. We will see how the following lines:
+This lecture will provide an introduction to working with geographic data using R in a 'tidy' way.
+It will focus on using the `sf` package to read, write, manipulate, and plot geographic data in combination with the `tidyverse` metapackage.
+Why use the `sf` package with the `tidyverse`?
+The lecture will outline some of the ideas underlying the `tidyverse` and how they can speed-up data analysis pipelines, while making data analysis code easier to read and write.
+We will see how the following lines:
 
 ``` r
 library(sf)
 library(tidyverse)
 ```
 
-can provide a foundation on which the many geographic data analysis problems can be solved. The lecture will also cover on more recently developed packages that integrate with the `tidyverse` to a greater and lesser extent. We will look at how the `geos` package, which provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data, integrates with the `tidyverse`. The `tidyverse` is not the right tool for every data analysis task and we touch on alternatives for working with raster data, with reference to the `terra` package, and alternative frameworks such as `data.table`. Finally, we will also look at how the 'tidy' philosophy could be implemented in other programming languages, such as Python.
+can provide a foundation on which the many geographic data analysis problems can be solved.
+The lecture will also cover on more recently developed packages that integrate with the `tidyverse` to a greater and lesser extent.
+We will look at how the `geos` package, which provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data, integrates with the `tidyverse`.
+The `tidyverse` is not the right tool for every data analysis task and we touch on alternatives for working with raster data, with reference to the `terra` package, and alternative frameworks such as `data.table`.
+Finally, we will also look at how the 'tidy' philosophy could be implemented in other programming languages, such as Python.
 
 The focus throughout will be on practical skills and using packages effectively within the wider context of project management tools, integrated development environments (we recommend VS Code with appropriate extensions or RStudio), and version control systems.
 
@@ -45,7 +57,8 @@ We recommend you run the code in the practical session with a modern integrated 
 -   RStudio: an IDE focussed on data science and software development with R. See [posit.co](https://posit.co/download/rstudio-desktop/) for installation instructions.
 -   VS Code: a general purpose, popular and future-proof IDE with support for R. See [github.com/REditorSupport/vscode-R](https://github.com/REditorSupport/vscode-R#getting-started) and [quarto.org](https://quarto.org/docs/get-started/) for installation instructions.
 
-After you have installed a suitable IDE you will need to install R packages used in this tutorial. You can install the packages we'll use with the following commands:
+After you have installed a suitable IDE you will need to install R packages used in this tutorial.
+You can install the packages we'll use with the following commands:
 
 ```{r}
 #| message: false
@@ -80,18 +93,23 @@ sapply(pkgs, require, character.only = TRUE)
 
 # An introduction to geographic data in the tidyverse
 
-The `tidyverse` is a collection of packages that provides a unified set of functions for data science. The name 'tidyverse' is a reference to the 'tidy data' concept, which means simple data that is in the form of one observation per row and one variable per column [@wickham2014]. The meaning has broadened to refer to a way of doing data analysis, that tends to make heavy use of tidyverse packages. Load the `tidyverse` with the following command:
+The `tidyverse` is a collection of packages that provides a unified set of functions for data science.
+The name 'tidyverse' is a reference to the 'tidy data' concept, which means simple data that is in the form of one observation per row and one variable per column [@wickham2014].
+The meaning has broadened to refer to a way of doing data analysis, that tends to make heavy use of tidyverse packages.
+Load the `tidyverse` with the following command:
 
 ```{r}
 library(tidyverse)
 ```
 
-As shown in the output, the package loads 9 sub-packages. In this tutorial we will focus on
+As shown in the output, the package loads 9 sub-packages.
+In this tutorial we will focus on
 
 -   `dplyr`, which provides convenient functions for manipulating data frames
 -   `ggplot2`, which provides a powerful and flexible system for creating plots
 
-A good way to understand it is to get started with a small dataset. So let's load the `sf` package and the `spData` package, which contains the `world` dataset:
+A good way to understand it is to get started with a small dataset.
+So let's load the `sf` package and the `spData` package, which contains the `world` dataset:
 
 ```{r}
 library(sf)
@@ -115,19 +133,23 @@ countries_df = countries |>
   st_drop_geometry()
 ```
 
-Don't worry about the syntax for now. The important thing is that we now have a data frame with three columns, representing the name, population and area of four countries. We can print out the contents of the data frame by typing its name (this is equivalent to `print(countries_df)`):
+Don't worry about the syntax for now.
+The important thing is that we now have a data frame with three columns, representing the name, population and area of four countries.
+We can print out the contents of the data frame by typing its name (this is equivalent to `print(countries_df)`):
 
 ```{r}
 countries_df
 ```
 
-The output above shows information about each country in a tabular. A feature of the tidyverse is that its default data frame class (the `tibble` which extends base R's `data.frame` as shown below) prints results in an informative and space-efficient way.
+The output above shows information about each country in a tabular.
+A feature of the tidyverse is that its default data frame class (the `tibble` which extends base R's `data.frame` as shown below) prints results in an informative and space-efficient way.
 
 ```{r}
 class(countries_df)
 ```
 
-`ggplot2` is dedicated plotting package that is loaded when you load the `tidyverse`. It has native support for geographic objects, as shown in the figure below which shows the output of `plot(countries)` next to the equivalent `ggplot2` code.
+`ggplot2` is dedicated plotting package that is loaded when you load the `tidyverse`.
+It has native support for geographic objects, as shown in the figure below which shows the output of `plot(countries)` next to the equivalent `ggplot2` code.
 
 ```{r}
 #| layout-ncol: 2
@@ -140,7 +162,10 @@ countries |>
 A characteristic feature of the tidyverse is the use of the pipe operator.
 You can use R's new native pipe operator (`|>`), first available in R 4.1.0, or the magrittr pipe operator (`%>%`).
 
-The pipes chain together functions, making it easier to read and write code. It can be particularly useful when used in combination with RStudio's intellisense feature, which provides suggestions for column names as you type. Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action. It will allow you to select the variable you're interested in without quote marks, using a feature called non-standard evaluation (NSE) [@wickham2019].
+The pipes chain together functions, making it easier to read and write code.
+It can be particularly useful when used in combination with RStudio's intellisense feature, which provides suggestions for column names as you type.
+Try typing the following in RStudio and hitting Tab with the curso located between the brackets on the final line to see this in action.
+It will allow you to select the variable you're interested in without quote marks, using a feature called non-standard evaluation (NSE) [@wickham2019].
 
 ```{r}
 #| eval: false
@@ -150,7 +175,8 @@ countries_df |>
 
 ## Reading and writing geographic data
 
-You can read and write a wide range of vector geographic data with `sf`. Save the `countries` object to a file called `countries.geojson` and inspect the result.
+You can read and write a wide range of vector geographic data with `sf`.
+Save the `countries` object to a file called `countries.geojson` and inspect the result.
 
 ```{r}
 sf::write_sf(countries, "countries.geojson", delete_dsn = TRUE)
@@ -187,9 +213,40 @@ drvs = sf::st_drivers() |>
 head(drvs)
 ```
 
+#### Exercises
+
+1.  Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
+
+    -   Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
+    -   Open question: Is this a good thing to benchmark? Why or why not?
+
+```{r}
+#| eval: false
+#| echo: false
+country_centroids2 = world_centroids[poland, , op = st_is_within_distance, dist = 2e5]
+waldo::compare(country_centroids, country_centroids2)
+#> ✔ No differences
+res = bench::mark(
+    base = world_centroids[poland, , op = st_is_within_distance, dist = 2e5],
+    st_filter = world_centroids |>
+  st_filter(poland, .predicate = st_is_within_distance, dist = 2e5)
+)
+res
+#> # A tibble: 2 × 13
+#>   expression      min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time
+#>   <bch:expr> <bch:tm> <bch:>     <dbl> <bch:byt>    <dbl> <int> <dbl>   <bch:tm>
+#> 1 base         10.7ms 12.4ms      81.2     208KB     6.58    37     3      456ms
+#> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
+```
+
+2.  Inspect the full list of drivers, e.g. with the command `View(drvs)`.
+    -   Which formats are you likely to use and why?
+    -   Bonus: take a look at [Chapter 8](https://r.geocompx.org/read-write) of Geocomputation with R for more on reading and writing geographic (including raster) data with R.
+
 ## Attribute operations with dplyr
 
-**dplyr** is a large package with many functions for working with data frames. The five key 'verbs' [described](https://dplyr.tidyverse.org/) as:
+**dplyr** is a large package with many functions for working with data frames.
+The five key 'verbs' [described](https://dplyr.tidyverse.org/) as:
 
 > -   `mutate()` adds new variables that are functions of existing variables
 > -   `select()` picks variables based on their names.
@@ -217,7 +274,8 @@ countries_summarised = countries |>
 countries_summarised
 ```
 
-The operation creates a new variable called `contains_a` that is `TRUE` if the country name contains an "a" and `FALSE` otherwise. Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter "a", highlighting `dplyr`'s ability to work with geographic data represented as `sf` objects.
+The operation creates a new variable called `contains_a` that is `TRUE` if the country name contains an "a" and `FALSE` otherwise.
+Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter "a", highlighting `dplyr`'s ability to work with geographic data represented as `sf` objects.
 
 ```{r}
 countries_summarised |>
@@ -226,40 +284,10 @@ countries_summarised |>
     geom_sf(data = countries, fill = NA, linetype = 3) 
 ```
 
-## Exercises
+### Exercises
 
-    
-
-1.  Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
-
-    -   Bonus: use the `bench::mark()` function to compare the performance of the base R and tidyverse implementation
-    -   Open question: Is this a good thing to benchmark? Why or why not?
-
-```{r}
-#| eval: false
-#| echo: false
-country_centroids2 = world_centroids[poland, , op = st_is_within_distance, dist = 2e5]
-waldo::compare(country_centroids, country_centroids2)
-#> ✔ No differences
-res = bench::mark(
-    base = world_centroids[poland, , op = st_is_within_distance, dist = 2e5],
-    st_filter = world_centroids |>
-  st_filter(poland, .predicate = st_is_within_distance, dist = 2e5)
-)
-res
-#> # A tibble: 2 × 13
-#>   expression      min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time
-#>   <bch:expr> <bch:tm> <bch:>     <dbl> <bch:byt>    <dbl> <int> <dbl>   <bch:tm>
-#> 1 base         10.7ms 12.4ms      81.2     208KB     6.58    37     3      456ms
-#> 2 st_filter      12ms 12.5ms      79.7     199KB     6.64    36     3      452ms
-```
-
-2. Inspect the full list of drivers, e.g. with the command `View(drvs)`. 
-    - Which formats are you likely to use and why?
-    - Bonus: take a look at [Chapter 8](https://r.geocompx.org/read-write) of Geocomputation with R for more on reading and writing geographic (including raster) data with R.
-
-3.  Create a new data frame called `countries_modified2` that contains the name, population and area of countries with a population density of more than 100 people per km2, sorted by area in descending order.
-4.  Do the same with base R functions and the `[` operator.
+1.  Create a new data frame called `countries_modified2` that contains the name, population and area of countries with a population density of more than 100 people per km2, sorted by area in descending order.
+2.  Do the same with base R functions and the `[` operator.
     -   What are the pros and cons of each?
     -   Which do you prefer?
 
@@ -310,14 +338,13 @@ ggplot() +
 
 ```
 
-## Exercises
+### Exercises
 
-1. With reference to the documentation at [ggplot2.tidyverse.org/index.html](https://ggplot2.tidyverse.org/index.html), modify the code above to create a map with a title, legend and a different color palette.
-2. With reference to [paleolimbot.github.io/ggspatial/](https://paleolimbot.github.io/ggspatial/), add annotations including scale bar, north arrow and a text label to the map.
-3. Bonus: try map making with `tmap` and test out the interactive mode (set with `tmap_mode("interactive")`)."
-4. Bonus: try reproducing maps presented in [Chapter 9](https://r.geocompx.org/adv-map.html) of Geocomputation with R with `ggplot2` and `ggspatial`. Which mapping framework do you prefer and why?
-5. If you use raster data, take a look at the [`tidyterra`](https://dieghernan.github.io/tidyterra/) documentation.
-
+1.  With reference to the documentation at [ggplot2.tidyverse.org/index.html](https://ggplot2.tidyverse.org/index.html), modify the code above to create a map with a title, legend and a different color palette.
+2.  With reference to [paleolimbot.github.io/ggspatial/](https://paleolimbot.github.io/ggspatial/), add annotations including scale bar, north arrow and a text label to the map.
+3.  Bonus: try map making with `tmap` and test out the interactive mode (set with `tmap_mode("interactive")`)."
+4.  Bonus: try reproducing maps presented in [Chapter 9](https://r.geocompx.org/adv-map.html) of Geocomputation with R with `ggplot2` and `ggspatial`. Which mapping framework do you prefer and why?
+5.  If you use raster data, take a look at the [`tidyterra`](https://dieghernan.github.io/tidyterra/) documentation.
 
 # Worked example: data from Poznan
 
@@ -383,7 +410,7 @@ opengeo_sf = sf::st_as_sf(opengeo_df, coords = c("lon", "lat"))
 sf::st_crs(opengeo_sf) = "EPSG:4326"
 ```
 
-
+````{=html}
 <!-- 
 ```python
 #| echo: false
@@ -393,11 +420,13 @@ pnt1 = shapely.Point([16.9418, 52.4643]) #   'Faculty',
 pnt2 = shapely.Point([16.9474, 52.4436]) #    'Hotel ForZa', 
 pnt3 = shapely.Point([16.9308, 52.4437]) #    'HL Hotel Lechicka'
 pnt4 = shapely.Point([16.9497, 52.4604]) #    'FairPlayce Hotel'
-``` -->
+``` 
+-->
+````
 
 ```{r}
-#| column: screen-inset-shaded
-
+#| eval: false
+# column: screen-inset-shaded
 library(leaflet)
 leaflet() %>%
   addTiles() %>%  # Add default OpenStreetMap map tiles
@@ -407,6 +436,45 @@ leaflet() %>%
     popup = opengeo_df$name
   )
 ```
+
+For comparison, we can create the same map with a single line of code with `{tmap}` (after loading and setting-up the package) as follows:
+
+```{r}
+library(tmap)
+tmap_mode("view")
+```
+
+We will also check the version of `{tmap}` that we're using, in anticipation of a major update (to v4, expected later in 2023).
+
+```{r}
+#| eval: false
+tm_shape(opengeo_sf) + tm_bubbles(popup.vars = "name")
+```
+
+The interactive maps below illustrate the outputs of the preceding map-making commands, highlighting the convenience of using `{tmap}`, which requires far fewer lines of code, although `{leaflet}` and other low-level map-making packages can offer more control.
+
+::: {#fig-rasterisation layout-ncol="2"}
+
+```{r}
+#| column: screen-inset-shaded
+#| layout-ncol: 2
+#| echo: false
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(
+    lng = opengeo_df$lon,
+    lat = opengeo_df$lat,
+    popup = opengeo_df$name
+  )
+
+tm_shape(opengeo_sf) +
+  tm_bubbles(popup.vars = "name", clustering = FALSE)
+```
+
+Interactive maps of 4 locations in Poznan made with 7 lines of code with `{leaflet}` (left), and 1 line of `{tmap}` code (right).
+
+:::
 
 # `tidyverse` + `geos` workflows
 
@@ -477,10 +545,10 @@ The answer can be found by following the exercises below.
 
 ## Exercises
 
-1. Benchmark the union operation in `geos` and `sf` with the `bench::mark()` function.
-    - Which is faster?
-    - Which is easier to use?
-    - Which do you prefer?
+1.  Benchmark the union operation in `geos` and `sf` with the `bench::mark()` function.
+    -   Which is faster?
+    -   Which is easier to use?
+    -   Which do you prefer?
 
 ```{r}
 #| eval: false
@@ -499,12 +567,12 @@ bench::mark(check = FALSE,
 There are many packages that integrate with the `tidyverse`, or which are inspired by it.
 Options include:
 
-- [`tidyterra`](https://dieghernan.github.io/tidyterra/) for working with raster data
-- [DuckDB](https://duckdb.org/docs/api/r.html) is a high-performance in-memory database that can be used with `dplyr` that is mature, well documented, and has a [spatial extension](https://duckdb.org/docs/extensions/spatial)
-- [dtplyr](https://github.com/tidyverse/dtplyr/), a `dplyr`-compliant interface to [`data.table`](https://rdatatable.gitlab.io/data.table/) for working with large datasets
-- The `collapse` package, which supports `tidyverse` syntax and which has some [integration with `sf`](https://sebkrantz.github.io/collapse/articles/collapse_and_sf.html)
-- [`tidypolars`](https://github.com/etiennebacher/tidypolars), an R interface to the [`polars`](https://github.com/pola-rs/polars) Rust crate (note: there is also a popular [Python interface](https://pola-rs.github.io/polars-book/user-guide/installation/)
-- [The geoarrow spec](https://github.com/geoarrow) and nascent implementations, none of which are yet ready for production use
+-   [`tidyterra`](https://dieghernan.github.io/tidyterra/) for working with raster data
+-   [DuckDB](https://duckdb.org/docs/api/r.html) is a high-performance in-memory database that can be used with `dplyr` that is mature, well documented, and has a [spatial extension](https://duckdb.org/docs/extensions/spatial)
+-   [dtplyr](https://github.com/tidyverse/dtplyr/), a `dplyr`-compliant interface to [`data.table`](https://rdatatable.gitlab.io/data.table/) for working with large datasets
+-   The `collapse` package, which supports `tidyverse` syntax and which has some [integration with `sf`](https://sebkrantz.github.io/collapse/articles/collapse_and_sf.html)
+-   [`tidypolars`](https://github.com/etiennebacher/tidypolars), an R interface to the [`polars`](https://github.com/pola-rs/polars) Rust crate (note: there is also a popular [Python interface](https://pola-rs.github.io/polars-book/user-guide/installation/)
+-   [The geoarrow spec](https://github.com/geoarrow) and nascent implementations, none of which are yet ready for production use
 
 How to assess which to use?
 My advice would be to focus on solving the problem, rather than the tools, in which case the `tidyverse` + `sf` + `terra` or `stars` should be more than adequate for most purposes.
@@ -518,7 +586,6 @@ There are times when performance is important but as the saying goes, premature 
 
 If you *do* need to wait longer than is feasible for your code to run, it is worth trying to identify the bottleneck (is there are a solution involving changing input datasets or workflows?) before having a look at alternatives.
 Established benchmarks for *non-spatial data* are https://duckdblabs.github.io/db-benchmark/ and https://www.pola.rs/benchmarks.html .
-
 
 This section is offered more as a place to experiment than any concrete advice.
 My concrete advice is focus on the problem and solving it with the software is most appropriate for your use case.
