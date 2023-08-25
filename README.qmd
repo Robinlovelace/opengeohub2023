@@ -24,11 +24,33 @@ Abstracts for these sessions are provided below.
 You can reproduce all of the results and run all the code in this repo.
 The quickest way to get started if you don't already have the dependencies is with codespaces.
 
-`<a href='https://codespaces.new/Robinlovelace/opengeohub2023'`{=html}<img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" style="max-width: 100%;"/></a>
+<a href='https://codespaces.new/Robinlovelace/opengeohub2023'><img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'></a>
 
 If it works you should see something like this:
 
 ![](images/paste-11.png)
+
+To run the code locally download the code, e.g. with the following command after installing GitHub's CLI tool:
+
+``` bash
+gh repo clone Robinlovelace/opengeohub2023
+```
+
+Then open the project in RStudio, VS Code, and start looking at and running the code.
+You should be able to reproduce the rendered website interactively with the following command:
+
+```bash
+quarto preview
+```
+
+You can also run the code in this repo in the Docker image hosted at https://github.com/Robinlovelace/opengeohub2023/pkgs/container/opengeohub2023 as follows, with the -v flag to mount the current directory in the container:
+
+``` bash
+docker run -it -v $(pwd):/workspace opengeohub2023:latest
+```
+
+If you have VS Code installed you should be able to 'Reopen in Container' (not fully tested locally).
+
 
 ## Tidy geographic data with sf, dplyr, ggplot2, geos and friends
 
