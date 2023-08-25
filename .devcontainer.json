@@ -1,6 +1,13 @@
 {
-    "name": "Quarto Dev Container",
-    "extensions": ["quarto.quarto", "REditorSupport.r"],
-    "dockerFile": "Dockerfile" // Specify the path to your Dockerfile
-  }
-  
+    "image": "ghcr.io/robinlovelace/opengeohub2023:main",
+    // "forwardPorts": [3000],
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "reditorsupport.r"
+            ]
+        }
+    }
+}
