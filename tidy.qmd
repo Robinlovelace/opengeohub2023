@@ -382,7 +382,9 @@ opengeo_sf = sf::st_as_sf(opengeo_df, coords = c("lon", "lat"))
 sf::st_crs(opengeo_sf) = "EPSG:4326"
 ```
 
-```{python}
+
+<!-- 
+```python
 #| echo: false
 #| eval: false
 # Python equivalent:
@@ -390,7 +392,7 @@ pnt1 = shapely.Point([16.9418, 52.4643]) #   'Faculty',
 pnt2 = shapely.Point([16.9474, 52.4436]) #    'Hotel ForZa', 
 pnt3 = shapely.Point([16.9308, 52.4437]) #    'HL Hotel Lechicka'
 pnt4 = shapely.Point([16.9497, 52.4604]) #    'FairPlayce Hotel'
-```
+``` -->
 
 ```{r}
 #| column: screen-inset-shaded
