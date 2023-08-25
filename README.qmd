@@ -12,12 +12,23 @@ This repo contains code to support sessions that I will deliver for the OpenGeoH
 
 As shown in the course [schedule](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/) I will deliver the following sessions:
 
-- [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/)
-  - 2023-08-28, 11:00–12:30, Room 21 (Sala 21)  
-- [Processing large OpenStreetMap datasets for geocomputation](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ) 
-  - 2023-09-01, 09:00–10:30, Room 18 (Sala 18)
+-   [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/7JN3FV/)
+    -   2023-08-28, 11:00--12:30, Room 21 (Sala 21)\
+-   [Processing large OpenStreetMap datasets for geocomputation](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/talk/SRMZVJ)
+    -   2023-09-01, 09:00--10:30, Room 18 (Sala 18)
 
 Abstracts for these sessions are provided below.
+
+## Reproducibility
+
+You can reproduce all of the results and run all the code in this repo.
+The quickest way to get started if you don't already have the dependencies is with codespaces.
+
+`<a href='https://codespaces.new/Robinlovelace/opengeohub2023'`{=html}<img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" style="max-width: 100%;"/></a>
+
+If it works you should see something like this:
+
+![](images/paste-11.png)
 
 ## Tidy geographic data with sf, dplyr, ggplot2, geos and friends
 
@@ -29,10 +40,11 @@ Why use the `sf` package with the `tidyverse`?
 The lecture will outline some of the ideas underlying the `tidyverse` and how they can speed-up data analysis pipelines, while making data analysis code easier to read and write.
 We will see how the following lines
 
-```r
+``` r
 library(sf)
 library(tidyverse)
 ```
+
 can provide a foundation on which the many geographic data analysis problems can be solved.
 The lecture will also cover on more recently developed packages that integrate with the `tidyverse` to a greater and lesser extent.
 We will look at how the `geos` package, which provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data, integrates with the `tidyverse`.
@@ -53,23 +65,24 @@ However, these features can make it difficult to work with OSM data.
 
 This lecture will provide an introduction to working with OSM and will cover the following:
 
-- How and where to download OSM data
-- How to process small amounts of OSM data using the `osmdata` R package
-- How to process large OSM 'extracts' data with the `osmextract` R package
-- Other command line tools for working with OSM data, including the mature and widely used `osmium` tool, the `pyrosm` Python package and the [`osm2streets`](https://github.com/a-b-street/osm2streets) web application and Rust codebase
+-   How and where to download OSM data
+-   How to process small amounts of OSM data using the `osmdata` R package
+-   How to process large OSM 'extracts' data with the `osmextract` R package
+-   Other command line tools for working with OSM data, including the mature and widely used `osmium` tool, the `pyrosm` Python package and the [`osm2streets`](https://github.com/a-b-street/osm2streets) web application and Rust codebase
 
 Finally, the lecture will outline ideas for using OSM data.
 It will conclude with a call to action, inspiring the use of this rich resource to support policy objectives such as the fast and fair decarbonisation of the global economy as societies transition away from inefficient, polluting and costly fossil fuels.
 
+```{=html}
 <!-- ## Using geocomputation in government
 
 TBC -->
-
+```
 ## Reproducibility
 
 To install the dependencies for this repo, run the following command:
 
-```r
+``` r
 remotes::install_github("robinlovelace/opengeohub2023")
 ```
 
@@ -102,4 +115,3 @@ for(i in seq_along(f)) {
   knitr::purl(f[i], f_r[i])
 }
 ```
-
