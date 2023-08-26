@@ -212,11 +212,14 @@ div.csl-indent {
   <li><a href="#spatial-joins" id="toc-spatial-joins" class="nav-link" data-scroll-target="#spatial-joins"><span class="header-section-number">3.2.3</span> Spatial joins</a></li>
   <li><a href="#exercises-3" id="toc-exercises-3" class="nav-link" data-scroll-target="#exercises-3"><span class="header-section-number">3.2.4</span> Exercises</a></li>
   </ul></li>
-  <li><a href="#raster-data-example" id="toc-raster-data-example" class="nav-link" data-scroll-target="#raster-data-example"><span class="header-section-number">3.3</span> Raster data example</a></li>
+  <li><a href="#raster-data-example" id="toc-raster-data-example" class="nav-link" data-scroll-target="#raster-data-example"><span class="header-section-number">3.3</span> Raster data example</a>
+  <ul class="collapse">
+  <li><a href="#exercises-4" id="toc-exercises-4" class="nav-link" data-scroll-target="#exercises-4"><span class="header-section-number">3.3.1</span> Exercises</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#tidyverse-geos-workflows" id="toc-tidyverse-geos-workflows" class="nav-link" data-scroll-target="#tidyverse-geos-workflows"><span class="header-section-number">4</span> <code>tidyverse</code> + <code>geos</code> workflows</a>
   <ul class="collapse">
-  <li><a href="#exercises-4" id="toc-exercises-4" class="nav-link" data-scroll-target="#exercises-4"><span class="header-section-number">4.1</span> Exercises</a></li>
+  <li><a href="#exercises-5" id="toc-exercises-5" class="nav-link" data-scroll-target="#exercises-5"><span class="header-section-number">4.1</span> Exercises</a></li>
   </ul></li>
   <li><a href="#friends" id="toc-friends" class="nav-link" data-scroll-target="#friends"><span class="header-section-number">5</span> + friends</a>
   <ul class="collapse">
@@ -760,13 +763,13 @@ pnt4 = shapely.Point([16.9497, 52.4604]) #    'FairPlayce Hotel'
 <div class="cell column-screen-inset-shaded quarto-layout-panel quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2595e2b305cf8c87af74" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-2595e2b305cf8c87af74">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[52.4643,52.4436,52.4437,52.4604],[16.9418,16.9474,16.9308,16.9497],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Faculty","Hotel ForZa","Hotel Lechicka","FairPlayce"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[52.4436,52.4643],"lng":[16.9308,16.9497]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-252dfdd589ef21f75721" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-252dfdd589ef21f75721">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[52.4643,52.4436,52.4437,52.4604],[16.9418,16.9474,16.9308,16.9497],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Faculty","Hotel ForZa","Hotel Lechicka","FairPlayce"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[52.4436,52.4643],"lng":[16.9308,16.9497]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 
-<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5f907d113c2a936ac840" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-5f907d113c2a936ac840">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["tmap401",401]},{"method":"addProviderTiles","args":["Esri.WorldGrayCanvas",null,"Esri.WorldGrayCanvas",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap",null,"OpenStreetMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,"Esri.WorldTopoMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addCircles","args":[[52.4643,52.4436,52.4437,52.4604],[16.9418,16.9474,16.9308,16.9497],[38.36230990623189,38.36230990623189,38.36230990623189,38.36230990623189],["Faculty","Hotel.ForZa","Hotel.Lechicka","FairPlayce"],"poi_sf",{"interactive":true,"className":"","pane":"tmap401","stroke":true,"color":"#666666","weight":1,"opacity":0.5,"fill":true,"fillColor":["#999999","#999999","#999999","#999999"],"fillOpacity":[1,1,1,1]},["<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Faculty<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>Faculty<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Hotel ForZa<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>Hotel ForZa<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Hotel Lechicka<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>Hotel Lechicka<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>FairPlayce<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>FairPlayce<\/nobr><\/td><\/tr><\/table><\/div>"],null,["Faculty","Hotel ForZa","Hotel Lechicka","FairPlayce"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLayersControl","args":[["Esri.WorldGrayCanvas","OpenStreetMap","Esri.WorldTopoMap"],"poi_sf",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[52.4436,52.4643],"lng":[16.9308,16.9497]},"fitBounds":[52.4436,16.9308,52.4643,16.9497,[]]},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e8f1f4ca777259e55c51" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e8f1f4ca777259e55c51">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"createMapPane","args":["tmap401",401]},{"method":"addProviderTiles","args":["Esri.WorldGrayCanvas",null,"Esri.WorldGrayCanvas",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap",null,"OpenStreetMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,"Esri.WorldTopoMap",{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"pane":"tilePane"}]},{"method":"addCircles","args":[[52.4643,52.4436,52.4437,52.4604],[16.9418,16.9474,16.9308,16.9497],[38.36230990623189,38.36230990623189,38.36230990623189,38.36230990623189],["Faculty","Hotel.ForZa","Hotel.Lechicka","FairPlayce"],"poi_sf",{"interactive":true,"className":"","pane":"tmap401","stroke":true,"color":"#666666","weight":1,"opacity":0.5,"fill":true,"fillColor":["#999999","#999999","#999999","#999999"],"fillOpacity":[1,1,1,1]},["<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Faculty<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>Faculty<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Hotel ForZa<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>Hotel ForZa<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>Hotel Lechicka<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>Hotel Lechicka<\/nobr><\/td><\/tr><\/table><\/div>","<style> div.leaflet-popup-content {width:auto !important;overflow-y:auto; overflow-x:hidden;}<\/style><div style=\"max-height:25em;padding-right:0px;\"><table>\n\t\t\t   <thead><tr><th colspan=\"2\"><b>FairPlayce<\/b><\/th><\/thead><\/tr><tr><td style=\"color: #888888;\"><nobr>name<\/nobr><\/td><td align=\"right\"><nobr>FairPlayce<\/nobr><\/td><\/tr><\/table><\/div>"],null,["Faculty","Hotel ForZa","Hotel Lechicka","FairPlayce"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]},{"method":"addLayersControl","args":[["Esri.WorldGrayCanvas","OpenStreetMap","Esri.WorldTopoMap"],"poi_sf",{"collapsed":true,"autoZIndex":true,"position":"topleft"}]}],"limits":{"lat":[52.4436,52.4643],"lng":[16.9308,16.9497]},"fitBounds":[52.4436,16.9308,52.4643,16.9497,[]]},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -938,6 +941,10 @@ Geodetic CRS:  WGS 84
 <ul>
 <li>Bonus: also create an interactive map.</li>
 </ul></li>
+<li><strong>Advanced</strong>: Reproduce the results presented above by following the Python code at <a href="https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html">geobgu.xyz/presentations/p_2023_ogh/01-vector.html</a>.
+<ul>
+<li>Which language do you prefer for the types of task presented here and why?</li>
+</ul></li>
 </ol>
 </section>
 </section>
@@ -1014,59 +1021,117 @@ names       : Blue, Green, Red, NIR_Broad </code></pre>
  Max.   :4508.0   Max.   :5131.0   Max.   :5428.0   Max.   :6092  </code></pre>
 </div>
 </div>
-<p>As shown, the result is an object with Blue, Green, Red and NIR bands, in that order. We can select only Red, Green, Blue bands, in that order, as follows:</p>
+<p>We can plot the result as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>r_rgb <span class="ot">=</span> r[[<span class="fu">c</span>(<span class="st">"Red"</span>, <span class="st">"Green"</span>, <span class="st">"Blue"</span>)]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If you try plotting the result with <code>plot(r)</code>, you will get an error. For plotting, we can remove outliers as follows:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>top_01pct <span class="ot">=</span> <span class="fu">quantile</span>(<span class="fu">values</span>(r_rgb), <span class="at">probs =</span> <span class="fl">0.999</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>bottom_01pct <span class="ot">=</span> <span class="fu">quantile</span>(<span class="fu">values</span>(r_rgb), <span class="at">probs =</span> <span class="fl">0.001</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>r_to_plot <span class="ot">=</span> r_rgb</span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>r_to_plot[r_rgb <span class="sc">&gt;</span> top_01pct] <span class="ot">=</span> top_01pct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-|---------|---------|---------|---------|
-=========================================
-                                          
-
-|---------|---------|---------|---------|
-=========================================
-                                          </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>r_to_plot[r_rgb <span class="sc">&lt;</span> bottom_01pct] <span class="ot">=</span> bottom_01pct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-|---------|---------|---------|---------|
-=========================================
-                                          
-
-|---------|---------|---------|---------|
-=========================================
-                                          </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(r_to_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-terra-plot-rgb" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-terra-plot-basic" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="tidy_files/figure-html/fig-terra-plot-rgb-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: Plotting a RGB raster layer with terra</figcaption>
+<p><img src="tidy_files/figure-html/fig-terra-plot-basic-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Output of <code>plot(r)</code>, showing the four bands of the raster layer</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>As shown, the result is an object with Blue, Green, Red and NIR bands, in that order. We can select only Red, Green, Blue bands, in that order, as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>r_rgb <span class="ot">=</span> r[[<span class="fu">c</span>(<span class="st">"Red"</span>, <span class="st">"Green"</span>, <span class="st">"Blue"</span>)]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you try plotting the result with <code>plotRGB(r)</code>, you will get an error. You can use the <code>stretch</code> argument to stretch the values and avoid errors caused by outliers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(r, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-terra-plot-rgb" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="tidy_files/figure-html/fig-terra-plot-rgb-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Plotting a RGB raster layer with terra</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also remove outliers with the <code>clamp()</code> function or manually, as shown below:</p>
+<div id="fig-terra-plot-rgb-clamp" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>r_clamp <span class="ot">=</span> <span class="fu">clamp</span>(r, <span class="dv">0</span>, <span class="dv">4000</span>)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(r_clamp)</span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>top_01pct <span class="ot">=</span> <span class="fu">quantile</span>(<span class="fu">values</span>(r_rgb), <span class="at">probs =</span> <span class="fl">0.999</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>bottom_01pct <span class="ot">=</span> <span class="fu">quantile</span>(<span class="fu">values</span>(r_rgb), <span class="at">probs =</span> <span class="fl">0.001</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>r_to_plot <span class="ot">=</span> r_rgb</span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>r_to_plot[r_rgb <span class="sc">&gt;</span> top_01pct] <span class="ot">=</span> top_01pct</span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>r_to_plot[r_rgb <span class="sc">&lt;</span> bottom_01pct] <span class="ot">=</span> bottom_01pct</span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(r_to_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="tidy_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          
+
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          
+
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="tidy_files/figure-html/unnamed-chunk-50-2.png" class="img-fluid figure-img" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;9: Plotting a RGB raster layer with terra, with outliers removed with <code>clamp()</code> (left) and manually (right)</figcaption><p></p>
+</figure>
+</div>
+<p>Save the combined raster as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write the r file:</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(r, <span class="st">"data/hls/combined.tif"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">writeRaster</span>(r_to_plot, <span class="st">"data/hls/r_to_plot.tif"</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="exercises-4" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="exercises-4"><span class="header-section-number">3.3.1</span> Exercises</h3>
+<ol type="1">
+<li>Experiment with arguments passed to <code>clamp()</code>, <code>stretch()</code> and <code>plotRGB()</code> to see how they affect the output.</li>
+<li>Try plotting the raster in another program like QGIS, which looks better?</li>
+</ol>
+</section>
 </section>
 </section>
 <section id="tidyverse-geos-workflows" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> <code>tidyverse</code> + <code>geos</code> workflows</h1>
 <p>The <a href="https://paleolimbot.github.io/geos/"><code>geos</code> package</a> provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data. Load it as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>geos</code> works well with the <code>tidyverse</code> and <code>sf</code> packages, as shown below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>countries_geos <span class="ot">=</span> <span class="fu">as_geos_geometry</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>countries_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>countries_geos <span class="ot">=</span> <span class="fu">as_geos_geometry</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>countries_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;geos_geometry[4] with CRS=WGS 84&gt;
 [1] &lt;MULTIPOLYGON [14.075 49.027...24.030 54.852]&gt;
@@ -1077,11 +1142,11 @@ names       : Blue, Green, Red, NIR_Broad </code></pre>
 </div>
 <p>The package only deals with geometries: the attribute data is removed when you convert an <code>sf</code> object to a <code>geos</code> object. You can store <code>geos</code> objects in a data frame and still use <code>dplyr</code> functions to process them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>countries_geos_df <span class="ot">=</span> <span class="fu">bind_cols</span>(countries_df, <span class="at">geos =</span> countries_geos)</span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>countries_summarised_df <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
-<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop))</span>
-<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>countries_geos_df <span class="ot">=</span> <span class="fu">bind_cols</span>(countries_df, <span class="at">geos =</span> countries_geos)</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>countries_summarised_df <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop))</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   contains_a     n  mean_pop
@@ -1092,31 +1157,31 @@ names       : Blue, Green, Red, NIR_Broad </code></pre>
 </div>
 <p>Note: the <code>geos</code> column has gone! This is because <code>geos</code> columns are not ‘sticky’ like <code>sf</code> columns. Let’s see how to get them back.</p>
 <div>
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>countries_union1 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union1)</span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>countries_union2 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
-<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_make_collection</span>() <span class="sc">|&gt;</span></span>
-<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
-<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>countries_union1 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union1)</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>countries_union2 <span class="ot">=</span> countries_geos <span class="sc">|&gt;</span></span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_make_collection</span>() <span class="sc">|&gt;</span></span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geos_unary_union</span>()</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_union2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="tidy_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
+<p><img src="tidy_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="tidy_files/figure-html/unnamed-chunk-52-2.png" class="img-fluid" width="672"></p>
+<p><img src="tidy_files/figure-html/unnamed-chunk-55-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 </div>
 <p>However, you can add the union of the grouped columns as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> <span class="fu">geos_unary_union</span>(<span class="fu">geos_make_collection</span>(geos)))</span>
-<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos <span class="ot">=</span> countries_geos_df <span class="sc">|&gt;</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">contains_a =</span> <span class="fu">str_detect</span>(name_long, <span class="st">"a"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_pop =</span> <span class="fu">mean</span>(pop),</span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> <span class="fu">geos_unary_union</span>(<span class="fu">geos_make_collection</span>(geos)))</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   contains_a     n  mean_pop geometry                                 
@@ -1124,22 +1189,22 @@ names       : Blue, Green, Red, NIR_Broad </code></pre>
 1 FALSE          1 10525347  &lt;POLYGON [12.240 48.555...18.853 51.117]&gt;
 2 TRUE           3 15454250. &lt;POLYGON [14.075 47.758...26.588 56.373]&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_summarised_geos<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(countries_summarised_geos<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="tidy_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid" width="672"></p>
+<p><img src="tidy_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Convert back to an <code>sf</code> object as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(countries_summarised_geos)</span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="co"># waldo::compare(</span></span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised,</span></span>
-<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised_geos_sf</span></span>
-<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>countries_summarised_geos_sf <span class="ot">=</span> <span class="fu">st_as_sf</span>(countries_summarised_geos)</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="co"># waldo::compare(</span></span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised,</span></span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   countries_summarised_geos_sf</span></span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Aside from geometry names and minor differences in the geometries, the two objects are identical. This raises the question: why use <code>geos</code> at all? The answer can be found by following the exercises below.</p>
-<section id="exercises-4" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="exercises-4"><span class="header-section-number">4.1</span> Exercises</h2>
+<section id="exercises-5" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="exercises-5"><span class="header-section-number">4.1</span> Exercises</h2>
 <ol type="1">
 <li>Benchmark the union operation in <code>geos</code> and <code>sf</code> with the <code>bench::mark()</code> function.
 <ul>
@@ -1170,10 +1235,10 @@ names       : Blue, Green, Red, NIR_Broad </code></pre>
 <h2 data-number="5.1" class="anchored" data-anchor-id="tidypolars"><span class="header-section-number">5.1</span> <code>tidypolars</code></h2>
 <p>If you want to give this package a spin, run the following command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'tidypolars'</span>, </span>
-<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://etiennebacher.r-universe.dev/bin/linux/jammy/4.3'</span>, <span class="fu">getOption</span>(<span class="st">"repos"</span>))</span>
-<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'tidypolars'</span>, </span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://etiennebacher.r-universe.dev/bin/linux/jammy/4.3'</span>, <span class="fu">getOption</span>(<span class="st">"repos"</span>))</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="rsgeo" class="level2" data-number="5.2">
@@ -1181,10 +1246,10 @@ names       : Blue, Green, Red, NIR_Broad </code></pre>
 <p>A work in progress is the <a href="https://github.com/JosiahParry/rsgeo"><code>rsgeo</code> package</a>, which aims to provide an seamless interface between R and the <code>geo</code> Rust crate. This could open the possiblity of calling other high-performance Rust libraries from R, although the package is at an early stage of development and probably not ready for production use.</p>
 <p>We can check the installation works as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'rsgeo'</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://josiahparry.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'rsgeo'</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://josiahparry.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsgeo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsgeo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Can't find generic `is_geometry` in package sf to register S3 method.
 ℹ This message is only shown to developers using devtools.
@@ -1234,8 +1299,8 @@ Attaching package: 'rsgeo'</code></pre>
 
     within</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>countries_rs  <span class="ot">=</span> <span class="fu">as_rsgeom</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>countries_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>countries_rs  <span class="ot">=</span> <span class="fu">as_rsgeom</span>(sf<span class="sc">::</span><span class="fu">st_geometry</span>(countries))</span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>countries_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;rs_MULTIPOLYGON[4]&gt;
 [1] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 23.4841276384498...
@@ -1243,18 +1308,18 @@ Attaching package: 'rsgeo'</code></pre>
 [3] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 22.5581376482117...
 [4] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 15.0169958838586...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(<span class="at">check =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sf =</span> sf<span class="sc">::</span><span class="fu">st_union</span>(countries),</span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">geos =</span> geos<span class="sc">::</span><span class="fu">geos_make_collection</span>(geos<span class="sc">::</span><span class="fu">geos_unary_union</span>(countries_geos)),</span>
-<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsgeo =</span> rsgeo<span class="sc">::</span><span class="fu">union_geoms</span>(countries_rs)</span>
-<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(<span class="at">check =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sf =</span> sf<span class="sc">::</span><span class="fu">st_union</span>(countries),</span>
+<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">geos =</span> geos<span class="sc">::</span><span class="fu">geos_make_collection</span>(geos<span class="sc">::</span><span class="fu">geos_unary_union</span>(countries_geos)),</span>
+<span id="cb119-4"><a href="#cb119-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsgeo =</span> rsgeo<span class="sc">::</span><span class="fu">union_geoms</span>(countries_rs)</span>
+<span id="cb119-5"><a href="#cb119-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 sf           6.26ms   6.34ms      157.     121KB     2.09
-2 geos         75.6µs     79µs    12497.        0B     4.49
-3 rsgeo       394.4µs  413.9µs     2410.        0B     0   </code></pre>
+1 sf           7.66ms   7.98ms      125.     121KB     2.12
+2 geos        85.61µs  97.31µs    10170.        0B     2.20
+3 rsgeo      486.65µs 525.55µs     1896.        0B     0   </code></pre>
 </div>
 </div>
 </section>
