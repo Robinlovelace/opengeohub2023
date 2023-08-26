@@ -127,7 +127,7 @@ which gdal-config
 
 ![](images/paste-10.png)
 
-# Part 1: sf + dplyr + ggplot2
+# Part 1: Sections 2 and 3
 
 ## Key features of `sf`
 
@@ -143,7 +143,7 @@ Source: @pebesma2018
 
 ## Practical (\~13:30-14:30)
 
-Work through the code at [ogh23.robinlovelace.net/tidy](https://ogh23.robinlovelace.net/tidy) and answer the questions at your own pace.
+Work through the code in Section 2 and 3 at [ogh23.robinlovelace.net/tidy](https://ogh23.robinlovelace.net/tidy) and answer the questions at your own pace.
 
 ```{r}
 #| message: false
@@ -156,36 +156,57 @@ if (!requireNamespace("remotes")) {
 ```
 
 ```{r}
+# Some of the packages we'll use
+pkgs = c(
+    "sf",
+    "tidyverse",
+    "geos",
+    "spData"
+)
+```
+
+```{r}
 #| eval: false
 #| echo: true
-remotes::install_cran(pkgs)
+remotes::install_github("robinlovelace/opengeohub2023")
 ```
 
 ```{r}
 #| echo: true
 #| message: false
 #| warning: false
-# The packages we'll use
-pkgs = c(
-    "sf",
-    "tidyverse",
-    "geos",
-    "data.table",
-    "spData"
-)
 sapply(pkgs, require, character.only = TRUE)
 ```
 
-## 
-
-# Part 2: and friends
-
-## tidyverse alternatives
-
-...
+# Part 2: Sections 4 to 7
 
 ## geos
 
-...
+![](images/paste-13.png)
+
+## tidyverse alternatives
+
+![](images/paste-12.png)
+
+## Comparing R with Python
+
+Inspiration: Working with [Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh/) materials
+
+![](images/paste-14.png)
+
+## Vector data in R/Python
+
+Aim: cross-compare approaches
+
+Source: [Python version](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html#plotting-1) and [R version](https://ogh23.robinlovelace.net/tidy#worked-example-data-from-poznan)
+
+::: {layout-ncol="2"}
+
+![](images/paste-15.png)
+
+![](images/paste-16.png)
+
+:::
+
 
 # References
