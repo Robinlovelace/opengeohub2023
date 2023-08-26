@@ -453,17 +453,34 @@ pois_buffer = poi_sf |>
 ```
 
 ```{r}
+extra_tags = c("maxspeed", "foot", "bicycle")
+```
 
 ```{r}
-extra_tags = c("maxspeed", "foot", "bicycle")
+#| eval: false
 lines = osmextract::oe_get(
   "Poznan",
   layer = "lines",
   extra_tags = extra_tags,
   boundary = pois_buffer,
   boundary_type = "clipsrc"
-  )
-# extra lines within
+)
+```
+
+```{r}
+#| include: false
+lines = osmextract::oe_get(
+  "Poznan",
+  layer = "lines",
+  extra_tags = extra_tags,
+  boundary = pois_buffer,
+  boundary_type = "clipsrc"
+)
+```
+
+Filter out only the ones we need as follows:
+
+```{r}
 lines_highways = lines |>
   filter(!is.na(highway)) 
 plot(lines$geometry)
@@ -473,19 +490,33 @@ table(lines$highway)
 Let's add some polygons to the map, representing the buildings in the area.
 
 ```{r}
+#| eval: false
 polygons = osmextract::oe_get(
   "Poznan",
   layer = "multipolygons",
   boundary = pois_buffer,
   boundary_type = "clipsrc"
-  )
+)
+```
+
+```{r}
+#| include: false
+polygons = osmextract::oe_get(
+  "Poznan",
+  layer = "multipolygons",
+  boundary = pois_buffer,
+  boundary_type = "clipsrc"
+)
+```
+
+```{r}
 buildings = polygons |>
   filter(!is.na(building))
 polygons_geog = buildings |>
   filter(str_detect(name, "Geog"))
 ```
 
-We can plot the results as follows:
+Plot the results as follows:
 
 ```{r}
 #| label: fig-osm-pois
@@ -503,7 +534,7 @@ tm_shape(buildings) +
 1. Create `sf` objects representing the following features in Poznan (hint: try using functions for geocoding such as `stplanr::geo_code()` or `tmaptools::geocode_OSM()`):
     -   The main train station
     -   The airport
-2. Extract features in the surrounding area from OSM and plot them on the map.
+2. Identify interesting features in the surrounding area from OSM and plot them in static and interactive maps.
 
 # `tidyverse` + `geos`
 
