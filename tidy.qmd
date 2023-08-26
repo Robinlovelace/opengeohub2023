@@ -572,10 +572,50 @@ stops_nearby = stops[poi_buffers, ]
 stops_nearby
 ```
 
+### Spatial joins
+
+Spatial joins can be performed with the `st_join()` function as follows:
+
+```{r}
+pois_joined = st_join(poi_buffers, stops)
+pois_joined
+```
+
 ### Exercises
 
 1.  Create a static map of the stops in Poznan, using the `stops` object created above, with a mapping package of your preference. Set the colour of each stop by `zone_id`.
     - Bonus: also create an interactive map.
+
+## Raster data example
+
+Building on the introduction to [raster data with Python](https://geobgu.xyz/presentations/p_2023_ogh/02-raster.html), this section introduces raster data with the `{terra}` package.
+
+Load it as follows:
+
+```{r}
+library(terra)
+```
+
+Read-in and plot a single raster layer with the following command:
+
+```{r}
+#| label: fig-terra-plot
+#| fig.cap: "Plotting a single raster layer with terra"
+src = rast('data/hls/HLS.S30.T33UXU.2022200T095559.v2.0.B02.tiff')
+terra::plot(src, col = gray.colors(10))
+```
+
+We will translate the following Python code to R:
+
+```python
+files = glob.glob('data/hls/*.tiff')
+```
+
+```{r}
+files = list.files("data/hls", pattern = "tiff", full.names = TRUE)
+files
+```
+
 
 # `tidyverse` + `geos` workflows
 
