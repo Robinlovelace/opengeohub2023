@@ -12,6 +12,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Install R packages
 RUN R -e "install.packages('remotes')"
+RUN R -e "install.packages('rsgeo', repos = c('https://josiahparry.r-universe.dev', 'https://cloud.r-project.org'))"
 RUN R -e "remotes::install_github('robinlovelace/opengeohub2023')"
 
 # Set working directory
