@@ -526,9 +526,23 @@ stops_raw = read_csv('data/gtfs/stops.txt')
 stops_df = stops_raw |>
   select(-stop_code)
 stops = st_as_sf(stops_df, coords = c("stop_lon", "stop_lat"), crs = "EPSG:4326")
-
 ```
 
+### Buffers
+
+The most widly used way to create buffers in R is with the function `st_buffer()` from the `sf` package.
+Let's create buffers of 150 m around each of the points in the `opengeo_sf` dataset.
+This is done in the following chunk, which first checks to see if the `s2` spherical geometry engine is set to run (it is by default).
+
+```{r}
+sf::sf_use_s2()
+opengeo_buffers = st_buffer(opengeo_sf, dist = 150)
+```
+
+### Exercises
+
+1.  Create a static map of the stops in Poznan, using the `stops` object created above, with a mapping package of your preference. Set the colour of each stop by `zone_id`.
+    - Bonus: also create an interactive map.
 
 # `tidyverse` + `geos` workflows
 
