@@ -650,24 +650,26 @@ plotRGB(r, stretch = "lin")
 
 We can also remove outliers with the `stretch()` or `clamp()` functions or manually, as shown below:
 
-::: {#fig-terra-plot-rgb-clamp layout-ncol="2"}
-
 ```{r}
-#| layout-ncol: 2
 # r_clamp = clamp(r, 0, 4000)
-# plotRGB(r_clamp)
 r_stretch = stretch(r_rgb, minq = 0.001, maxq = 0.999)
-# summary(r_stretch)
-plotRGB(r_stretch)
 top_01pct = quantile(values(r_rgb), probs = 0.999, na.rm = TRUE)
 bottom_01pct = quantile(values(r_rgb), probs = 0.001, na.rm = TRUE)
 r_to_plot = r_rgb
 r_to_plot[r_rgb > top_01pct] = top_01pct
 r_to_plot[r_rgb < bottom_01pct] = bottom_01pct
+```
+
+::: {#fig-terra-plot-rgb-clamp layout-ncol="2"}
+
+```{r}
+#| layout-ncol: 2
+# summary(r_stretch)
+plotRGB(r_stretch)
 plotRGB(r_to_plot)
 ```
 
-Plotting a RGB raster layer with terra, with outliers removed with `clamp()` (left) and manually (right)
+Plotting a RGB raster layer with terra, with outliers handled with `stretch()` (left) and manually (right)
 
 :::
 
