@@ -573,8 +573,8 @@
 
 <img data-src="images/paste-10.png" class="r-stretch"></section></section>
 <section>
-<section id="part-1-sf-dplyr-ggplot2" class="title-slide slide level1 center">
-<h1>Part 1: sf + dplyr + ggplot2</h1>
+<section id="part-1-sections-2-and-3" class="title-slide slide level1 center">
+<h1>Part 1: Sections 2 and 3</h1>
 
 </section>
 <section id="key-features-of-sf" class="slide level2">
@@ -589,41 +589,50 @@
 </section>
 <section id="practical-1330-1430" class="slide level2">
 <h2>Practical (~13:30-14:30)</h2>
-<p>Work through the code at <a href="https://ogh23.robinlovelace.net/tidy">ogh23.robinlovelace.net/tidy</a> and answer the questions at your own pace.</p>
+<p>Work through the code in Section 2 and 3 at <a href="https://ogh23.robinlovelace.net/tidy">ogh23.robinlovelace.net/tidy</a> and answer the questions at your own pace.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"robinlovelace/opengeohub2023"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># The packages we'll use</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb6-3"><a href="#cb6-3"></a>    <span class="st">"sf"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4"></a>    <span class="st">"tidyverse"</span>,</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="st">"geos"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>    <span class="st">"data.table"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7"></a>    <span class="st">"spData"</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="fu">sapply</span>(pkgs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">sapply</span>(pkgs, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        sf  tidyverse       geos data.table     spData 
-      TRUE       TRUE       TRUE       TRUE       TRUE </code></pre>
+<pre><code>       sf tidyverse      geos    spData 
+     TRUE      TRUE      TRUE      TRUE </code></pre>
 </div>
 </div>
-</section>
-<section id="section" class="slide level2">
-<h2></h2>
 </section></section>
 <section>
-<section id="part-2-and-friends" class="title-slide slide level1 center">
-<h1>Part 2: and friends</h1>
+<section id="part-2-sections-4-to-7" class="title-slide slide level1 center">
+<h1>Part 2: Sections 4 to 7</h1>
 
-</section>
-<section id="tidyverse-alternatives" class="slide level2">
-<h2>tidyverse alternatives</h2>
-<p>…</p>
 </section>
 <section id="geos" class="slide level2">
 <h2>geos</h2>
-<p>…</p>
+
+<img data-src="images/paste-13.png" class="r-stretch"></section>
+<section id="tidyverse-alternatives" class="slide level2">
+<h2>tidyverse alternatives</h2>
+
+<img data-src="images/paste-12.png" class="r-stretch"></section>
+<section id="comparing-r-with-python" class="slide level2">
+<h2>Comparing R with Python</h2>
+<p>Inspiration: Working with <a href="https://geobgu.xyz/presentations/p_2023_ogh/">Spatial Data in Python</a> materials</p>
+
+<img data-src="images/paste-14.png" class="r-stretch"></section>
+<section id="vector-data-in-rpython" class="slide level2">
+<h2>Vector data in R/Python</h2>
+<p>Aim: cross-compare approaches</p>
+<p>Source: <a href="https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html#plotting-1">Python version</a> and <a href="https://ogh23.robinlovelace.net/tidy#worked-example-data-from-poznan">R version</a></p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="images/paste-15.png"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="images/paste-16.png"></p>
+</div>
+</div>
+</div>
 </section></section>
 <section id="references" class="title-slide slide level1 smaller scrollable">
 <h1>References</h1>

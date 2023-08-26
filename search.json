@@ -151,21 +151,35 @@
     "href": "tidy-slides.html#practical-1330-1430",
     "title": "Tidy geographic data",
     "section": "Practical (~13:30-14:30)",
-    "text": "Practical (~13:30-14:30)\nWork through the code at ogh23.robinlovelace.net/tidy and answer the questions at your own pace.\n\nremotes::install_cran(pkgs)\n\n\n# The packages we'll use\npkgs = c(\n    \"sf\",\n    \"tidyverse\",\n    \"geos\",\n    \"data.table\",\n    \"spData\"\n)\nsapply(pkgs, require, character.only = TRUE)\n\n        sf  tidyverse       geos data.table     spData \n      TRUE       TRUE       TRUE       TRUE       TRUE"
-  },
-  {
-    "objectID": "tidy-slides.html#tidyverse-alternatives",
-    "href": "tidy-slides.html#tidyverse-alternatives",
-    "title": "Tidy geographic data",
-    "section": "tidyverse alternatives",
-    "text": "tidyverse alternatives\n…"
+    "text": "Practical (~13:30-14:30)\nWork through the code in Section 2 and 3 at ogh23.robinlovelace.net/tidy and answer the questions at your own pace.\n\nremotes::install_github(\"robinlovelace/opengeohub2023\")\n\n\nsapply(pkgs, require, character.only = TRUE)\n\n       sf tidyverse      geos    spData \n     TRUE      TRUE      TRUE      TRUE"
   },
   {
     "objectID": "tidy-slides.html#geos",
     "href": "tidy-slides.html#geos",
     "title": "Tidy geographic data",
     "section": "geos",
-    "text": "geos\n…"
+    "text": "geos"
+  },
+  {
+    "objectID": "tidy-slides.html#tidyverse-alternatives",
+    "href": "tidy-slides.html#tidyverse-alternatives",
+    "title": "Tidy geographic data",
+    "section": "tidyverse alternatives",
+    "text": "tidyverse alternatives"
+  },
+  {
+    "objectID": "tidy-slides.html#comparing-r-with-python",
+    "href": "tidy-slides.html#comparing-r-with-python",
+    "title": "Tidy geographic data",
+    "section": "Comparing R with Python",
+    "text": "Comparing R with Python\nInspiration: Working with Spatial Data in Python materials"
+  },
+  {
+    "objectID": "tidy-slides.html#vector-data-in-rpython",
+    "href": "tidy-slides.html#vector-data-in-rpython",
+    "title": "Tidy geographic data",
+    "section": "Vector data in R/Python",
+    "text": "Vector data in R/Python\nAim: cross-compare approaches\nSource: Python version and R version"
   },
   {
     "objectID": "index.html",
@@ -298,7 +312,7 @@
     "href": "tidy.html#rsgeo",
     "title": "Tidy geographic data",
     "section": "6.2 rsgeo",
-    "text": "6.2 rsgeo\nA work in progress is the rsgeo package, which aims to provide an seamless interface between R and the geo Rust crate. This could open the possiblity of calling other high-performance Rust libraries from R, although the package is at an early stage of development and probably not ready for production use.\nWe can check the installation works as follows:\n\ninstall.packages('rsgeo', repos = c('https://josiahparry.r-universe.dev', 'https://cloud.r-project.org'))\n\n\nlibrary(rsgeo)\n\nWarning: Can't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\n\n\n\nAttaching package: 'rsgeo'\n\n\nThe following object is masked from 'package:terra':\n\n    centroids\n\n\nThe following object is masked from 'package:dplyr':\n\n    contains\n\n\nThe following object is masked from 'package:tidyr':\n\n    contains\n\n\nThe following objects are masked from 'package:ggplot2':\n\n    geom_point, geom_polygon\n\n\nThe following object is masked from 'package:base':\n\n    within\n\ncountries_rs  = as_rsgeom(sf::st_geometry(countries_projected))\ncountries_rs\n\n&lt;rs_MULTIPOLYGON[4]&gt;\n[1] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 783702.727085208...\n[2] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 961535.497772281...\n[3] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 747909.740613558...\n[4] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 209659.318221267...\n\nbench::mark(check = FALSE,\n  sf = sf::st_union(countries_projected),\n  geos = geos::geos_make_collection(geos::geos_unary_union(countries_geos)),\n  rsgeo = rsgeo::union_geoms(countries_rs)\n)\n\n# A tibble: 3 × 6\n  expression      min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 sf           6.63ms   7.18ms      135.    61.7KB     0   \n2 geos        135.4µs  159.1µs     5785.        0B     2.37\n3 rsgeo      492.31µs 544.11µs     1701.        0B     0"
+    "text": "6.2 rsgeo\nA work in progress is the rsgeo package, which aims to provide an seamless interface between R and the geo Rust crate. This could open the possiblity of calling other high-performance Rust libraries from R, although the package is at an early stage of development and probably not ready for production use.\nWe can check the installation works as follows:\n\ninstall.packages('rsgeo', repos = c('https://josiahparry.r-universe.dev', 'https://cloud.r-project.org'))\n\n\nlibrary(rsgeo)\n\nWarning: Can't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\nCan't find generic `is_geometry` in package sf to register S3 method.\nℹ This message is only shown to developers using devtools.\nℹ Do you need to update sf to the latest version?\n\n\n\nAttaching package: 'rsgeo'\n\n\nThe following object is masked from 'package:terra':\n\n    centroids\n\n\nThe following object is masked from 'package:dplyr':\n\n    contains\n\n\nThe following object is masked from 'package:tidyr':\n\n    contains\n\n\nThe following objects are masked from 'package:ggplot2':\n\n    geom_point, geom_polygon\n\n\nThe following object is masked from 'package:base':\n\n    within\n\ncountries_rs  = as_rsgeom(sf::st_geometry(countries_projected))\ncountries_rs\n\n&lt;rs_MULTIPOLYGON[4]&gt;\n[1] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 783702.727085208...\n[2] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 961535.497772281...\n[3] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 747909.740613558...\n[4] (MultiPolygon([Polygon { exterior: LineString([Coord { x: 209659.318221267...\n\nbench::mark(check = FALSE,\n  sf = sf::st_union(countries_projected),\n  geos = geos::geos_make_collection(geos::geos_unary_union(countries_geos)),\n  rsgeo = rsgeo::union_geoms(countries_rs)\n)\n\n# A tibble: 3 × 6\n  expression      min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 sf           5.72ms   6.64ms      147.    61.7KB     0   \n2 geos        119.7µs  144.5µs     6162.        0B     2.31\n3 rsgeo       421.5µs  513.8µs     1862.        0B     0"
   },
   {
     "objectID": "osm.html",
