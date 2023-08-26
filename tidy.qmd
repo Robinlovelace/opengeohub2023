@@ -149,9 +149,14 @@ class(countries_df)
 ```
 
 `ggplot2` is dedicated plotting package that is loaded when you load the `tidyverse`.
-It has native support for geographic objects, as shown in the figure below which shows the output of `plot(countries)` next to the equivalent `ggplot2` code.
+It has native support for geographic objects, as shown in @fig-plotting-basics, which shows the output of `plot(countries)` next to the equivalent `ggplot2` code.
 
 ```{r}
+#| label: fig-plotting-basics
+#| fig.cap: "Plotting geographic data with base R (left) and ggplot2 (right)"
+#| fig.subcap:
+#|   - "Base R"
+#|   - "ggplot2"
 #| layout-ncol: 2
 plot(countries)
 countries |>
@@ -213,7 +218,7 @@ drvs = sf::st_drivers() |>
 head(drvs)
 ```
 
-#### Exercises
+### Exercises
 
 1.  Re-create the `country_centroids` object, using `world_centroids` and `poland` and inputs, but this time using base R syntax with the `[` operator.
 
@@ -278,6 +283,8 @@ The operation creates a new variable called `contains_a` that is `TRUE` if the c
 Perhaps more impressively, it also automatically updated the geometry column of the combined countries containing the letter "a", highlighting `dplyr`'s ability to work with geographic data represented as `sf` objects.
 
 ```{r}
+#| label: fig-summarise
+#| fig.cap: "Result of running dplyr group_by() and summarise() functions on countries data"
 countries_summarised |>
   ggplot() +
     geom_sf(aes(fill = contains_a)) +
@@ -311,9 +318,11 @@ waldo::compare(countries_modified2$name_long, countries_base$name_long)
 ## Making maps with ggplot2
 
 As shown above, `geom_sf()` works 'out of the box' with geographic data.
-We can modify plotting commands to control outputs and generate publishable maps.
+We can modify plotting commands to control outputs as showing in @fig-geom-sf-fill and generate publishable maps.
 
 ```{r}
+#| label: fig-geom-sf-fill
+#| fig.cap: "Map created with ggplot2, with fill color controlled by the pop_density variable and multiple layers."
 library(ggspatial)
 countries |>
   ggplot() +
@@ -326,16 +335,19 @@ countries |>
 Map making is an iterative and time consuming process.
 Iterate on the code above, e.g. by changing the color palette, adding a title, and adding a legend.
 
-There are many add-ons to `ggplot2` and one that is highly recommended is `ggspatial`, which can be used to add a basemap to a plot with `annotation_map_tile()`.
+There are many add-ons to `ggplot2`.
+`ggspatial` can be used to add a basemap to a plot with `annotation_map_tile()`, as illustrated in @fig-annotation-map-tile.
 
 ```{r}
 #| message: false
+#| label: fig-annotation-map-tile
+#| fig.cap: "Map created with ggplot2, with a basemap added with annotation_map_tile()."
 rosm::osm.types()
 ggplot() +
   annotation_map_tile() +
-  layer_spatial(countries_modified, aes(fill = pop_density), linewidth = 3, alpha = 0.3) +
+  layer_spatial(countries_modified, aes(fill = pop_density),
+                linewidth = 3, alpha = 0.3) +
   scale_fill_viridis_c()
-
 ```
 
 ### Exercises
@@ -475,6 +487,49 @@ tm_shape(opengeo_sf) +
 Interactive maps of 4 locations in Poznan made with 7 lines of code with `{leaflet}` (left), and 1 line of `{tmap}` code (right).
 
 :::
+
+Turn off the interactive mode as follows.
+
+```{r}
+tmap_mode("plot")
+```
+
+The next code chunk reads-in a larger dataset, representing transport-related features around Poznan (note: you need to have downloaded and unzipped the `data.zip` file into your project or working directory for this to work):
+
+```{r}
+pol_all = sf::read_sf("./data/osm/gis_osm_transport_a_free_1.shp")
+pol_all
+```
+
+Let's filter-out a feature that matches a particular character string:
+
+```{r}
+pol = pol_all |>
+  filter(str_detect(name, "Port*.+Poz"))
+```
+
+Plot it, first with base R and then with `{ggplot2}`and `{tmap}`, resulting in maps shown below.
+
+```{r}
+#| layout-ncol: 3
+#| column: screen-inset-shaded
+plot(pol)
+pol |>
+  ggplot() +
+  geom_sf()
+tm_shape(pol) + tm_polygons()
+```
+
+We'll read-in a point layer from a CSV file as shown below.
+
+```{r}
+stops_raw = read_csv('data/gtfs/stops.txt')
+stops_df = stops_raw |>
+  select(-stop_code)
+stops = st_as_sf(stops_df, coords = c("stop_lon", "stop_lat"), crs = "EPSG:4326")
+
+```
+
 
 # `tidyverse` + `geos` workflows
 
