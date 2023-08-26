@@ -380,7 +380,6 @@ To get the data for this session, download and unzip the [data.zip](https://gith
 You can do that in R with the following commands:
 
 ```{r}
-#| eval: false
 u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
 f = basename(u)
 if (!dir.exists("data")) {
