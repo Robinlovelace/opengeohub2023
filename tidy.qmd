@@ -722,7 +722,6 @@ tm_shape(stretch(r_cropped[[c("Red", "Green", "Blue")]], minq = 0.001, maxq= 0.9
 
 # `tidyverse` + `geos` workflows
 
-
 The [`geos` package](https://paleolimbot.github.io/geos/) provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data.
 Load it as follows:
 
@@ -732,8 +731,24 @@ library(geos)
 
 `geos` works well with the `tidyverse` and `sf` packages, as shown below.
 
+## Finding suitable coordinate reference systems
+
+`geos` is designed to work with projected data, so we will reproject the `countries` object to a different CRS before proceeding.
+
 ```{r}
-countries_geos = as_geos_geometry(sf::st_geometry(countries))
+suitable_crs = crsuggest::suggest_crs(countries)
+suitable_crs
+```
+
+We'll use the first of these.
+
+```{r}
+crs1 = paste0("EPSG:", suitable_crs$crs_code[1])
+countries_projected = sf::st_transform(countries, crs = crs1)
+```
+
+```{r}
+countries_geos = as_geos_geometry(sf::st_geometry(countries_projected))
 countries_geos
 ```
 
@@ -802,7 +817,7 @@ bench::mark(check = FALSE,
   geos = countries_geos |>
     geos_make_collection() |>
     geos_unary_union(),
-  sf = countries |>
+  sf = countries_projected |>
     st_union()
 )
 ```
@@ -861,10 +876,10 @@ install.packages('rsgeo', repos = c('https://josiahparry.r-universe.dev', 'https
 
 ```{r}
 library(rsgeo)
-countries_rs  = as_rsgeom(sf::st_geometry(countries))
+countries_rs  = as_rsgeom(sf::st_geometry(countries_projected))
 countries_rs
 bench::mark(check = FALSE,
-  sf = sf::st_union(countries),
+  sf = sf::st_union(countries_projected),
   geos = geos::geos_make_collection(geos::geos_unary_union(countries_geos)),
   rsgeo = rsgeo::union_geoms(countries_rs)
 )

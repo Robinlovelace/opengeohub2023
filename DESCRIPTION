@@ -22,7 +22,8 @@ Imports:
     collapse,
     tmap,
     languageserver,
-    terra
+    terra,
+    crsuggest
 Suggests:
     rsgeo
 Remotes: 
