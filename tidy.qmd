@@ -585,6 +585,8 @@ pois_joined
 
 1.  Create a static map of the stops in Poznan, using the `stops` object created above, with a mapping package of your preference. Set the colour of each stop by `zone_id`.
     - Bonus: also create an interactive map.
+2. **Advanced**: Reproduce the results presented above by following the Python code at [geobgu.xyz/presentations/p_2023_ogh/01-vector.html](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html).
+    - Which language do you prefer for the types of task presented here and why?
 
 ## Raster data example
 
@@ -622,6 +624,14 @@ r
 summary(r)
 ```
 
+We can plot the result as follows:
+
+```{r}
+#| label: fig-terra-plot-basic
+#| fig.cap: "Output of `plot(r)`, showing the four bands of the raster layer"
+plot(r)
+```
+
 As shown, the result is an object with Blue, Green, Red and NIR bands, in that order.
 We can select only Red, Green, Blue bands, in that order, as follows:
 
@@ -629,12 +639,23 @@ We can select only Red, Green, Blue bands, in that order, as follows:
 r_rgb = r[[c("Red", "Green", "Blue")]]
 ```
 
-If you try plotting the result with `plot(r)`, you will get an error.
-For plotting, we can remove outliers as follows:
+If you try plotting the result with `plotRGB(r)`, you will get an error.
+You can use the `stretch` argument to stretch the values and avoid errors caused by outliers.
 
 ```{r}
 #| label: fig-terra-plot-rgb
 #| fig.cap: "Plotting a RGB raster layer with terra"
+plotRGB(r, stretch = "lin")
+```
+
+We can also remove outliers with the `clamp()` function or manually, as shown below:
+
+::: {#fig-terra-plot-rgb-clamp layout-ncol="2"}
+
+```{r}
+#| layout-ncol: 2
+r_clamp = clamp(r, 0, 4000)
+plotRGB(r_clamp)
 top_01pct = quantile(values(r_rgb), probs = 0.999, na.rm = TRUE)
 bottom_01pct = quantile(values(r_rgb), probs = 0.001, na.rm = TRUE)
 r_to_plot = r_rgb
@@ -642,6 +663,25 @@ r_to_plot[r_rgb > top_01pct] = top_01pct
 r_to_plot[r_rgb < bottom_01pct] = bottom_01pct
 plotRGB(r_to_plot)
 ```
+
+Plotting a RGB raster layer with terra, with outliers removed with `clamp()` (left) and manually (right)
+
+:::
+
+Save the combined raster as follows:
+
+```{r}
+#| eval: false
+# write the r file:
+writeRaster(r, "data/hls/combined.tif", overwrite = TRUE)
+writeRaster(r_to_plot, "data/hls/r_to_plot.tif", overwrite = TRUE)
+```
+
+### Exercises
+
+1. Experiment with arguments passed to `clamp()`, `stretch()` and `plotRGB()` to see how they affect the output.
+2. Try plotting the raster in another program like QGIS, which looks better?
+
 
 # `tidyverse` + `geos` workflows
 
