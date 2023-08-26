@@ -358,8 +358,154 @@ ggplot() +
 4.  Bonus: try reproducing maps presented in [Chapter 9](https://r.geocompx.org/adv-map.html) of Geocomputation with R with `ggplot2` and `ggspatial`. Which mapping framework do you prefer and why?
 5.  If you use raster data, take a look at the [`tidyterra`](https://dieghernan.github.io/tidyterra/) documentation.
 
+# Data from OSM and data frames
 
-# `tidyverse` + `geos` workflows
+We'll start this section by creating some data ourselves, representing 4 points of interest (pois) in relation to the OpenGeoHub Summer School 2023.
+
+```{r}
+#| eval: false
+#| echo: false
+fair_playce_poznan = stplanr::geo_code("FairPlayce, Poznan")
+fair_playce_poznan
+```
+
+```{r}
+poi_df = tribble(
+  ~name, ~lon, ~lat,
+  "Faculty",        16.9418, 52.4643,
+  "Hotel ForZa",    16.9474, 52.4436,
+  "Hotel Lechicka", 16.9308, 52.4437,
+  "FairPlayce",     16.9497, 52.4604
+)
+poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"))
+sf::st_crs(poi_sf) = "EPSG:4326"
+```
+
+
+```{r}
+#| eval: false
+# column: screen-inset-shaded
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(
+    lng = poi_df$lon,
+    lat = poi_df$lat,
+    popup = poi_df$name
+  )
+```
+
+For comparison, we can create the same map with a single line of code with `{tmap}` (after loading and setting-up the package) as follows:
+
+```{r}
+library(tmap)
+tmap_mode("view")
+```
+
+We will also check the version of `{tmap}` that we're using, in anticipation of a major update (to v4, expected later in 2023).
+
+```{r}
+#| eval: false
+tm_shape(poi_sf) + tm_bubbles(popup.vars = "name")
+```
+
+The interactive maps below illustrate the outputs of the preceding map-making commands, highlighting the convenience of using `{tmap}`, which requires far fewer lines of code, although `{leaflet}` and other low-level map-making packages can offer more control.
+
+::: {#fig-interactive layout-ncol="2"}
+
+```{r}
+#| column: screen-inset-shaded
+#| layout-ncol: 2
+#| echo: false
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(
+    lng = poi_df$lon,
+    lat = poi_df$lat,
+    popup = poi_df$name
+  )
+
+tm_shape(poi_sf) +
+  tm_symbols(popup.vars = "name") +
+  tm_scale_bar()
+```
+
+Interactive maps of 4 locations in Poznan made with 7 lines of code with `{leaflet}` (left), and 1 line of `{tmap}` code (right).
+
+:::
+
+Turn off the interactive mode as follows.
+
+```{r}
+tmap_mode("plot")
+```
+
+As a taster for the OSM workshop, let's read-in some data from OSM.
+As our study area, we'll use a 500 m buffer around the convex hull of the Faculty and FairPlayce points.
+
+```{r}
+pois_buffer = poi_sf |>
+  filter(str_detect(name, "Fair|Faculty")) |>
+  st_union() |>
+  st_convex_hull() |>
+  st_buffer(dist = 500)
+```
+
+```{r}
+
+```{r}
+extra_tags = c("maxspeed", "foot", "bicycle")
+lines = osmextract::oe_get(
+  "Poznan",
+  layer = "lines",
+  extra_tags = extra_tags,
+  boundary = pois_buffer,
+  boundary_type = "clipsrc"
+  )
+# extra lines within
+lines_highways = lines |>
+  filter(!is.na(highway)) 
+plot(lines$geometry)
+table(lines$highway)
+```
+
+Let's add some polygons to the map, representing the buildings in the area.
+
+```{r}
+polygons = osmextract::oe_get(
+  "Poznan",
+  layer = "multipolygons",
+  boundary = pois_buffer,
+  boundary_type = "clipsrc"
+  )
+buildings = polygons |>
+  filter(!is.na(building))
+polygons_geog = buildings |>
+  filter(str_detect(name, "Geog"))
+```
+
+We can plot the results as follows:
+
+```{r}
+#| label: fig-osm-pois
+#| fig.cap: "OSM data from Poznan, Poland, with lines and polygons."
+tm_shape(buildings) +
+  tm_fill("lightgrey") +
+  tm_shape(lines_highways) +
+  tm_lines() +
+  tm_shape(polygons_geog) +
+  tm_polygons(col = "red") 
+```
+
+## Exercises
+
+1. Create `sf` objects representing the following features in Poznan (hint: try using functions for geocoding such as `stplanr::geo_code()` or `tmaptools::geocode_OSM()`):
+    -   The main train station
+    -   The airport
+2. Extract features in the surrounding area from OSM and plot them on the map.
+
+# `tidyverse` + `geos`
 
 The [`geos` package](https://paleolimbot.github.io/geos/) provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data.
 Load it as follows:
@@ -503,101 +649,7 @@ list.files("data")[1:3]
 
 ## Vector data
 
-We'll start with a dataset that we'll create ourselves, representing 4 points of interest (pois) in relation to the OpenGeoHub Summer School 2023.
-
-```{r}
-#| eval: false
-#| echo: false
-fair_playce_poznan = stplanr::geo_code("FairPlayce, Poznan")
-fair_playce_poznan
-
-```
-
-```{r}
-poi_df = tribble(
-  ~name, ~lon, ~lat,
-  "Faculty",        16.9418, 52.4643,
-  "Hotel ForZa",    16.9474, 52.4436,
-  "Hotel Lechicka", 16.9308, 52.4437,
-  "FairPlayce",     16.9497, 52.4604
-)
-poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"))
-sf::st_crs(poi_sf) = "EPSG:4326"
-```
-
-````{=html}
-<!-- 
-```python
-#| echo: false
-#| eval: false
-# Python equivalent:
-pnt1 = shapely.Point([16.9418, 52.4643]) #   'Faculty', 
-pnt2 = shapely.Point([16.9474, 52.4436]) #    'Hotel ForZa', 
-pnt3 = shapely.Point([16.9308, 52.4437]) #    'HL Hotel Lechicka'
-pnt4 = shapely.Point([16.9497, 52.4604]) #    'FairPlayce Hotel'
-``` 
--->
-````
-
-```{r}
-#| eval: false
-# column: screen-inset-shaded
-library(leaflet)
-leaflet() %>%
-  addTiles() %>%  # Add default OpenStreetMap map tiles
-  addMarkers(
-    lng = poi_df$lon,
-    lat = poi_df$lat,
-    popup = poi_df$name
-  )
-```
-
-For comparison, we can create the same map with a single line of code with `{tmap}` (after loading and setting-up the package) as follows:
-
-```{r}
-library(tmap)
-tmap_mode("view")
-```
-
-We will also check the version of `{tmap}` that we're using, in anticipation of a major update (to v4, expected later in 2023).
-
-```{r}
-#| eval: false
-tm_shape(poi_sf) + tm_bubbles(popup.vars = "name")
-```
-
-The interactive maps below illustrate the outputs of the preceding map-making commands, highlighting the convenience of using `{tmap}`, which requires far fewer lines of code, although `{leaflet}` and other low-level map-making packages can offer more control.
-
-::: {#fig-rasterisation layout-ncol="2"}
-
-```{r}
-#| column: screen-inset-shaded
-#| layout-ncol: 2
-#| echo: false
-library(leaflet)
-leaflet() %>%
-  addTiles() %>%  # Add default OpenStreetMap map tiles
-  addMarkers(
-    lng = poi_df$lon,
-    lat = poi_df$lat,
-    popup = poi_df$name
-  )
-
-tm_shape(poi_sf) +
-  tm_symbols(popup.vars = "name")
-```
-
-Interactive maps of 4 locations in Poznan made with 7 lines of code with `{leaflet}` (left), and 1 line of `{tmap}` code (right).
-
-:::
-
-Turn off the interactive mode as follows.
-
-```{r}
-tmap_mode("plot")
-```
-
-The next code chunk reads-in a larger dataset, representing transport-related features around Poznan (note: you need to have downloaded and unzipped the `data.zip` file into your project or working directory for this to work):
+Let's start by reading-in a dataset representing transport-related features around Poznan (note: you need to have downloaded and unzipped the `data.zip` file into your project or working directory for this to work):
 
 ```{r}
 pol_all = sf::read_sf("./data/osm/gis_osm_transport_a_free_1.shp")

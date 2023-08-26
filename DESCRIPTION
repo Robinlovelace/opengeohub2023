@@ -23,7 +23,8 @@ Imports:
     tmap,
     languageserver,
     terra,
-    crsuggest
+    crsuggest,
+    osmextract
 Suggests:
     rsgeo
 Remotes: 
