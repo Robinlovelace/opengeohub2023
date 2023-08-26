@@ -481,7 +481,7 @@ leaflet() %>%
   )
 
 tm_shape(opengeo_sf) +
-  tm_bubbles(popup.vars = "name", clustering = FALSE)
+  tm_symbols(popup.vars = "name")
 ```
 
 Interactive maps of 4 locations in Poznan made with 7 lines of code with `{leaflet}` (left), and 1 line of `{tmap}` code (right).
