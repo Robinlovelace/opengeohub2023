@@ -640,7 +640,7 @@ r_rgb = r[[c("Red", "Green", "Blue")]]
 ```
 
 If you try plotting the result with `plotRGB(r)`, you will get an error.
-You can use the `stretch` argument to stretch the values and avoid errors caused by outliers.
+You can use the `stretch` argument of the function to stretch the values and avoid errors caused by outliers.
 
 ```{r}
 #| label: fig-terra-plot-rgb
@@ -648,14 +648,17 @@ You can use the `stretch` argument to stretch the values and avoid errors caused
 plotRGB(r, stretch = "lin")
 ```
 
-We can also remove outliers with the `clamp()` function or manually, as shown below:
+We can also remove outliers with the `stretch()` or `clamp()` functions or manually, as shown below:
 
 ::: {#fig-terra-plot-rgb-clamp layout-ncol="2"}
 
 ```{r}
 #| layout-ncol: 2
-r_clamp = clamp(r, 0, 4000)
-plotRGB(r_clamp)
+# r_clamp = clamp(r, 0, 4000)
+# plotRGB(r_clamp)
+r_stretch = stretch(r_rgb, minq = 0.001, maxq = 0.999)
+# summary(r_stretch)
+plotRGB(r_stretch)
 top_01pct = quantile(values(r_rgb), probs = 0.999, na.rm = TRUE)
 bottom_01pct = quantile(values(r_rgb), probs = 0.001, na.rm = TRUE)
 r_to_plot = r_rgb
@@ -677,11 +680,43 @@ writeRaster(r, "data/hls/combined.tif", overwrite = TRUE)
 writeRaster(r_to_plot, "data/hls/r_to_plot.tif", overwrite = TRUE)
 ```
 
+### Masking and cropping
+
+We can mask the raster with the `pol` polygon object as follows:
+
+```{r}
+pol_projected = sf::st_transform(pol, crs = crs(r))
+r_masked = mask(r, pol_projected)
+summary(r_masked)
+```
+
+As shown in the summary of the result, the majority of the values are now NA.
+That's how masking works: it sets all values outside the polygon to NA.
+We can crop the raster to a 500 m buffer around the polygon as follows:
+
+```{r}
+r_cropped = crop(r, sf::st_buffer(pol_projected, dist = 500))
+```
+
+Let's plot the result, illustrated in @fig-terra-plot-rgb-cropped.
+
+```{r}
+#| label: fig-terra-plot-rgb-cropped
+#| fig.cap: "Result of plotting a cropped RGB raster layer with the tmap package"
+tm_shape(stretch(r_cropped[[c("Red", "Green", "Blue")]], minq = 0.001, maxq= 0.98)) +
+  tm_rgb() +
+  tm_shape(pol_projected) +
+  tm_borders(col = "white", lty = 3) +
+  tm_fill(col = "red", alpha = 0.1) +
+  tm_scale_bar(bg.color = "white", bg.alpha = 0.6, text.size = 0.8) 
+```
+
 ### Exercises
 
 1. Experiment with arguments passed to `clamp()`, `stretch()` and `plotRGB()` to see how they affect the output.
 2. Try plotting the raster in another program like QGIS, which looks better?
-
+3. **Advanced**: Reproduce the results presented above by following the Python code at [geobgu.xyz/presentations/p_2023_ogh/02-raster.html](https://geobgu.xyz/presentations/p_2023_ogh/02-raster.html).
+    - Which language do you prefer for the types of task presented here and why?
 
 # `tidyverse` + `geos` workflows
 
