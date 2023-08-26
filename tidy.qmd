@@ -358,6 +358,113 @@ ggplot() +
 4.  Bonus: try reproducing maps presented in [Chapter 9](https://r.geocompx.org/adv-map.html) of Geocomputation with R with `ggplot2` and `ggspatial`. Which mapping framework do you prefer and why?
 5.  If you use raster data, take a look at the [`tidyterra`](https://dieghernan.github.io/tidyterra/) documentation.
 
+
+# `tidyverse` + `geos` workflows
+
+The [`geos` package](https://paleolimbot.github.io/geos/) provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data.
+Load it as follows:
+
+```{r}
+library(geos)
+```
+
+`geos` works well with the `tidyverse` and `sf` packages, as shown below.
+
+## Finding suitable coordinate reference systems
+
+`geos` is designed to work with projected data, so we will reproject the `countries` object to a different CRS before proceeding.
+
+```{r}
+suitable_crs = crsuggest::suggest_crs(countries)
+suitable_crs
+```
+
+We'll use the first of these.
+
+```{r}
+crs1 = paste0("EPSG:", suitable_crs$crs_code[1])
+countries_projected = sf::st_transform(countries, crs = crs1)
+```
+
+```{r}
+countries_geos = as_geos_geometry(sf::st_geometry(countries_projected))
+countries_geos
+```
+
+The package only deals with geometries: the attribute data is removed when you convert an `sf` object to a `geos` object.
+You can store `geos` objects in a data frame and still use `dplyr` functions to process them:
+
+```{r}
+countries_geos_df = bind_cols(countries_df, geos = countries_geos)
+countries_summarised_df = countries_geos_df |>
+  group_by(contains_a = str_detect(name_long, "a")) |>
+  summarise(n = n(), mean_pop = mean(pop))
+countries_summarised_df
+```
+
+Note: the `geos` column has gone!
+This is because `geos` columns are not 'sticky' like `sf` columns.
+Let's see how to get them back.
+
+```{r}
+#| layout-ncol: 2
+countries_union1 = countries_geos |>
+  geos_unary_union()
+plot(countries_union1)
+countries_union2 = countries_geos |>
+  geos_make_collection() |>
+  geos_unary_union()
+plot(countries_union2)
+```
+
+However, you can add the union of the grouped columns as follows:
+
+```{r}
+countries_summarised_geos = countries_geos_df |>
+  group_by(contains_a = str_detect(name_long, "a")) |>
+  summarise(n = n(), mean_pop = mean(pop),
+  geometry = geos_unary_union(geos_make_collection(geos)))
+countries_summarised_geos
+plot(countries_summarised_geos$geometry)
+```
+
+Convert back to an `sf` object as follows:
+
+```{r}
+countries_summarised_geos_sf = st_as_sf(countries_summarised_geos)
+# waldo::compare(
+#   countries_summarised,
+#   countries_summarised_geos_sf
+#   )
+```
+
+Aside from geometry names and minor differences in the geometries, the two objects are identical.
+This raises the question: why use `geos` at all?
+The answer can be found by following the exercises below.
+
+## Exercises
+
+1.  Benchmark the union operation in `geos` and `sf` with the `bench::mark()` function.
+    -   Which is faster?
+    -   Which is easier to use?
+    -   Which do you prefer?
+
+```{r}
+#| eval: false
+#| echo: false
+bench::mark(check = FALSE,
+  geos = countries_geos |>
+    geos_make_collection() |>
+    geos_unary_union(),
+  geos_to_sf = countries_geos |>
+    geos_make_collection() |>
+    geos_unary_union() |>
+    st_as_sf(),
+  sf = countries_projected |>
+    st_union()
+)
+```
+
 # Worked example: data from Poznan
 
 For many people 'learning by doing' is the most effective way to pick up new technical skills.
@@ -720,109 +827,7 @@ tm_shape(stretch(r_cropped[[c("Red", "Green", "Blue")]], minq = 0.001, maxq= 0.9
 3. **Advanced**: Reproduce the results presented above by following the Python code at [geobgu.xyz/presentations/p_2023_ogh/02-raster.html](https://geobgu.xyz/presentations/p_2023_ogh/02-raster.html).
     - Which language do you prefer for the types of task presented here and why?
 
-# `tidyverse` + `geos` workflows
-
-The [`geos` package](https://paleolimbot.github.io/geos/) provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data.
-Load it as follows:
-
-```{r}
-library(geos)
-```
-
-`geos` works well with the `tidyverse` and `sf` packages, as shown below.
-
-## Finding suitable coordinate reference systems
-
-`geos` is designed to work with projected data, so we will reproject the `countries` object to a different CRS before proceeding.
-
-```{r}
-suitable_crs = crsuggest::suggest_crs(countries)
-suitable_crs
-```
-
-We'll use the first of these.
-
-```{r}
-crs1 = paste0("EPSG:", suitable_crs$crs_code[1])
-countries_projected = sf::st_transform(countries, crs = crs1)
-```
-
-```{r}
-countries_geos = as_geos_geometry(sf::st_geometry(countries_projected))
-countries_geos
-```
-
-The package only deals with geometries: the attribute data is removed when you convert an `sf` object to a `geos` object.
-You can store `geos` objects in a data frame and still use `dplyr` functions to process them:
-
-```{r}
-countries_geos_df = bind_cols(countries_df, geos = countries_geos)
-countries_summarised_df = countries_geos_df |>
-  group_by(contains_a = str_detect(name_long, "a")) |>
-  summarise(n = n(), mean_pop = mean(pop))
-countries_summarised_df
-```
-
-Note: the `geos` column has gone!
-This is because `geos` columns are not 'sticky' like `sf` columns.
-Let's see how to get them back.
-
-```{r}
-#| layout-ncol: 2
-countries_union1 = countries_geos |>
-  geos_unary_union()
-plot(countries_union1)
-countries_union2 = countries_geos |>
-  geos_make_collection() |>
-  geos_unary_union()
-plot(countries_union2)
-```
-
-However, you can add the union of the grouped columns as follows:
-
-```{r}
-countries_summarised_geos = countries_geos_df |>
-  group_by(contains_a = str_detect(name_long, "a")) |>
-  summarise(n = n(), mean_pop = mean(pop),
-  geometry = geos_unary_union(geos_make_collection(geos)))
-countries_summarised_geos
-plot(countries_summarised_geos$geometry)
-```
-
-Convert back to an `sf` object as follows:
-
-```{r}
-countries_summarised_geos_sf = st_as_sf(countries_summarised_geos)
-# waldo::compare(
-#   countries_summarised,
-#   countries_summarised_geos_sf
-#   )
-```
-
-Aside from geometry names and minor differences in the geometries, the two objects are identical.
-This raises the question: why use `geos` at all?
-The answer can be found by following the exercises below.
-
-## Exercises
-
-1.  Benchmark the union operation in `geos` and `sf` with the `bench::mark()` function.
-    -   Which is faster?
-    -   Which is easier to use?
-    -   Which do you prefer?
-
-```{r}
-#| eval: false
-#| echo: false
-bench::mark(check = FALSE,
-  geos = countries_geos |>
-    geos_make_collection() |>
-    geos_unary_union(),
-  sf = countries_projected |>
-    st_union()
-)
-```
-
-# + friends
+# Other tidy packages
 
 There are many packages that integrate with the `tidyverse`, or which are inspired by it.
 Options include:
