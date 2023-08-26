@@ -25,5 +25,4 @@ Imports:
 Suggests:
     rsgeo
 Remotes: 
-    r-tmap/tmap@v4,
     JosiahParry/rsgeo
