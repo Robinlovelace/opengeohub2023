@@ -21,7 +21,8 @@ Imports:
     bench,
     collapse,
     tmap,
-    languageserver
+    languageserver,
+    terra
 Suggests:
     rsgeo
 Remotes: 

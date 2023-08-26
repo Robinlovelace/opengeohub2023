@@ -616,8 +616,35 @@ files = list.files("data/hls", pattern = "tiff", full.names = TRUE)
 files
 ```
 
+```{r}
+r = rast(files)
+r
+summary(r)
+```
+
+As shown, the result is an object with Blue, Green, Red and NIR bands, in that order.
+We can select only Red, Green, Blue bands, in that order, as follows:
+
+```{r}
+r_rgb = r[[c("Red", "Green", "Blue")]]
+```
+
+If you try plotting the result with `plot(r)`, you will get an error.
+For plotting, we can remove outliers as follows:
+
+```{r}
+#| label: fig-terra-plot-rgb
+#| fig.cap: "Plotting a RGB raster layer with terra"
+top_01pct = quantile(values(r_rgb), probs = 0.999, na.rm = TRUE)
+bottom_01pct = quantile(values(r_rgb), probs = 0.001, na.rm = TRUE)
+r_to_plot = r_rgb
+r_to_plot[r_rgb > top_01pct] = top_01pct
+r_to_plot[r_rgb < bottom_01pct] = bottom_01pct
+plotRGB(r_to_plot)
+```
 
 # `tidyverse` + `geos` workflows
+
 
 The [`geos` package](https://paleolimbot.github.io/geos/) provides a simple and high-performance interface to the GEOS library for performing geometric operations on geographic data.
 Load it as follows:
