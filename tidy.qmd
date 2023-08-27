@@ -554,12 +554,14 @@ Let's create an animated map:
 ```{r}
 #| eval: false
 # ?tmap_animation
-m_faceted = tm_shape(gpx_mutated) +
+m_faceted = tm_shape(gpx_mutated[pois_buffer, ]) +
   tm_dots("minute", size = 0.5, legend.show = FALSE) +
   tm_facets("minute", free.coords = FALSE, ncol = 1, nrow = 1) +
   tm_scale_bar()
-tmap_animation(m_faceted, delay = 5)
+tmap_animation(m_faceted, delay = 10, filename = "gpx.gif")
 ```
+
+![](gpx.gif)
 
 
 ## Exercises
