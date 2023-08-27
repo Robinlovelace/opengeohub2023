@@ -884,6 +884,7 @@ plotRGB(r, stretch = "lin")
 We can also remove outliers with the `stretch()` or `clamp()` functions or manually, as shown below:
 
 ```{r}
+#| eval: false
 # r_clamp = clamp(r, 0, 4000)
 r_stretch = stretch(r_rgb, minq = 0.001, maxq = 0.999)
 top_01pct = quantile(values(r_rgb), probs = 0.999, na.rm = TRUE)
@@ -893,11 +894,22 @@ r_to_plot[r_rgb > top_01pct] = top_01pct
 r_to_plot[r_rgb < bottom_01pct] = bottom_01pct
 ```
 
-::: {#fig-terra-plot-rgb-clamp layout-ncol="2"}
+```{r}
+#| include: false
+# r_clamp = clamp(r, 0, 4000)
+r_stretch = stretch(r_rgb, minq = 0.001, maxq = 0.999)
+top_01pct = quantile(values(r_rgb), probs = 0.999, na.rm = TRUE)
+bottom_01pct = quantile(values(r_rgb), probs = 0.001, na.rm = TRUE)
+r_to_plot = r_rgb
+r_to_plot[r_rgb > top_01pct] = top_01pct
+r_to_plot[r_rgb < bottom_01pct] = bottom_01pct
+```
+
+::: {#fig-terra-plot-rgb-clamp}
 
 ```{r}
+#| echo: false
 #| layout-ncol: 2
-# summary(r_stretch)
 plotRGB(r_stretch)
 plotRGB(r_to_plot)
 ```
