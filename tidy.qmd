@@ -8,10 +8,6 @@ number-sections: true
 bibliography: references.bib
 ---
 
-```{r setup-knitr}
-# knitr::opts_chunk$set(cache = TRUE)
-```
-
 These materials were created for the OpenGeoHub Summer School 2023.
 
 They can be used with reference to the accompanying slides, available at [ogh23.robinlovelace.net/opengeohub2023](https://ogh23.robinlovelace.net/tidy-slides.html).
@@ -521,7 +517,7 @@ Plot the results as follows:
 ```{r}
 #| label: fig-osm-pois
 #| fig.cap: "OSM data from Poznan, Poland, with lines and polygons."
-tm_shape(buildings) +
+m_osm = tm_shape(buildings) +
   tm_fill("lightgrey") +
   tm_shape(lines_highways) +
   tm_lines() +
@@ -545,24 +541,35 @@ We can divide the GPS points into n groups of equal length as follows:
 
 ```{r}
 gpx_mutated = gpx |>
-  mutate(minute = lubridate::round_date(time, "minute"))
+  mutate(minute = lubridate::round_date(time, "minute")) |>
+  mutate(second = lubridate::round_date(time, "second")) 
 summary(gpx_mutated$minute)
 ```
 
-Let's create an animated map:
+Let's create an animated map, as illustrated in @fig-gpx, with the following code:
 
 ```{r}
 #| eval: false
 # ?tmap_animation
-m_faceted = tm_shape(gpx_mutated[pois_buffer, ]) +
-  tm_dots("minute", size = 0.5, legend.show = FALSE) +
-  tm_facets("minute", free.coords = FALSE, ncol = 1, nrow = 1) +
+m_faceted = m_osm +
+  tm_shape(gpx_mutated[pois_buffer, ]) +
+  tm_dots(size = 0.8, legend.show = FALSE) +
+  tm_facets("second", free.coords = FALSE, ncol = 1, nrow = 1) +
   tm_scale_bar()
-tmap_animation(m_faceted, delay = 10, filename = "gpx.gif")
+tmap_animation(m_faceted, delay = 2, filename = "gpx.gif")
 ```
 
-![](gpx.gif)
+<!---
+ ![](gpx.gif) 
+--->
 
+::: {#fig-gpx}
+
+![](https://user-images.githubusercontent.com/1825120/263552520-4079b188-f921-4c6f-9391-bfd7891a4f52.gif){width="100%"}
+
+Animated map of a GPX file representing a route from central Poznan to FairPlayce.
+
+:::
 
 ## Exercises
 
@@ -1002,7 +1009,7 @@ install.packages('rsgeo', repos = c('https://josiahparry.r-universe.dev', 'https
 
 ```{r}
 library(rsgeo)
-countries_rs  = as_rsgeom(sf::st_geometry(countries_projected))
+countries_rs  = as_rsgeo(sf::st_geometry(countries_projected))
 countries_rs
 bench::mark(check = FALSE,
   sf = sf::st_union(countries_projected),
