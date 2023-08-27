@@ -529,6 +529,39 @@ tm_shape(buildings) +
   tm_polygons(col = "red") 
 ```
 
+## Loading a GPX file
+
+Let's load a GPX file representing a route from the Faculty to FairPlayce.
+
+```{r}
+u_gpx = "https://www.openstreetmap.org/trace/9741677/data"
+f_gpx = paste0(basename(u_gpx), ".gpx")
+download.file(u_gpx, f_gpx)
+sf::st_layers(f_gpx)
+gpx = sf::read_sf(f_gpx, layer = "track_points")
+```
+
+We can divide the GPS points into n groups of equal length as follows:
+
+```{r}
+gpx_mutated = gpx |>
+  mutate(minute = lubridate::round_date(time, "minute"))
+summary(gpx_mutated$minute)
+```
+
+Let's create an animated map:
+
+```{r}
+#| eval: false
+# ?tmap_animation
+m_faceted = tm_shape(gpx_mutated) +
+  tm_dots("minute", size = 0.5, legend.show = FALSE) +
+  tm_facets("minute", free.coords = FALSE, ncol = 1, nrow = 1) +
+  tm_scale_bar()
+tmap_animation(m_faceted, delay = 5)
+```
+
+
 ## Exercises
 
 1. Create `sf` objects representing the following features in Poznan (hint: try using functions for geocoding such as `stplanr::geo_code()` or `tmaptools::geocode_OSM()`):
