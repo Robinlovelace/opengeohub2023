@@ -556,10 +556,11 @@ suitable_crs = crsuggest::suggest_crs(countries)
 suitable_crs
 ```
 
-We'll use the first of these.
+We'll use the second of these, EPSG:2180, after [checking](https://github.com/Robinlovelace/opengeohub2023/issues/12) (the package's top suggestion is not always the most up-to-date or appropriate option).
 
 ```{r}
-crs1 = paste0("EPSG:", suitable_crs$crs_code[1])
+crs1 = paste0("EPSG:", suitable_crs$crs_code[2])
+crs1
 countries_projected = sf::st_transform(countries, crs = crs1)
 ```
 
@@ -909,6 +910,8 @@ tm_shape(stretch(r_cropped[[c("Red", "Green", "Blue")]], minq = 0.001, maxq= 0.9
 2. Try plotting the raster in another program like QGIS, which looks better?
 3. **Advanced**: Reproduce the results presented above by following the Python code at [geobgu.xyz/presentations/p_2023_ogh/02-raster.html](https://geobgu.xyz/presentations/p_2023_ogh/02-raster.html).
     - Which language do you prefer for the types of task presented here and why?
+4. **Advanced**: Try plotting the raster with `{ggplot2}` and `{tmap}`.
+    - Which do you prefer and why?
 
 # Other tidy packages
 
@@ -975,6 +978,10 @@ bench::mark(check = FALSE,
 ```
 
 # Further reading
+
+For more on raster data see https://kadyb.github.io/OGH2023/Clustering.html
+
+
 
 The following free and open access resources provide a strong foundation for further learning in this space.
 
