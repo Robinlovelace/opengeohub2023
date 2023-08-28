@@ -1,0 +1,44 @@
+---
+title: R and Python side-by-side
+---
+
+Here is a code chunk.
+
+:::: columns
+
+::: {.column width="50%"}
+
+
+```{r}
+x <- 1:10
+x
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{python}
+x = list(range(10))
+x
+```
+
+:::
+
+::::
+
+Here is another code chunk.
+
+::: {#r-chunk .r}
+```{r}
+y <- 1:10
+y
+```
+
+```{python}
+y = list(range(10))
+y
+```
+:::
+
+
