@@ -22,6 +22,35 @@ Source: [pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/v/0.7/]
 Parallel to the Python session.
 :::
 
+## About me
+
+:::: columns
+::: {.column width="50%" .incremental}
+-   Associate Professor, University of Leeds
+-   Head of Data and Digital at Active Travel England
+-   Author of [Geocomputation with R](https://r.geocompx.org)
+-   Research: geocomputation + transport decarbonisation
+-   Research question: where to build bike lanes?
+
+:::
+
+::: {.column width="50%"}
+
+<!---
+ Iframe: 
+--->
+
+Source: [www.npt.scot](https://nptscot.github.io/#11.34/55.8656/-4.1742)
+
+<iframe src="https://nptscot.github.io/#11.34/55.8656/-4.1742" width="400" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+<!---
+ <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2378.703742821301!2d-1.555293684150781!3d53.80140398008763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795d0d0b0b0e0f%3A0x9e1b0b0b0b0b0b0b!2sUniversity%20of%20Leeds!5e0!3m2!1sen!2suk!4v1629914398803!5m2!1sen!2suk" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe> 
+--->
+
+:::
+::::
+
 ## System dependencies
 
 ![](images/paste-2.png)
@@ -184,6 +213,14 @@ sapply(pkgs, require, character.only = TRUE)
 
 ![](images/paste-13.png)
 
+## rsgeo
+
+![](images/paste-18.png)
+
+## rsgeo II
+
+![](images/paste-17.png)
+
 ## tidyverse alternatives
 
 ![](images/paste-12.png)
@@ -201,12 +238,9 @@ Aim: cross-compare approaches
 Source: [Python version](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html#plotting-1) and [R version](https://ogh23.robinlovelace.net/tidy#worked-example-data-from-poznan)
 
 ::: {layout-ncol="2"}
-
 ![](images/paste-15.png)
 
 ![](images/paste-16.png)
-
 :::
-
 
 # References
