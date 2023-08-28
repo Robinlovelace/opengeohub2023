@@ -43,22 +43,25 @@ Source: [www.npt.scot](https://nptscot.github.io/#11.34/55.8656/-4.1742)
 
 ![](images/paste-19.png)
 
-
-
+```{=html}
 <!---
  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2378.703742821301!2d-1.555293684150781!3d53.80140398008763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48795d0d0b0b0e0f%3A0x9e1b0b0b0b0b0b0b!2sUniversity%20of%20Leeds!5e0!3m2!1sen!2suk!4v1629914398803!5m2!1sen!2suk" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe> 
 --->
+```
 :::
 :::
 
 ## From research to impact
 
-<iframe src="https://nptscot.github.io/#11.34/55.8656/-4.1742" width="800" height="600" style="border:0;" allowfullscreen loading="lazy"></iframe>
+<iframe src="https://nptscot.github.io/#11.34/55.8656/-4.1742" width="800" height="600" style="border:0;" allowfullscreen loading="lazy">
+
+</iframe>
 
 ## Geocomputation to tackle the climate crisis
 
-<iframe src="https://ourworldindata.org/grapher/global-co2-fossil-plus-land-use" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+<iframe src="https://ourworldindata.org/grapher/global-co2-fossil-plus-land-use" loading="lazy" style="width: 100%; height: 600px; border: 0px none;">
 
+</iframe>
 
 ## System dependencies
 
@@ -164,6 +167,14 @@ which gdal-config
 ## On Mattermost
 
 ![](images/paste-10.png)
+
+## Mattermost results
+
+![](images/paste-20.png)
+
+## Mattermost results 2...
+
+![](images/paste-21.png)
 
 # Part 1: Sections 2 and 3
 
