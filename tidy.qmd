@@ -121,7 +121,11 @@ poland = world |>
 world_centroids = world |>
     st_centroid()
 country_centroids = world_centroids |>
-  st_filter(poland, .predicate = st_is_within_distance, dist = 2e5)
+  st_filter(
+    poland,
+    .predicate = st_is_within_distance,
+    dist = 200 * 1000 # 200 km
+    )
 countries = world |>
   filter(name_long %in% country_centroids$name_long)
 countries_df = countries |>
@@ -523,6 +527,13 @@ m_osm = tm_shape(buildings) +
   tm_lines() +
   tm_shape(polygons_geog) +
   tm_polygons(col = "red") 
+```
+
+You can export the `lines_highways` object to GeoJSON as follows:
+
+```{r}
+#| eval: false
+sf::write_sf(lines_highways, "data/lines_highways.geojson")
 ```
 
 ## Loading a GPX file
