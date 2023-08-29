@@ -136,3 +136,30 @@ if (!dir.exists("data")) {
 
 ::::
 
+## Reading and printing geographic data
+
+As shown below, Python and R implemenations to import a shapefile are similar.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+pol_all = gpd.read_file('data/osm/gis_osm_transport_a_free_1.shp')
+pol_all
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+pol_all = sf::read_sf("data/osm/gis_osm_transport_a_free_1.shp")
+pol_all
+```
+
+:::
+
+::::
+
+
