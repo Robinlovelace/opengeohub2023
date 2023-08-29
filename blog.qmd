@@ -36,9 +36,9 @@ We will start by loading core packages for working with geographic vector and at
 See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data) and [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html) implementations in the respective lecture note sections.
 
 
-:::: columns
+:::: {.panel-tabset}
 
-::: {.column width="50%"}
+## Python
 
 ```{python}
 import pandas as pd
@@ -46,16 +46,12 @@ import shapely
 import geopandas as gpd
 ```
 
-:::
-
-::: {.column width="50%"}
+## R
 
 ```{r}
 library(sf)
 library(tidyverse)
 ```
-
-:::
 
 ::::
 
@@ -64,9 +60,9 @@ library(tidyverse)
 The following commands create geographic datasets 'from scratch'.
 Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
 
-:::: columns
+:::: {.panel-tabset}
 
-::: {.column width="50%"}
+## Python
 
 ```{python}
 pnt1 = shapely.Point([16.9418, 52.4643])
@@ -82,9 +78,7 @@ name = pd.Series([
 poi = gpd.GeoDataFrame({'name': name, 'geometry': geom})
 ```
 
-:::
-
-::: {.column width="50%"}
+## R
 
 ```{r}
 poi_df = tribble(
@@ -98,7 +92,6 @@ poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"))
 sf::st_crs(poi_sf) = "EPSG:4326"
 ```
 
-:::
 
 ::::
 
@@ -106,9 +99,9 @@ sf::st_crs(poi_sf) = "EPSG:4326"
 
 The following commands download and unzip data from the internet.
 
-:::: columns
+:::: {.panel-tabset}
 
-::: {.column width="50%"}
+## Python
 
 ```{python}
 import urllib.request
@@ -122,9 +115,7 @@ if not os.path.exists("data"):
         zip_ref.extractall()
 ```
 
-:::
-
-::: {.column width="50%"}
+## R
 
 ```{r}
 u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
@@ -135,33 +126,27 @@ if (!dir.exists("data")) {
 }
 ```
 
-:::
-
 ::::
 
 ## Reading and printing geographic data
 
 As shown below, Python and R implemenations to import a shapefile are similar.
 
-:::: columns
+:::: {.panel-tabset}
 
-::: {.column width="50%"}
+## Python
 
 ```{python}
 pol_all = gpd.read_file('data/osm/gis_osm_transport_a_free_1.shp')
 pol_all
 ```
 
-:::
-
-::: {.column width="50%"}
+## R
 
 ```{r}
 pol_all = sf::read_sf("data/osm/gis_osm_transport_a_free_1.shp")
 pol_all
 ```
-
-:::
 
 ::::
 
@@ -169,26 +154,22 @@ pol_all
 
 The following commands select a subset of the data based on attribute values.
 
-:::: columns
+:::: {.panel-tabset}
 
-::: {.column width="50%"}
+## Python
 
 ```{python}
 pol = pol_all[pol_all['name'].str.contains('Port*.+Poz', na=False)]
 pol
 ```
 
-:::
-
-::: {.column width="50%"}
+## R
 
 ```{r}
 pol = pol_all |>
   filter(str_detect(name, "Port*.+Poz"))
 pol
 ```
-
-:::
 
 ::::
 
