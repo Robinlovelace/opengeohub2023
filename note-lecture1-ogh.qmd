@@ -1,0 +1,155 @@
+---
+title: "Untitled"
+# output: html_document
+date: "2023-08-28"
+---
+
+These are the packages we'll use:
+
+```{r}
+library(sf)
+library(tidyverse)
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r}
+library(spData)
+names(world)
+world
+```
+
+
+```{r}
+poland = world[world$name_long == "Poland", 1]
+dim(poland)
+names(poland)
+poland_df = sf::st_drop_geometry(poland)
+class(poland)
+class(poland_df)
+plot(poland)
+plot(poland_df)
+```
+
+Tidyverse way:
+
+```{r}
+poland = world |>
+  filter(name_long == "Poland") |>
+  select(name_long, pop, area_km2)
+```
+
+
+## Data from Poznan
+
+```{r}
+u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
+f = basename(u)
+f
+options(timeout = 600)
+download.file(url = u, f)
+unzip(f)
+```
+
+```{r}
+list.files("data/")
+list.files("data/osm")
+```
+
+```{r}
+pol_all = read_sf("data/osm/gis_osm_transport_a_free_1.shp")
+pol_all
+plot(pol_all)
+```
+
+```{r}
+pol_bus = pol_all |> 
+  filter(str_detect(name, "bus"))
+
+pol_bus_station = pol_all |> 
+  filter(fclass == "bus_station")
+
+mapview::mapview(pol_bus_station)
+
+pol = pol_all |> 
+  filter(str_detect(name, "Port*.+P"))
+
+pol |>
+  ggplot() +
+  geom_sf()
+
+library(tmap)
+tmap_mode("view")
+tm_shape(pol) +
+  tm_borders()
+```
+
+Create pois:
+
+```{r}
+poi_df = tribble(
+  ~name, ~lon, ~lat,
+  "Faculty",        16.9418, 52.4643,
+  "Hotel ForZa",    16.9474, 52.4436,
+  "Hotel Lechicka", 16.9308, 52.4437,
+  "FairPlayce",     16.9497, 52.4604
+)
+poi_df
+poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"))
+sf::st_crs(poi_sf) = "EPSG:4326"
+```
+
+```{r}
+stop_raw = read_csv("data/gtfs/stops.txt")
+stops_df = stop_raw |> 
+  select(-stop_code)
+stops = sf::st_as_sf(stops_df, coords = c("stop_lon", "stop_lat"))
+sf::st_crs(stops)
+sf::st_crs(stops) = "EPSG:4326"
+sf::st_crs(stops)
+```
+
+```{r}
+pois_buffer = sf::st_buffer(poi_sf, 150)
+stops_in_buffer = stops[pois_buffer, ]
+
+stops_not_in_buffer = stops[pois_buffer, , op = sf::st_disjoint]
+nrow(stops_in_buffer)
+nrow(stops_not_in_buffer)
+
+stops_not_in_buffer = stops |> 
+  filter(!stop_id %in% stops_in_buffer$stop_id)
+nrow(stops)
+nrow(stops_in_buffer)
+crsuggest::suggest_crs(stops_in_buffer)
+
+stops_not_in_buffer2 = sf::st_difference(stops, sf::st_union(pois_buffer))
+
+plot(pois_buffer$geometry[1])
+
+pois_buffer2 = stplanr::geo_buffer(poi_sf, dist = 150)
+plot(pois_buffer2$geometry[1])
+
+pois_joined = sf::st_join(pois_buffer, stops)
+
+stops_joined = stops |> 
+  filter(stop_id %in% pois_joined$stop_id)
+
+stops_joined$geometry_txt = sf::st_as_text(stops_joined$geometry)
+
+pois_joined2 = left_join(
+  pois_joined,
+  stops_joined |>
+    select(stop_id, geometry_txt) |> 
+  sf::st_drop_geometry()
+  )
+```
+
+
+
+
+
+
+
+
+
+
