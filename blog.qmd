@@ -99,3 +99,40 @@ sf::st_crs(poi_sf) = "EPSG:4326"
 
 ::::
 
+### Downloading and unzipping data
+
+The following commands download and unzip data from the internet.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+import urllib.request
+import zipfile
+import os
+u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
+f = os.path.basename(u)
+if not os.path.exists("data"):
+    urllib.request.urlretrieve(u, f)
+    with zipfile.ZipFile(f, 'r') as zip_ref:
+        zip_ref.extractall()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
+f = basename(u)
+if (!dir.exists("data")) {
+  download.file(u, f)
+  unzip(f)
+}
+```
+
+:::
+
+::::
+
