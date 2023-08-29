@@ -385,7 +385,7 @@ poi.area
 ## R
 
 ```{r}
-st_area(poi_buffers)
+st_area(poi_buffer)
 ```
 
 :::
@@ -418,6 +418,24 @@ stops_in_b
 
 ## Spatial joins
 
+Spatial joins work slightly differently in R and Python.
+In Python, the operation returns the geometry of both 'x' and 'y' objects, which could be useful for further analysis.
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+poi.sjoin(stops, how='left')
+```
+
+## R
+
+```{r}
+st_join(stops, poi_buffer)
+```
+
+:::
 
 
 
