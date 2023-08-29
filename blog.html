@@ -161,6 +161,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#reading-and-printing-geographic-data" id="toc-reading-and-printing-geographic-data" class="nav-link" data-scroll-target="#reading-and-printing-geographic-data">Reading and printing geographic data</a></li>
   <li><a href="#subsetting-by-attributes" id="toc-subsetting-by-attributes" class="nav-link" data-scroll-target="#subsetting-by-attributes">Subsetting by attributes</a></li>
+  <li><a href="#basic-plotting" id="toc-basic-plotting" class="nav-link" data-scroll-target="#basic-plotting">Basic plotting</a></li>
+  <li><a href="#creating-geographic-data-frames-from-a-csv-file" id="toc-creating-geographic-data-frames-from-a-csv-file" class="nav-link" data-scroll-target="#creating-geographic-data-frames-from-a-csv-file">Creating geographic data frames from a CSV file</a></li>
+  <li><a href="#plotting-attributes-and-layers" id="toc-plotting-attributes-and-layers" class="nav-link" data-scroll-target="#plotting-attributes-and-layers">Plotting attributes and layers</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -392,6 +395,121 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </div>
+</section>
+<section id="basic-plotting" class="level2">
+<h2 class="anchored" data-anchor-id="basic-plotting">Basic plotting</h2>
+<p>The following commands plot the data. Note that by default, R’s <code>plot()</code> method for <code>{sf}</code> objects creates a plot for each column in the data (up to 9 by default).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">R</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pol.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="blog_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="614"></p>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="blog_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The arguments needed to change the colour of the fill and border are different in R and Python, but the results are similar.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">R</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pol.plot(color<span class="op">=</span><span class="st">'none'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="blog_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pol<span class="sc">$</span>geometry, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">border =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="blog_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-geographic-data-frames-from-a-csv-file" class="level2">
+<h2 class="anchored" data-anchor-id="creating-geographic-data-frames-from-a-csv-file">Creating geographic data frames from a CSV file</h2>
+<p>The following commands create a geographic data frame from a CSV file. Note that separate steps are needed to grom a GeoSeries to a GeoDataFrame in Python, whereas in R the <code>sf::st_as_sf()</code> function can be used to convert a data frame to a spatial data frame directly.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">R</a></li></ul>
+<div class="tab-content" data-group="language">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>stops <span class="op">=</span> pd.read_csv(<span class="st">'data/gtfs/stops.txt'</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>stops <span class="op">=</span> stops.drop(columns<span class="op">=</span><span class="st">'stop_code'</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>geom <span class="op">=</span> gpd.points_from_xy(stops[<span class="st">'stop_lon'</span>], stops[<span class="st">'stop_lat'</span>], crs<span class="op">=</span><span class="dv">4326</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>geom <span class="op">=</span> gpd.GeoSeries(geom)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>stops <span class="op">=</span> gpd.GeoDataFrame(data<span class="op">=</span>stops, geometry<span class="op">=</span>geom)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>stops <span class="op">=</span> stops.drop(columns<span class="op">=</span>[<span class="st">'stop_lon'</span>, <span class="st">'stop_lat'</span>])</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>stops</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      stop_id  ...                   geometry
+0        2186  ...  POINT (17.04263 52.32684)
+1         355  ...  POINT (16.86888 52.46234)
+2        4204  ...  POINT (16.78629 52.47810)
+3        3885  ...  POINT (16.72401 52.47590)
+4         494  ...  POINT (16.93085 52.43616)
+...       ...  ...                        ...
+2916     2099  ...  POINT (16.65026 52.47006)
+2917     3915  ...  POINT (16.98360 52.38233)
+2918     3876  ...  POINT (16.52949 52.49770)
+2919      594  ...  POINT (16.80900 52.43642)
+2920     1190  ...  POINT (16.99819 52.44124)
+
+[2921 rows x 4 columns]</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stops <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"data/gtfs/stops.txt"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>stop_code) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"stop_lon"</span>, <span class="st">"stop_lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>stops</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2921 features and 3 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 16.48119 ymin: 52.15166 xmax: 17.27693 ymax: 52.58723
+Geodetic CRS:  WGS 84
+# A tibble: 2,921 × 4
+   stop_id stop_name              zone_id            geometry
+ *   &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt;           &lt;POINT [°]&gt;
+ 1    2186 Żerniki/Skrzyżowanie   B       (17.04263 52.32684)
+ 2     355 Sucholeska             A       (16.86888 52.46234)
+ 3    4204 Pawłowicka             A        (16.78629 52.4781)
+ 4    3885 Kobylniki/Karolewska   B        (16.72401 52.4759)
+ 5     494 Połabska               A       (16.93085 52.43616)
+ 6    2040 Tarnowo Pdg/Karolewo I C       (16.68462 52.46915)
+ 7    3736 Komorniki/Kryształowa  B        (16.78291 52.3478)
+ 8    3932 Unii Lubelskiej        A        (16.9497 52.37239)
+ 9    2795 Potasze/Jodłowa        C       (17.02994 52.52445)
+10    3861 Miękowo/Stokrotkowa    C       (16.98954 52.49024)
+# ℹ 2,911 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting-attributes-and-layers" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-attributes-and-layers">Plotting attributes and layers</h2>
 
 
 </section>
