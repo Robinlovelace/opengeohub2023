@@ -1053,9 +1053,6 @@ write_parquet(countries_projected, "data/countries_projected.parquet") # Fails
 
 ```
 
-```{r}
-
-```
 
 # Further reading
 

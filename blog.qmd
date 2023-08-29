@@ -1,0 +1,192 @@
+---
+title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
+# Render on save: true
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+# Introduction
+
+In this blog post, we talk about our experience teaching R and Python for geocomputation, broadly defined as [follows](https://r.geocompx.org/intro#what-is-geocomputation):
+
+> Working with geographic data in a computational way, focusing on code, reproducibility and modularity.
+
+There are are two major motivations for this post:
+
+- To share our experience teaching R and Python for geocomputation, at the OpenGeoHub Summer School in Poznan, Poland
+- To report progress on our open source book, [Geocomputation with Python](https://py.geocompx.org/)
+
+The post is based on the following lecture notes, which we recommend checking out for deeper dives into the R and Python implementations of geocomputation:
+
+- [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://ogh23.robinlovelace.net/tidy)
+- [Working with Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh/)
+- [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23)
+
+# Working with vector geographic data
+
+## Loading packages
+
+We will start by loading core packages for working with geographic vector and attribute data.
+See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data) and [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html) implementations in the respective lecture note sections.
+
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+import pandas as pd
+import shapely
+import geopandas as gpd
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+library(sf)
+library(tidyverse)
+```
+
+:::
+
+::::
+
+## Creating geographic data
+
+The following commands create geographic datasets 'from scratch'.
+Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+pnt1 = shapely.Point([16.9418, 52.4643])
+pnt2 = shapely.Point([16.9474, 52.4436])
+pnt3 = shapely.Point([16.9308, 52.4437])
+pnt3 = shapely.Point([16.9497, 52.4604])
+geom = gpd.GeoSeries([pnt1, pnt2, pnt3], crs=4326)
+name = pd.Series([
+    'Faculty of Geographical and Geological Sciences', 
+    'Hotel ForZa', 
+    'HL Hotel Lechicka'
+])
+poi = gpd.GeoDataFrame({'name': name, 'geometry': geom})
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+poi_df = tribble(
+  ~name, ~lon, ~lat,
+  "Faculty",        16.9418, 52.4643,
+  "Hotel ForZa",    16.9474, 52.4436,
+  "Hotel Lechicka", 16.9308, 52.4437,
+  "FairPlayce",     16.9497, 52.4604
+)
+poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"))
+sf::st_crs(poi_sf) = "EPSG:4326"
+```
+
+:::
+
+::::
+
+### Downloading and unzipping data
+
+The following commands download and unzip data from the internet.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+import urllib.request
+import zipfile
+import os
+u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
+f = os.path.basename(u)
+if not os.path.exists("data"):
+    urllib.request.urlretrieve(u, f)
+    with zipfile.ZipFile(f, 'r') as zip_ref:
+        zip_ref.extractall()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
+f = basename(u)
+if (!dir.exists("data")) {
+  download.file(u, f)
+  unzip(f)
+}
+```
+
+:::
+
+::::
+
+## Reading and printing geographic data
+
+As shown below, Python and R implemenations to import a shapefile are similar.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+pol_all = gpd.read_file('data/osm/gis_osm_transport_a_free_1.shp')
+pol_all
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+pol_all = sf::read_sf("data/osm/gis_osm_transport_a_free_1.shp")
+pol_all
+```
+
+:::
+
+::::
+
+## Subsetting by attributes
+
+The following commands select a subset of the data based on attribute values.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+sel = 'Port Lotniczy Poznań-Ławica im. Henryka Wieniawskiego'
+pol = pol_all[pol_all['name'] == sel]
+pol
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+pol = pol_all |>
+  filter(str_detect(name, "Port*.+Poz"))
+pol
+```
+
+:::
+
+::::
+
