@@ -360,6 +360,7 @@ b = poi_projected.buffer(150)
 poi_projected['buffer_150'] = b
 poi_projected = poi_projected.rename(columns={'geometry': 'point'})
 poi_projected = poi_projected.set_geometry('buffer_150')
+poi_buffer = poi_projected.to_crs(4326)
 ```
 
 ## R
@@ -379,7 +380,7 @@ An interesting difference between R and Python is that the former uses the `unit
 ## Python
 
 ```{python}
-poi.area
+poi_buffer.to_crs(2180).area
 ```
 
 ## R
@@ -403,7 +404,7 @@ As shown, the R is more concise because in Python you must undertake a few addit
 ## Python
 
 ```{python}
-poi_union = poi.unary_union
+poi_union = poi_buffer.unary_union
 sel = stops.intersects(poi_union)
 stops_in_b = stops[sel]
 stops_in_b
@@ -416,6 +417,8 @@ stops_in_b = stops[poi_buffer, ]
 stops_in_b
 ```
 
+:::
+
 ## Spatial joins
 
 Spatial joins work slightly differently in R and Python.
@@ -426,7 +429,7 @@ In Python, the operation returns the geometry of both 'x' and 'y' objects, which
 ## Python
 
 ```{python}
-poi.sjoin(stops, how='left')
+poi_buffer.sjoin(stops, how='left')
 ```
 
 ## R
