@@ -124,8 +124,8 @@ country_centroids = world_centroids |>
   st_filter(
     poland,
     .predicate = st_is_within_distance,
-    dist = 200 * 1000 # 200 km
-    )
+    dist = 2e5
+  )
 countries = world |>
   filter(name_long %in% country_centroids$name_long)
 countries_df = countries |>
@@ -1039,6 +1039,21 @@ bench::mark(check = FALSE,
   geos = geos::geos_make_collection(geos::geos_unary_union(countries_geos)),
   rsgeo = rsgeo::union_geoms(countries_rs)
 )
+
+```
+
+## Arrow
+
+```{r}
+#| eval: false
+library(arrow)
+
+# write countries_projected to parquet file:
+write_parquet(countries_projected, "data/countries_projected.parquet") # Fails
+
+```
+
+```{r}
 
 ```
 
