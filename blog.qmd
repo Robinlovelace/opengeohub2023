@@ -105,9 +105,9 @@ sf::st_crs(poi_sf) = "EPSG:4326"
 
 :::
 
-### Downloading and unzipping data
+### Downloading data
 
-The following commands download and unzip data from the internet.
+The following commands download data from the internet.
 
 ::: {.panel-tabset group="language"}
 
@@ -121,8 +121,6 @@ u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data
 f = os.path.basename(u)
 if not os.path.exists("data"):
     urllib.request.urlretrieve(u, f)
-    with zipfile.ZipFile(f, 'r') as zip_ref:
-        zip_ref.extractall()
 ```
 
 ## R
@@ -136,6 +134,8 @@ if (!dir.exists("data")) {
 }
 ```
 
+Note that, for R, we also unzip the dataset. This is not necessary for Python, since GeoPandas can read directly from ZIP files.
+
 :::
 
 ## Reading and printing geographic data
@@ -147,7 +147,7 @@ As shown below, Python and R implemenations to import a shapefile are similar.
 ## Python
 
 ```{python}
-pol_all = gpd.read_file('data/osm/gis_osm_transport_a_free_1.shp')
+pol_all = gpd.read_file("zip://data.zip!data/osm/gis_osm_transport_a_free_1.shp")
 pol_all
 ```
 
