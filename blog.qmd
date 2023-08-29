@@ -56,7 +56,7 @@ See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data
 
 ```{python}
 import pandas as pd
-import shapely
+from shapely import Point
 import geopandas as gpd
 ```
 
@@ -80,17 +80,12 @@ Most projects start with pre-generated data, but it's useful to create datasets 
 ## Python
 
 ```{python}
-pnt1 = shapely.Point([16.9418, 52.4643])
-pnt2 = shapely.Point([16.9474, 52.4436])
-pnt3 = shapely.Point([16.9308, 52.4437])
-pnt3 = shapely.Point([16.9497, 52.4604])
-geom = gpd.GeoSeries([pnt1, pnt2, pnt3], crs=4326)
-name = pd.Series([
-    'Faculty of Geographical and Geological Sciences', 
-    'Hotel ForZa', 
-    'HL Hotel Lechicka'
-])
-poi = gpd.GeoDataFrame({'name': name, 'geometry': geom})
+poi = gpd.GeoDataFrame([
+    {"name": "Faculty",        "geometry": Point(16.9418, 52.4643)},
+    {"name": "Hotel ForZa",    "geometry": Point(16.9474, 52.4436)},
+    {"name": "Hotel Lechicka", "geometry": Point(16.9308, 52.4437)},
+    {"name": "FairPlayce",     "geometry": Point(16.9497, 52.4604)},
+], crs=4326)
 ```
 
 ## R
