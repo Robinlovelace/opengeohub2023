@@ -237,13 +237,11 @@ Note that separate steps are needed to grom a GeoSeries to a GeoDataFrame in Pyt
 ## Python
 
 ```{python}
-stops = pd.read_csv('data/gtfs/stops.txt')
-stops = stops.drop(columns='stop_code')
-geom = gpd.points_from_xy(stops['stop_lon'], stops['stop_lat'], crs=4326)
-geom = gpd.GeoSeries(geom)
-stops = gpd.GeoDataFrame(data=stops, geometry=geom)
-stops = stops.drop(columns=['stop_lon', 'stop_lat'])
-stops
+stops = pd.read_csv("data/gtfs/stops.txt")
+stops = gpd.GeoDataFrame(
+    stops.drop(columns=['stop_lon', 'stop_lat', 'stop_code']),
+    geometry = gpd.points_from_xy(stops.stop_lon, stops.stop_lat),
+    crs = 4326)
 ```
 
 ## R
