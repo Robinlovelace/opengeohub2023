@@ -24,7 +24,8 @@ Imports:
     languageserver,
     terra,
     crsuggest,
-    osmextract
+    osmextract,
+    reticulate
 Suggests:
     rsgeo
 Remotes: 
