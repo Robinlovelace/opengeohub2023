@@ -370,6 +370,26 @@ poi_buffer = sf::st_buffer(poi_sf, 150)
 
 :::
 
+## Calculating distances and areas
+
+An interesting difference between R and Python is that the former uses the `units` package to store units, making it easy to convert between them, as outlined in the [buffers section of the R lecture notes](https://ogh23.robinlovelace.net/tidy#buffers).
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+poi.area
+```
+
+## R
+
+```{r}
+st_area(poi_buffers)
+```
+
+:::
+
 ## Spatial joins
 
 
