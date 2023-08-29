@@ -1,8 +1,5 @@
 ---
-# This has become sufficiently long that it's worth having a separate post for raster data IMO (RL)
-title: "Geographic data analysis in R and Python: comparing code and outputs for working with vector datasets"
-# # Alternative title:
-# title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
+title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
 # Render on save: true
 ---
 
@@ -10,39 +7,28 @@ title: "Geographic data analysis in R and Python: comparing code and outputs for
 #| include: false
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 # install python packages needed for this document:
-pkgs = c("geopandas", "shapely", "pandas", "rasterio", "matplotlib", "folium", "mapclassify")
+pkgs = c("geopandas", "shapely", "pandas", "rasterio", "matplotlib")
 reticulate::py_install(pkgs)
 ```
 
 # Introduction
 
-In this blog post, we talk about our experience teaching R and Python for geocomputation.
-The focus of the blog post is on geographic vector data, meaning points, lines, polygons (and their 'multi' variants) and the attributes associated with them.
+In this blog post, we talk about our experience teaching R and Python for geocomputation, broadly defined as [follows](https://r.geocompx.org/intro#what-is-geocomputation):
 
-Geographic data analysis is a broad topic and in a later post we will cover raster data, meaning gridded data such as satellite images.
+> Working with geographic data in a computational way, focusing on code, reproducibility and modularity.
 
- <!---
- broadly defined as [follows](https://r.geocompx.org/intro#what-is-geocomputation):
+There are are two major motivations for this post:
 
-> Working with geographic data in a computational way, focusing on code, reproducibility and modularity. 
---->
-The context of this blog post is the [OpenGeoHub Summer School 2023](https://opengeohub.org/summer-school/opengeohub-summer-school-poznan-2023/) which has courses on R, Python and Julia.
-The size and the diversity of the event has grown over the years.
-Noting that many events focus on just one language, and the advantages of diversity of languages and approaches, we wanted to follow-up in a blog post that could be useful to others.
-
-OpenGeoHub 2023 was also a unique chance for the authors of the in-progress open source book, [Geocomputation with Python](https://py.geocompx.org/) to meet in person: the first time we have all been in one place at the same time.
+- To share our experience teaching R and Python for geocomputation, at the OpenGeoHub Summer School in Poznan, Poland
+- To report progress on our open source book, [Geocomputation with Python](https://py.geocompx.org/)
 
 The post is based on the following lecture notes, which we recommend checking out for deeper dives into the R and Python implementations of geocomputation:
 
 - [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://ogh23.robinlovelace.net/tidy)
 - [Working with Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh/)
+- [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23)
 
-<!---
- TODO: Add video links 
---->
-
-
-# Comparing R and Python for vector geographic data analysis
+# Working with vector geographic data
 
 ## Loading packages
 
@@ -56,7 +42,7 @@ See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data
 
 ```{python}
 import pandas as pd
-import shapely
+from shapely import Point
 import geopandas as gpd
 ```
 
@@ -65,7 +51,6 @@ import geopandas as gpd
 ```{r}
 library(sf)
 library(tidyverse)
-library(tmap)
 ```
 
 :::
@@ -80,17 +65,12 @@ Most projects start with pre-generated data, but it's useful to create datasets 
 ## Python
 
 ```{python}
-pnt1 = shapely.Point([16.9418, 52.4643])
-pnt2 = shapely.Point([16.9474, 52.4436])
-pnt3 = shapely.Point([16.9308, 52.4437])
-pnt3 = shapely.Point([16.9497, 52.4604])
-geom = gpd.GeoSeries([pnt1, pnt2, pnt3], crs=4326)
-name = pd.Series([
-    'Faculty of Geographical and Geological Sciences', 
-    'Hotel ForZa', 
-    'HL Hotel Lechicka'
-])
-poi = gpd.GeoDataFrame({'name': name, 'geometry': geom})
+poi = gpd.GeoDataFrame([
+    {"name": "Faculty",        "geometry": Point(16.9418, 52.4643)},
+    {"name": "Hotel ForZa",    "geometry": Point(16.9474, 52.4436)},
+    {"name": "Hotel Lechicka", "geometry": Point(16.9308, 52.4437)},
+    {"name": "FairPlayce",     "geometry": Point(16.9497, 52.4604)},
+], crs=4326)
 ```
 
 ## R
@@ -259,129 +239,5 @@ stops
 
 ## Plotting attributes and layers
 
-The following commands plot the bus stops loaded in the previous step.
-Note that the `tmap` package is used in R to create these more advanced plots, as it also supports interactive mapping.
-
-::: {.panel-tabset group="language"}
-
-## Python
-
-```{python}
-stops.plot(markersize=1, column='zone_id', legend=True, cmap='Dark2');
-```
-
-## R
-
-```{r}
-tm_shape(stops) +
-  tm_dots(size = 0.1, col = "zone_id")
-```
-
-:::
-
-We can add basic overlays easily in both languages.
-
-::: {.panel-tabset group="language"}
-
-## Python
-
-```{python}
-base = stops.plot(markersize=0.1)
-poi.plot(ax=base, color='red');
-```
-
-## R
-
-```{r}
-plot(stops$geometry, col = "grey", pch = 20, cex = 0.5)
-plot(poi_sf$geometry, col = "red", add = TRUE)
-```
-
-:::
-
-## Interactive plots
-
-The following commands create interactive plots, in Python and R respectively.
-The Python code requires `folium` and `mapclassify` packages, which are not installed by default when you install `geopandas`.
-Note that with `{tmap}` you can use the same code to create static and interactive plots, by changing the `tmap_mode()`. 
-
-::: {.panel-tabset group="language"}
-
-## Python
-
-```{python}
-stops.explore(column='zone_id', legend=True, cmap='Dark2')
-```
-
-## R
-
-```{r}
-tmap_mode("view")
-tm_shape(stops) +
-  tm_dots(size = 0.1, col = "zone_id")
-```
-
-:::
-
-## Reprojecting data
-
-The following commands reproject the data to a local coordinate reference system (CRS).
-
-::: {.panel-tabset group="language"}
-
-## Python
-
-```{python}
-poi.crs
-poi_projected = poi.to_crs(2180)
-stops_projected = stops.to_crs(2180)
-```
-
-## R
-
-```{r}
-st_crs(poi_sf)
-poi_projected = st_transform(poi_sf, 2180)
-stops_projected = st_transform(stops, 2180)
-```
-
-:::
-
-## Buffers
-
-The following commands create a buffer around the points.
-Note that R allows buffer to be created directly from a spatial data frame with geographic (lon/lot) coordinates thanks to its integration with Google's S2 spherical geometry engine.
-For buffer operations to work in Python you must reproject the data first (although there plans for GeoPandas to support a spherical geometry backend at some point, as discussed in issue [#2098](https://github.com/geopandas/geopandas/issues/2098)).
 
 
-::: {.panel-tabset group="language"}
-
-## Python
-
-<!---
- TODO: can we improve this? 
---->
-
-```{python}
-b = poi_projected.buffer(150)
-poi_projected['buffer_150'] = b
-poi_projected = poi_projected.rename(columns={'geometry': 'point'})
-poi_projected = poi_projected.set_geometry('buffer_150')
-```
-
-## R
-
-```{r}
-poi_buffer = sf::st_buffer(poi_sf, 150)
-```
-
-:::
-
-## Spatial joins
-
-
-
-
-# Further reading
-
-- A great tutorial that simultaneously covers R and Python is [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23) by Lorena Abad.
