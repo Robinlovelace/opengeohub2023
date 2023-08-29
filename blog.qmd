@@ -171,8 +171,7 @@ The following commands select a subset of the data based on attribute values.
 ::: {.column width="50%"}
 
 ```{python}
-sel = 'Port Lotniczy Poznań-Ławica im. Henryka Wieniawskiego'
-pol = pol_all[pol_all['name'] == sel]
+pol = pol_all[pol_all['name'].str.contains('Port*.+Poz', na=False)]
 pol
 ```
 
