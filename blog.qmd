@@ -7,7 +7,7 @@ title: "Teaching R and Python for geographic data: shared experiences and lesson
 #| include: false
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 # install python packages needed for this document:
-pkgs = c("geopandas", "shapely", "pandas", "rasterio")
+pkgs = c("geopandas", "shapely", "pandas", "rasterio", "matplotlib")
 reticulate::py_install(pkgs)
 ```
 
@@ -36,7 +36,7 @@ We will start by loading core packages for working with geographic vector and at
 See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data) and [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html) implementations in the respective lecture note sections.
 
 
-:::: {.panel-tabset group="language"}
+::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -53,14 +53,14 @@ library(sf)
 library(tidyverse)
 ```
 
-::::
+:::
 
 ## Creating geographic data
 
 The following commands create geographic datasets 'from scratch'.
 Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
 
-:::: {.panel-tabset group="language"}
+::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -93,13 +93,13 @@ sf::st_crs(poi_sf) = "EPSG:4326"
 ```
 
 
-::::
+:::
 
 ### Downloading and unzipping data
 
 The following commands download and unzip data from the internet.
 
-:::: {.panel-tabset group="language"}
+::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -126,13 +126,13 @@ if (!dir.exists("data")) {
 }
 ```
 
-::::
+:::
 
 ## Reading and printing geographic data
 
 As shown below, Python and R implemenations to import a shapefile are similar.
 
-:::: {.panel-tabset group="language"}
+::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -148,13 +148,13 @@ pol_all = sf::read_sf("data/osm/gis_osm_transport_a_free_1.shp")
 pol_all
 ```
 
-::::
+:::
 
 ## Subsetting by attributes
 
 The following commands select a subset of the data based on attribute values.
 
-:::: {.panel-tabset group="language"}
+::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -171,5 +171,78 @@ pol = pol_all |>
 pol
 ```
 
-::::
+:::
+
+## Basic plotting
+
+The following commands plot the data.
+Note that by default, R's `plot()` method for `{sf}` objects creates a plot for each column in the data (up to 9 by default).
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+pol.plot();
+```
+
+## R
+
+```{r}
+plot(pol)
+```
+
+:::
+
+The arguments needed to change the colour of the fill and border are different in R and Python, but the results are similar.
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+pol.plot(color='none', edgecolor='black');
+```
+
+## R
+
+```{r}
+plot(pol$geometry, col = "white", border = "black")
+```
+
+:::
+
+## Creating geographic data frames from a CSV file
+
+The following commands create a geographic data frame from a CSV file.
+Note that separate steps are needed to grom a GeoSeries to a GeoDataFrame in Python, whereas in R the `sf::st_as_sf()` function can be used to convert a data frame to a spatial data frame directly.
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+stops = pd.read_csv('data/gtfs/stops.txt')
+stops = stops.drop(columns='stop_code')
+geom = gpd.points_from_xy(stops['stop_lon'], stops['stop_lat'], crs=4326)
+geom = gpd.GeoSeries(geom)
+stops = gpd.GeoDataFrame(data=stops, geometry=geom)
+stops = stops.drop(columns=['stop_lon', 'stop_lat'])
+stops
+```
+
+## R
+
+```{r}
+stops = read_csv("data/gtfs/stops.txt") |>
+  select(-stop_code) |>
+  st_as_sf(coords = c("stop_lon", "stop_lat"), crs = 4326)
+stops
+```
+
+:::
+
+## Plotting attributes and layers
+
+
 
