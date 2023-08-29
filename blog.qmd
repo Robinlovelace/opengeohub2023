@@ -6,6 +6,9 @@ title: "Teaching R and Python for geographic data: shared experiences and lesson
 ```{r}
 #| include: false
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# install python packages needed for this document:
+pkgs = c("geopandas", "shapely", "pandas", "rasterio")
+reticulate::py_install(pkgs)
 ```
 
 # Introduction
