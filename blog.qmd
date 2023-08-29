@@ -1,5 +1,5 @@
 ---
-title: "Teaching R and Python for Geographic Data: Shared Experience and Lessons Learned"
+title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
 # Render on save: true
 ---
 
@@ -25,7 +25,7 @@ The post is based on the following lecture notes, which we recommend checking ou
 - [Working with Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh/)
 - [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23)
 
-# Working with vector Geographic Data
+# Working with vector geographic data
 
 ## Loading packages
 
