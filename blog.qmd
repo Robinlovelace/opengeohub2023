@@ -1,8 +1,29 @@
 ---
-title: R and Python side-by-side
+title: "Teaching R and Python for Geographic Data: Shared Experience and Lessons Learned"
+# Render on save: true
 ---
 
-Here is a code chunk.
+# Introduction
+
+In this blog post, we talk about our experience teaching R and Python for geocomputation, broadly defined as [follows](https://r.geocompx.org/intro#what-is-geocomputation):
+
+> Working with geographic data in a computational way, focusing on code, reproducibility and modularity.
+
+There are are two major motivations for this post:
+
+- To share our experience teaching R and Python for geocomputation, at the OpenGeoHub Summer School in Poznan, Poland
+- To report progress on our open source book, [Geocomputation with Python](https://py.geocompx.org/)
+
+The post is based on the following lecture notes, which we recommend checking out for deeper dives into the R and Python implementations of geocomputation:
+
+- [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://ogh23.robinlovelace.net/tidy)
+- [Working with Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh/)
+- [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23)
+
+# Working with vector Geographic Data
+
+We will start by loading core packages for working with geographic vector and attribute data in R and Python.
+
 
 :::: columns
 
