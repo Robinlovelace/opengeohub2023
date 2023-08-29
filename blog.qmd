@@ -432,7 +432,7 @@ In Python, the operation returns the geometry of both 'x' and 'y' objects, which
 poi_joined = poi_buffer.sjoin(stops, how='left')
 # Column names:
 poi_joined.columns
-poi_joined[['name', 'point', 'buffer_150']]
+poi_joined[['stop_id', 'point']]
 ```
 
 ## R
@@ -440,7 +440,7 @@ poi_joined[['name', 'point', 'buffer_150']]
 ```{r}
 poi_joined = st_join(poi_buffer, stops)
 names(poi_joined)
-poi_joined[c("name", "geometry")]
+poi_joined[c("stop_id", "geometry")]
 ```
 
 :::
