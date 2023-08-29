@@ -36,7 +36,7 @@ We will start by loading core packages for working with geographic vector and at
 See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data) and [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html) implementations in the respective lecture note sections.
 
 
-:::: {.panel-tabset}
+:::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -60,7 +60,7 @@ library(tidyverse)
 The following commands create geographic datasets 'from scratch'.
 Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
 
-:::: {.panel-tabset}
+:::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -99,7 +99,7 @@ sf::st_crs(poi_sf) = "EPSG:4326"
 
 The following commands download and unzip data from the internet.
 
-:::: {.panel-tabset}
+:::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -132,7 +132,7 @@ if (!dir.exists("data")) {
 
 As shown below, Python and R implemenations to import a shapefile are similar.
 
-:::: {.panel-tabset}
+:::: {.panel-tabset group="language"}
 
 ## Python
 
@@ -154,7 +154,7 @@ pol_all
 
 The following commands select a subset of the data based on attribute values.
 
-:::: {.panel-tabset}
+:::: {.panel-tabset group="language"}
 
 ## Python
 
