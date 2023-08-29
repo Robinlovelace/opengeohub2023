@@ -390,6 +390,32 @@ st_area(poi_buffers)
 
 :::
 
+## Spatial subsetting
+
+Code to subset the bus stops withing the buffered `poi` points is shown below.
+As shown, the R is more concise because in Python you must undertake a few additional steps:
+
+- Take the unary union of the buffered points before subsetting
+- Create a boolean Series object with the `contains()` or other method and use the boolean Series to subset the data (rather than another geographic object)
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+poi_union = poi.unary_union
+sel = stops.intersects(poi_union)
+stops_in_b = stops[sel]
+stops_in_b
+```
+
+## R
+
+```{r}
+stops_in_b = stops[poi_buffer, ]
+stops_in_b
+```
+
 ## Spatial joins
 
 
