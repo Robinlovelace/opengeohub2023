@@ -429,13 +429,18 @@ In Python, the operation returns the geometry of both 'x' and 'y' objects, which
 ## Python
 
 ```{python}
-poi_buffer.sjoin(stops, how='left')
+poi_joined = poi_buffer.sjoin(stops, how='left')
+# Column names:
+poi_joined.columns
+poi_joined[['name', 'point', 'buffer_150']]
 ```
 
 ## R
 
 ```{r}
-st_join(stops, poi_buffer)
+poi_joined = st_join(poi_buffer, stops)
+names(poi_joined)
+poi_joined[c("name", "geometry")]
 ```
 
 :::
