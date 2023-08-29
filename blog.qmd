@@ -162,4 +162,31 @@ pol_all
 
 ::::
 
+## Subsetting by attributes
+
+The following commands select a subset of the data based on attribute values.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{python}
+sel = 'Port Lotniczy Poznań-Ławica im. Henryka Wieniawskiego'
+pol = pol_all[pol_all['name'] == sel]
+pol
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+pol = pol_all |>
+  filter(str_detect(name, "Port*.+Poz"))
+pol
+```
+
+:::
+
+::::
 
