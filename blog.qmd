@@ -3,6 +3,11 @@ title: "Teaching R and Python for Geographic Data: Shared Experience and Lessons
 # Render on save: true
 ---
 
+```{r}
+#| include: false
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
 # Introduction
 
 In this blog post, we talk about our experience teaching R and Python for geocomputation, broadly defined as [follows](https://r.geocompx.org/intro#what-is-geocomputation):
@@ -22,44 +27,75 @@ The post is based on the following lecture notes, which we recommend checking ou
 
 # Working with vector Geographic Data
 
-We will start by loading core packages for working with geographic vector and attribute data in R and Python.
+## Loading packages
+
+We will start by loading core packages for working with geographic vector and attribute data.
+See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data) and [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html) implementations in the respective lecture note sections.
 
 
 :::: columns
 
 ::: {.column width="50%"}
 
-
-```{r}
-x <- 1:10
-x
+```{python}
+import pandas as pd
+import shapely
+import geopandas as gpd
 ```
 
 :::
 
 ::: {.column width="50%"}
 
-```{python}
-x = list(range(10))
-x
+```{r}
+library(sf)
+library(tidyverse)
 ```
 
 :::
 
 ::::
 
-Here is another code chunk.
+## Creating geographic data
 
-::: {#r-chunk .r}
-```{r}
-y <- 1:10
-y
-```
+The following commands create geographic datasets 'from scratch'.
+Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
+
+:::: columns
+
+::: {.column width="50%"}
 
 ```{python}
-y = list(range(10))
-y
+pnt1 = shapely.Point([16.9418, 52.4643])
+pnt2 = shapely.Point([16.9474, 52.4436])
+pnt3 = shapely.Point([16.9308, 52.4437])
+pnt3 = shapely.Point([16.9497, 52.4604])
+geom = gpd.GeoSeries([pnt1, pnt2, pnt3], crs=4326)
+name = pd.Series([
+    'Faculty of Geographical and Geological Sciences', 
+    'Hotel ForZa', 
+    'HL Hotel Lechicka'
+])
+poi = gpd.GeoDataFrame({'name': name, 'geometry': geom})
 ```
+
 :::
 
+::: {.column width="50%"}
+
+```{r}
+poi_df = tribble(
+  ~name, ~lon, ~lat,
+  "Faculty",        16.9418, 52.4643,
+  "Hotel ForZa",    16.9474, 52.4436,
+  "Hotel Lechicka", 16.9308, 52.4437,
+  "FairPlayce",     16.9497, 52.4604
+)
+poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"))
+sf::st_crs(poi_sf) = "EPSG:4326"
+```
+
+:::
+
+::::
 
