@@ -517,11 +517,36 @@ buffers = gpd.GeoDataFrame({
 buffers.sjoin(points2, how='left')
 ```
 
+# Questions and next steps
 
+The code above shows that R and Python are similar in many ways.
+Differences include:
+
+- R's use of the S2 spherical geometry engine by default for lon/lat data, which can mean fewer lines of code for some operations (e.g. buffers)
+- R returns measures with units, which can make conversions easier, but which can also be confusing for new users
+- Python uses the 'zip:' syntax for virtual file system access, while R uses '/vsizip/'
+- Python has native support for interactive plotting with the `.explore()` method, while R requires an additional package such as **tmap** or **mapview** to create interactive plots
+
+The above code is also a good example of how to create a reproducible workflow for geographic data analysis.
+We hope that it can also act a bit like a [Rosetta Stone](https://en.wikipedia.org/wiki/Rosetta_Stone) for those who are familiar with one language and want to learn the other.
+
+It also raises some questions, which we leave unanswered for the community to consider and comment on:
+
+- Which language is more concise?
+  - While there are slightly fewer lines of R code in the examples above, there may be ways to improve the Python code
+- Which language runs quicker?
+    - It would be interesting to see benchmarks for the above code, perhaps in a future [geocompx](https://geocompx.org/) blog post or even a multi-language benchmarking package
+- Which language is quicker to write code in (the answer likely depends on your prior experience and tastes)?
+
+We welcome input on these questions and any other comments on the above code, the source code of which can be found at [github.com/geocompx/geocompx.org](https://github.com/geocompx/geocompx.org/blob/main/post/2023/rgdal-retirement/index.qmd).
+If you would like to contribute, with ideas, comments, or additional questions, feel free to get in touch via the [geocompx](https://geocompx.org/) website, our [Discord server](https://discord.gg/PMztXYgNxp), in a [GitHub Discussion](https://github.com/geocompx/geocompx.org/discussions), on [Mastodon](https://fosstodon.org/tags/geocompx) or anywhere else.
 
 # Further reading
 
-<!---
- jn: add geocompr and geocompy here 
---->
+There is lots more to learn in this space.
+For more information, the following resources are recommended:
+
+- [Geocomputation with R](https://r.geocompx.org/) 
+- [Geocomputation with Python](https://py.geocompx.org/)
+- [Spatial Data Science with applications in R and Python](https://r-spatial.org/python/), which provides R and Python code side-by-side
 - A great tutorial that simultaneously covers R and Python is [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23) by Lorena Abad.
