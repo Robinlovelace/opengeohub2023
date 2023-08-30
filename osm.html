@@ -155,6 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#sec-download" id="toc-sec-download" class="nav-link" data-scroll-target="#sec-download">How and where to download OSM data</a>
   <ul class="collapse">
+  <li><a href="#uncompressed-osm-providers" id="toc-uncompressed-osm-providers" class="nav-link" data-scroll-target="#uncompressed-osm-providers">Uncompressed OSM providers</a></li>
   <li><a href="#geofabrik" id="toc-geofabrik" class="nav-link" data-scroll-target="#geofabrik">Geofabrik</a></li>
   <li><a href="#openstreetmap.fr" id="toc-openstreetmap.fr" class="nav-link" data-scroll-target="#openstreetmap.fr">Openstreetmap.fr</a></li>
   <li><a href="#bbbike" id="toc-bbbike" class="nav-link" data-scroll-target="#bbbike">BBBike</a></li>
@@ -217,9 +218,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://pyrosm.readthedocs.io/en/latest/">pyrosm</a></li>
 <li><a href="https://a-b-street.github.io/osm2streets/#1/0/0">osm2streets</a> (although this is currently mostly a web UI and does not have a command line interface)</li>
 </ul>
+<p>We will get data representing case study areas:</p>
+<ul>
+<li></li>
+</ul>
 </section>
 <section id="sec-download" class="level1">
 <h1>How and where to download OSM data</h1>
+<p>There are two main ways to download OSM data:</p>
+<ul>
+<li>In small amounts, which you can get from osm.org directly, and from <a href="">services</a> that host the Overpass API and provide free access.</li>
+<li>In large amounts, which you can get from a smaller number of extract providers. Because the focus of this session is on large amounts of data, and because providers of small uncompressed datasets cannot scale to national or global datasets, we will focus on this second way of getting data, with key providers described below.</li>
+</ul>
+<section id="uncompressed-osm-providers" class="level2">
+<h2 class="anchored" data-anchor-id="uncompressed-osm-providers">Uncompressed OSM providers</h2>
+<p>Queries to Overpass API providers can be made directly from the <a href="https://overpass-turbo.eu/">Overpass Turbo</a> web application, which has a convenient web interface that is ideal for exploring the data and writing queries iteratively.</p>
+<p>Overpass users the <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL">Overpass QL</a>, an example of which is provided below. You can see the results of a query at this endpoint, for example: https://overpass-turbo.eu/?Q=%28%0A+++node%2851.249%2C7.148%2C51.251%2C7.152%29%3B%0A+++%3C%3B%0A%29%3B%0Aout+meta%3B</p>
+<p>This can be written in Overpass QL as:</p>
+<pre class="overpass"><code>(
+  node(51.249,7.148,51.251,7.152);
+  &lt;;
+);
+out meta;</code></pre>
+<p>After saving this query as a file (e.g.&nbsp;called <code>query.txt</code>), you can download the data using the <code>curl</code> command line tool as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST <span class="at">-H</span> <span class="st">"Content-Type: application/x-www-form-urlencoded"</span> <span class="at">-d</span> @query.txt https://overpass-api.de/api/interpreter <span class="op">&gt;</span> data.osm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As outlined in the <a href="https://docs.ropensci.org/osmextract/articles/providers_comparisons.html"><code>providers_comparison</code></a> vignettte in the <a href="https://docs.ropensci.org/osmextract/"><code>osmextract</code></a> package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:</p>
 <ul>
 <li><a href="https://download.geofabrik.de/">geofabrik</a></li>
@@ -227,25 +249,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://download.bbbike.org/osm/bbbike/">bbbike</a></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Data (c) OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 Check the package website, https://docs.ropensci.org/osmextract/, for more details.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
 </div>
 </div>
 <p>Extracts from each provider are shown in the figures below, generated by code that can be ‘unfolded’ by clicking on the arrows:</p>
+</section>
 <section id="geofabrik" class="level2">
 <h2 class="anchored" data-anchor-id="geofabrik">Geofabrik</h2>
 <p><code>geofabrik</code> is a company that provides map-based services and free downloads of OSM extracts that are updated daily. These extracts are based on a division of the world into different regions, at 4 different levels. Zones in level 1 cover a whole continent (plus Russian Federation):</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
@@ -255,7 +278,7 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
@@ -265,7 +288,7 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">3</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">3</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
@@ -279,8 +302,8 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Russian federation is considered as a level 1 zone</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Russian federation is considered as a level 1 zone</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
@@ -290,7 +313,7 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
@@ -300,7 +323,7 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"china"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"china"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
@@ -310,7 +333,7 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"india"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"india"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
@@ -320,10 +343,10 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"france"</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"france"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
@@ -333,10 +356,10 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"brazil"</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"brazil"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
@@ -362,17 +385,17 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <h2 class="anchored" data-anchor-id="finding-an-extract-to-download">Finding an extract to download</h2>
 <p>Let’s see how it works for the city of Poznan:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We geocode the coordinates of Poznan, Poland</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> tmaptools<span class="sc">::</span><span class="fu">geocode_OSM</span>(<span class="st">"Poznan, Poland"</span>)<span class="sc">$</span>coords</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># poznan = c(x = 16.933, y = 52.408)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> tmaptools<span class="sc">::</span><span class="fu">geocode_OSM</span>(<span class="st">"Poznan, Poland"</span>)<span class="sc">$</span>coords</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># poznan = c(x = 16.933, y = 52.408)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and look for a match in the OSM extracts using <code>oe_match()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"geofabrik"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"geofabrik"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$url
 [1] "https://download.geofabrik.de/europe/poland/wielkopolskie-latest.osm.pbf"
@@ -380,7 +403,7 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 $file_size
 [1] 1.26e+08</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"bbbike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"bbbike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$url
 [1] "https://download.bbbike.org/osm/bbbike/Poznan/Poznan.osm.pbf"
@@ -388,7 +411,7 @@ $file_size
 $file_size
 [1] 25856507</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"openstreetmap_fr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"openstreetmap_fr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$url
 [1] "http://download.openstreetmap.fr/extracts/europe/poland/wielkopolskie-latest.osm.pbf"
