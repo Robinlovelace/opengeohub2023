@@ -424,21 +424,7 @@
     "href": "blog.html#unzipping-data",
     "title": "Geographic data analysis in R and Python: comparing code and outputs for working with vector datasets",
     "section": "Unzipping data",
-    "text": "Unzipping data\nWe can unzip the data using the unzip command in R and Python, for reading in bus stops data in a later step.\n::: {.panel-tabset group=“language”}"
-  },
-  {
-    "objectID": "blog.html#python-3",
-    "href": "blog.html#python-3",
-    "title": "Geographic data analysis in R and Python: comparing code and outputs for working with vector datasets",
-    "section": "Python",
-    "text": "Python\n\nwith zipfile.ZipFile(f, 'r') as zip_ref:\n    zip_ref.extractall()"
-  },
-  {
-    "objectID": "blog.html#r-3",
-    "href": "blog.html#r-3",
-    "title": "Geographic data analysis in R and Python: comparing code and outputs for working with vector datasets",
-    "section": "R",
-    "text": "R\n\nunzip(f)"
+    "text": "Unzipping data\nWe can unzip the data using the unzip command in R and Python, for reading in bus stops data in a later step.\n\nPythonR\n\n\n\nwith zipfile.ZipFile(f, 'r') as zip_ref:\n    zip_ref.extractall()\n\n\n\n\nunzip(f)"
   },
   {
     "objectID": "blog.html#reading-and-printing-geographic-data",
