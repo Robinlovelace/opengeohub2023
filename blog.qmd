@@ -72,7 +72,7 @@ library(tmap)
 
 ## Creating geographic data
 
-The following commands create geographic datasets 'from scratch' representing coordinates of a few hotels in Poznan, Poland.
+The following commands create geographic datasets 'from scratch' representing coordinates of a the faculty where the Summer School takes place, and few hotels, in Poznan, Poland.
 Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
 
 ::: {.panel-tabset group="language"}
@@ -215,7 +215,7 @@ pol
 ## Basic plotting
 
 The following commands plot the data.
-Note that by default, R's `plot()` method for `{sf}` objects creates a plot for each column in the data (up to 9 by default).
+Note that by default, R's `plot()` method for `{sf}` objects creates a plot for each column in the data (up to 9 by default). <!--- Perhaps switch to plot(st_geometry(pol)) in R, to make it more comparable with Python? --->
 
 ::: {.panel-tabset group="language"}
 
@@ -254,7 +254,7 @@ plot(st_geometry(pol), col = "white", border = "black")
 ## Creating geographic data frames from a CSV file
 
 The following commands create a geographic data frame from a CSV file.
-Note that separate steps are needed to convert a GeoSeries to a GeoDataFrame in Python, whereas in R the `sf::st_as_sf()` function can be used to convert a data frame to a spatial data frame directly.
+Note that two steps---creating the geometry column and combining it with the original table, hereby combined into one complex expression---are needed to convert a `DataFrame` to a `GeoDataFrame` in Python, whereas in R the `sf::st_as_sf()` function can be used to convert a `data.frame` to a spatial data frame directly.
 
 ::: {.panel-tabset group="language"}
 
@@ -286,7 +286,7 @@ stops
 ## Plotting attributes and layers
 
 The following commands plot the bus stops loaded in the previous step.
-Note that the **tmap** package is used in R to create these more advanced plots, as it also supports interactive mapping.
+Note that the **tmap** package is hereby used in R to create these more advanced plots, as it also supports interactive mapping (see below).
 
 ::: {.panel-tabset group="language"}
 
@@ -305,7 +305,7 @@ tm_shape(stops) +
 
 :::
 
-We can add basic overlays easily in both languages.
+We can add basic overlays in both languages as follows.
 
 ::: {.panel-tabset group="language"}
 
@@ -332,7 +332,7 @@ plot(poi_sf$geometry, col = "red", add = TRUE)
 ## Interactive plots
 
 The following commands create interactive plots, in Python and R respectively.
-The Python code requires **folium** and **mapclassify** packages, which are not installed by default when you install **geopandas**.
+The Python code requires the **folium** and **mapclassify** packages, which are not installed by default when you install **geopandas**.
 Note that with **tmap**, you can use the same code to create static and interactive plots, by changing the `tmap_mode()`. 
 
 ::: {.panel-tabset group="language"}
@@ -355,7 +355,7 @@ tm_shape(stops) +
 
 ## Reprojecting data
 
-The following commands reproject the data to a local projected coordinate reference system (CRS).
+The following commands reproject the data to a local projected Coordinate Reference System (CRS).
 
 ::: {.panel-tabset group="language"}
 
@@ -371,8 +371,8 @@ stops_projected = stops.to_crs(2180)
 
 ```{r}
 st_crs(poi_sf)
-poi_projected = st_transform(poi_sf, "EPSG:2180")
-stops_projected = st_transform(stops, "EPSG:2180")
+poi_projected = st_transform(poi_sf, 2180)
+stops_projected = st_transform(stops, 2180)
 ```
 
 :::
@@ -384,7 +384,7 @@ Note that R allows buffer to be created directly from a spatial data frame with 
 <!---
  jn: maybe add a link to geocompr here? 
 --->
-For buffer operations to work in Python you must reproject the data first (although there plans for GeoPandas to support a spherical geometry backend at some point, as discussed in issue [#2098](https://github.com/geopandas/geopandas/issues/2098)).
+For buffer operations to work in Python you must reproject the data first (which we did, see above) (although there plans for **geopandas** to support a spherical geometry backend at some point, as discussed in issue [#2098](https://github.com/geopandas/geopandas/issues/2098)).
 
 
 ::: {.panel-tabset group="language"}
