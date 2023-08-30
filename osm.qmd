@@ -39,7 +39,39 @@ You may want to install the following packages for @sec-command-line:
 - [pyrosm](https://pyrosm.readthedocs.io/en/latest/)
 - [osm2streets](https://a-b-street.github.io/osm2streets/#1/0/0) (although this is currently mostly a web UI and does not have a command line interface)
 
+We will get data representing case study areas:
+
+- 
+
 # How and where to download OSM data {#sec-download}
+
+There are two main ways to download OSM data:
+
+- In small amounts, which you can get from osm.org directly, and from [services]() that host the Overpass API and provide free access.
+- In large amounts, which you can get from a smaller number of extract providers. Because the focus of this session is on large amounts of data, and because providers of small uncompressed datasets cannot scale to national or global datasets, we will focus on this second way of getting data, with key providers described below.
+
+## Uncompressed OSM providers
+
+Queries to Overpass API providers can be made directly from the [Overpass Turbo](https://overpass-turbo.eu/) web application, which has a convenient web interface that is ideal for exploring the data and writing queries iteratively.
+
+Overpass users the [Overpass QL](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL), an example of which is provided below.
+You can see the results of a query at this endpoint, for example: https://overpass-turbo.eu/?Q=%28%0A+++node%2851.249%2C7.148%2C51.251%2C7.152%29%3B%0A+++%3C%3B%0A%29%3B%0Aout+meta%3B
+
+This can be written in Overpass QL as:
+
+```overpass
+(
+  node(51.249,7.148,51.251,7.152);
+  <;
+);
+out meta;
+```
+
+After saving this query as a file (e.g. called `query.txt`), you can download the data using the `curl` command line tool as follows:
+
+```bash
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d @query.txt https://overpass-api.de/api/interpreter > data.osm
+```
 
 As outlined in the [`providers_comparison`](https://docs.ropensci.org/osmextract/articles/providers_comparisons.html) vignettte in the [`osmextract`](https://docs.ropensci.org/osmextract/) package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:
 
