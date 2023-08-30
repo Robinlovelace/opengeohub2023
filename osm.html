@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -113,7 +147,20 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#sec-download" id="toc-sec-download" class="nav-link" data-scroll-target="#sec-download">How and where to download OSM data</a></li>
+  <li><a href="#sec-osmdata" id="toc-sec-osmdata" class="nav-link" data-scroll-target="#sec-osmdata">How to process small amounts of OSM data using the osmdata R package</a></li>
+  <li><a href="#sec-osmextract" id="toc-sec-osmextract" class="nav-link" data-scroll-target="#sec-osmextract">How to process large OSM ‘extracts’ data with the osmextract R package</a></li>
+  <li><a href="#sec-command-line" id="toc-sec-command-line" class="nav-link" data-scroll-target="#sec-command-line">Other command line tools for working with OSM data</a></li>
+  <li><a href="#sec-ideas" id="toc-sec-ideas" class="nav-link" data-scroll-target="#sec-ideas">Ideas for using OSM data</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -135,9 +182,118 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>TBC.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This practical was developed for the <a href="https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/">OpenGeoHub summer school 2023</a>.</p>
+
+<!---
+ Abstract
 
 
+OpenGeoHub Summer School 2023
+login
+Processing large OpenStreetMap datasets for geocomputational research
+2023-09-01, 09:00–10:30, Room 18 (Sala 18)
+
+OpenStreetMap (OSM) is a free and openly editable map of the world. Like
+Wikipedia and unlike government or corperation maintained datasets, OSM
+is created and maintained by a community of volunteers, making it the
+premier decentralized and fastest evolving source of geographic vector
+data focussed on features relevant to human activity (e.g. roads,
+buildings, cafes) on planet Earth. Unlike Wikipedia, every data point in
+OSM has a geographic location and attributes must be structured as
+key-value pairs. OSM is a rich source of data for geocomputational
+research, but the decentralized nature of the project and the sheer
+volume of data. ‘Planet.osm’ now has more nodes than there are people on
+Earth, with more than 8 billion
+nodes, and the rate of data
+creation is increasing as the community grows, to 10 million
+users in early 2023. The
+size and rapid evolution of OSM are great strengths, democratising
+geographic knowledge and ensuring resilience. However, these features
+can make it difficult to work with OSM data.
+
+This lecture will provide an introduction to working with OSM and will
+cover the following:
+
+    How and where to download OSM data
+    How to process small amounts of OSM data using the osmdata R package
+    How to process large OSM ‘extracts’ data with the osmextract R
+    package
+    Other command line tools for working with OSM data, including the
+    mature and widely used osmium tool, the pyrosm Python package and
+    the osm2streets web
+    application and Rust codebase
+
+Finally, the lecture will outline ideas for using OSM data. It will
+conclude with a call to action, inspiring the use of this rich resource
+to support policy objectives such as the fast and fair decarbonisation
+of the global economy as societies transition away from inefficient,
+polluting and costly fossil fuels.
+What is your current associations to EU Horizon projects (if any)? –
+Robin Lovelace
+
+Robin Lovelace is Associate Professor of Transport Data Science at the Leeds Institute for Transport Studies (ITS) and Head of Data at the government agency Active Travel England. Robin specializes in geocomputation with a focus on developing geographic methods applied to modeling transport systems, active travel, and decarbonisation. Robin has experience not only researching but deploying transport models in inform sustainable policies and more effective use of transport investment, including as Lead Developer of the Propensity to Cycle Tool (see www.pct.bike), the basis of strategic cycle network plans nationwide. Robin has led numerous data science projects for organizations ranging from the Department for Transport to the World Bank.
+
+Robin is author of popular open source software packages including R packages stplanr, stats19 and abstr. He has authored three reproducible and open source textbooks, Microsimulation with R, Efficient R Programming, and Geocomputation with R.
+This speaker also appears in:
+
+    Tidy geographic data with sf, dplyr, ggplot2, geos and friends (part 1)
+    Tidy geographic data with sf, dplyr, ggplot2, geos and friends (part 2)
+
+powered by pretalx · Contact us · Imprint
+
+
+--->
+<p>As outlined in the session abstract, will cover</p>
+<ul>
+<li>How and where to download OSM data</li>
+<li>How to process small amounts of OSM data using the osmdata R package</li>
+<li>How to process large OSM ‘extracts’ data with the osmextract R package</li>
+<li>Other command line tools for working with OSM data, including the mature and widely used osmium tool, the pyrosm Python package and the osm2streets web application and Rust codebase</li>
+</ul>
+<p>Finally, the session will outline ideas for using OSM data to support the fast and fair decarbonisation of the global economy.</p>
+</section>
+<section id="prerequisites" class="level1">
+<h1>Prerequisites</h1>
+<p>To participate in the session, all you need is R and following packages:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tidyverse"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"osmdata"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"osmextract"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You may want to install the following packages for <a href="#sec-command-line">Section&nbsp;6</a>:</p>
+<ul>
+<li><a href="https://osmcode.org/osmium-tool/">osmium</a></li>
+<li><a href="https://pyrosm.readthedocs.io/en/latest/">pyrosm</a></li>
+<li><a href="https://a-b-street.github.io/osm2streets/#1/0/0">osm2streets</a></li>
+</ul>
+</section>
+<section id="sec-download" class="level1">
+<h1>How and where to download OSM data</h1>
+<p>As …</p>
+</section>
+<section id="sec-osmdata" class="level1">
+<h1>How to process small amounts of OSM data using the osmdata R package</h1>
+<p>The <a href="https://cran.r-project.org/package=osmdata">osmdata</a> package is a mature and widely used tool for working with OSM data in R. It is designed to work with small amounts of data, such as the area around a city or a country. It is not designed to work with large amounts of data, such as the whole of Europe or the world. For that, we need a different approach, which is covered in the next section.</p>
+</section>
+<section id="sec-osmextract" class="level1">
+<h1>How to process large OSM ‘extracts’ data with the osmextract R package</h1>
+<p>…</p>
+</section>
+<section id="sec-command-line" class="level1">
+<h1>Other command line tools for working with OSM data</h1>
+<p>…</p>
+</section>
+<section id="sec-ideas" class="level1">
+<h1>Ideas for using OSM data</h1>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

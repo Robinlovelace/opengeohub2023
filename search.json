@@ -81,7 +81,7 @@
     "href": "osm.html",
     "title": "Processing large OpenStreetMap datasets for research",
     "section": "",
-    "text": "TBC."
+    "text": "Introduction\nThis practical was developed for the OpenGeoHub summer school 2023.\n\n\nAs outlined in the session abstract, will cover\n\nHow and where to download OSM data\nHow to process small amounts of OSM data using the osmdata R package\nHow to process large OSM ‘extracts’ data with the osmextract R package\nOther command line tools for working with OSM data, including the mature and widely used osmium tool, the pyrosm Python package and the osm2streets web application and Rust codebase\n\nFinally, the session will outline ideas for using OSM data to support the fast and fair decarbonisation of the global economy.\n\n\nPrerequisites\nTo participate in the session, all you need is R and following packages:\npkgs = c(\n    \"tidyverse\",\n    \"osmdata\",\n    \"osmextract\"\n)\nremotes::install_cran(pkgs)\nYou may want to install the following packages for Section 6:\n\nosmium\npyrosm\nosm2streets\n\n\n\nHow and where to download OSM data\nAs …\n\n\nHow to process small amounts of OSM data using the osmdata R package\nThe osmdata package is a mature and widely used tool for working with OSM data in R. It is designed to work with small amounts of data, such as the area around a city or a country. It is not designed to work with large amounts of data, such as the whole of Europe or the world. For that, we need a different approach, which is covered in the next section.\n\n\nHow to process large OSM ‘extracts’ data with the osmextract R package\n…\n\n\nOther command line tools for working with OSM data\n…\n\n\nIdeas for using OSM data\n\n\nReferences"
   },
   {
     "objectID": "tidy.html",
