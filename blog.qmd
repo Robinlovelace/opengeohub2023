@@ -522,7 +522,7 @@ buffers.sjoin(points2, how='left')
 The code above shows that R and Python are similar in many ways.
 Differences include:
 
-- R's use of the S2 spherical geometry engine by default for lon/lat data, which can mean fewer lines of code for some operations (e.g. buffers)
+- R's package **sf** use of the S2 spherical geometry engine by default for lon/lat data, which can mean fewer lines of code for some operations (e.g. buffers)
 - R returns measures with units, which can make conversions easier, but which can also be confusing for new users
 - Python uses the 'zip:' syntax for virtual file system access, while R uses '/vsizip/'
 - Python has native support for interactive plotting with the `.explore()` method, while R requires an additional package such as **tmap** or **mapview** to create interactive plots
