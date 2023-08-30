@@ -3,6 +3,23 @@ title: "Geographic data analysis in R and Python: comparing code and outputs for
 format: html
 # # Alternative title:
 # title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
+author: 
+  - name: Robin Lovelace
+    affiliation: University of Leeds, Active Travel England, UK
+    orcid: 0000-0001-5679-6536
+    email: 
+  - name: Anita Graser
+    affiliation: Austrian Institute of Technology, Austria
+    orcid: 0000-0001-5361-2885
+    email: 
+  - name: Michael Dorman
+    affiliation: Ben-Gurion University of the Negev, Israel
+    orcid: 
+    email:
+  - name: Jakub Nowosad
+    affiliation: Adam Mickiewicz University, Poznań, Poland
+    orcid: 0000-0002-1057-3721
+    email: 
 ---
 
 ```{r}
@@ -60,6 +77,10 @@ import geopandas as gpd
 
 <!---
  jn: I would suggest to use specific packages from tidyverse instead of attaching the whole tidyverse 
+
+rl: Why? Tidyverse is popular and it makes life easy.
+Also that's the approach in the teaching materials.
+For the book and for software development that's another matter but for this blog post I think it's fine.
 --->
 
 ```{r}
@@ -158,10 +179,8 @@ unzip(f)
 
 ## Reading and printing geographic data
 
-<!---
- jn: I know that shapefiles are so prominent everyone, but given the issues with them, I would suggest to use other formats (e.g. GeoPackage) instead. 
---->
 As shown below, Python and R implemenations to import a shapefile are similar.
+Note: we recommend using open file formats such as GeoPackage (`.gpkg`), as outlined in [Geocomputation with R](https://r.geocompx.org/read-write) and [Geocomputation with Python](https://py.geocompx.org/08-read-write-plot).
 
 ::: {.panel-tabset group="language"}
 
@@ -380,12 +399,8 @@ stops_projected = st_transform(stops, 2180)
 ## Buffers
 
 The following commands create buffers around the points.
-Note that R allows buffer to be created directly from a spatial data frame with geographic (lon/lot) coordinates thanks to its integration with Google's S2 spherical geometry engine.
-<!---
- jn: maybe add a link to geocompr here? 
---->
-For buffer operations to work in Python you must reproject the data first (which we did, see above) (although there plans for **geopandas** to support a spherical geometry backend at some point, as discussed in issue [#2098](https://github.com/geopandas/geopandas/issues/2098)).
-
+Note that R allows buffer to be created directly from a spatial data frame with geographic (lon/lot) coordinates thanks to its integration with Google's S2 spherical geometry engine, as outlined in [Geocomputation with R](https://r.geocompx.org/reproj-geo-data#geom-proj).
+For buffer operations to work in Python you must reproject the data first (which we did, see above) (although there are plans for **geopandas** to support a spherical geometry backend at some point, as discussed in issue [#2098](https://github.com/geopandas/geopandas/issues/2098)).
 
 ::: {.panel-tabset group="language"}
 
@@ -500,9 +515,36 @@ buffers = gpd.GeoDataFrame({
 buffers.sjoin(points2, how='left')
 ```
 
+# Questions and next steps
+
+The code above shows that R and Python are similar in many ways.
+Differences include:
+
+- R's package **sf** use of the S2 spherical geometry engine by default for lon/lat data, which can mean fewer lines of code for some operations (e.g. buffers)
+- The R package **sf** returns measures with units, which can make conversions easier, but which can also be confusing for new users
+- Python uses the 'zip:' syntax for virtual file system access, while R uses '/vsizip/'
+- Python has native support for interactive plotting with the `.explore()` method, while R requires an additional package such as **tmap** or **mapview** to create interactive plots
+
+The above code is also a good example of how to create a reproducible workflow for geographic data analysis.
+We hope that it can also act a bit like a [Rosetta Stone](https://en.wikipedia.org/wiki/Rosetta_Stone) for those who are familiar with one language and want to learn the other.
+
+It also raises some questions, which we leave unanswered for the community to consider and comment on:
+
+- Which language is more concise?
+  - While there are slightly fewer lines of R code in the examples above, there may be ways to improve the Python code
+- Which language runs quicker?
+    - It would be interesting to see benchmarks for the above code, perhaps in a future [geocompx](https://geocompx.org/) blog post or even a multi-language benchmarking package
+- Which language is quicker to write code in (the answer likely depends on your prior experience and tastes)?
+
+We welcome input on these questions and any other comments on the above code, the source code of which can be found at [github.com/geocompx/geocompx.org](https://github.com/geocompx/geocompx.org/blob/main/post/2023/rgdal-retirement/index.qmd).
+If you would like to contribute, with ideas, comments, or additional questions, feel free to get in touch via the [geocompx](https://geocompx.org/) website, our [Discord server](https://discord.gg/PMztXYgNxp), in a [GitHub Discussion](https://github.com/orgs/geocompx/discussions), on [Mastodon](https://fosstodon.org/tags/geocompx) or anywhere else.
+
 # Further reading
 
-<!---
- jn: add geocompr and geocompy here 
---->
+There is lots more to learn in this space.
+For more information, the following resources are recommended:
+
+- [Geocomputation with R](https://r.geocompx.org/) 
+- [Geocomputation with Python](https://py.geocompx.org/)
+- [Spatial Data Science with applications in R and Python](https://r-spatial.org/python/), which provides R and Python code side-by-side
 - A great tutorial that simultaneously covers R and Python is [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23) by Lorena Abad.
