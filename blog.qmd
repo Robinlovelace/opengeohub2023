@@ -20,6 +20,10 @@ author:
     affiliation: Adam Mickiewicz University, Poznań, Poland
     orcid: 0000-0002-1057-3721
     email: 
+  - name: Maarten Pronk
+    affiliation: Deltares & TU Delft, Delft, the Netherlands
+    orcid: 0000-0001-8758-3939
+    email: 
 ---
 
 ```{r}
@@ -89,6 +93,11 @@ library(tidyverse)
 library(tmap)
 ```
 
+## Julia
+```{julia}
+using GeoDataFrames
+```
+
 :::
 
 ## Creating geographic data
@@ -152,7 +161,18 @@ if (!dir.exists("data")) {
 }
 ```
 
-Note that we can read directly from ZIP files with R and Python thanks to the [GDAL Virtual File System](https://gdal.org/user/virtual_file_systems.html).
+## Julia
+
+```{julia}
+using Downloads
+u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
+f = basename(u)
+if !isfile(f)
+    download(u, f)
+end
+```
+
+Note that we can read directly from ZIP files with R, Python, and Julia thanks to the [GDAL Virtual File System](https://gdal.org/user/virtual_file_systems.html).
 
 :::
 
@@ -198,8 +218,17 @@ pol_all = sf::read_sf("/vsizip/data.zip/data/osm/gis_osm_transport_a_free_1.shp"
 pol_all
 ```
 
+## Julia
+```{julia}
+df = GeoDataFrames.read("/vsizip/data.zip/data/osm/gis_osm_transport_a_free_1.shp")
+df
+```
+
 :::
 
+<!---
+  This should also work in Python and Julia no? It's a GDAL feature.
+--->
 Note: in R, you can read-in the dataset from the URL in a single line of code without first downloading the zip file:
 
 ```{r}

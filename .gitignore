@@ -8,3 +8,4 @@ data/
 data.zip
 *.gpkg
 *.gif
+Manifest.toml

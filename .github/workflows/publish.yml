@@ -23,6 +23,16 @@ jobs:
         with:
           toolchain: stable
           override: true
+      
+      - uses: julia-actions/setup-julia@v1
+        with:
+          version: 1.9
+      - uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/cache@v1
+        with:
+          cache-compiled: "true"
+          cache-registries: "true"
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
