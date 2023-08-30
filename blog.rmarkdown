@@ -13,6 +13,7 @@ pkgs = c("geopandas", "shapely", "pandas", "rasterio", "matplotlib", "folium", "
 reticulate::py_install(pkgs)
 ```
 
+
 # Introduction
 
 In this blog post, we talk about our experience teaching R and Python for geocomputation.
@@ -50,11 +51,13 @@ See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data
 
 ## Python
 
+
 ```{python}
 import pandas as pd
 from shapely import Point
 import geopandas as gpd
 ```
+
 
 ## R
 
@@ -62,11 +65,13 @@ import geopandas as gpd
  jn: I would suggest to use specific packages from tidyverse instead of attaching the whole tidyverse 
 --->
 
+
 ```{r}
 library(sf)
 library(tidyverse)
 library(tmap)
 ```
+
 
 :::
 
@@ -79,6 +84,7 @@ Most projects start with pre-generated data, but it's useful to create datasets 
 
 ## Python
 
+
 ```{python}
 poi = gpd.GeoDataFrame([
     {"name": "Faculty",        "geometry": Point(16.9418, 52.4643)},
@@ -88,7 +94,9 @@ poi = gpd.GeoDataFrame([
 ], crs=4326)
 ```
 
+
 ## R
+
 
 ```{r}
 poi_df = tribble(
@@ -101,6 +109,7 @@ poi_df = tribble(
 poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"), crs = "EPSG:4326")
 ```
 
+
 :::
 
 ### Downloading data
@@ -110,6 +119,7 @@ The following commands download data from the internet.
 ::: {.panel-tabset group="language"}
 
 ## Python
+
 
 ```{python}
 import urllib.request
@@ -121,7 +131,9 @@ if not os.path.exists("data"):
     urllib.request.urlretrieve(u, f)
 ```
 
+
 ## R
+
 
 ```{r}
 u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
@@ -130,6 +142,7 @@ if (!dir.exists("data")) {
   download.file(u, f)
 }
 ```
+
 
 Note that we can read directly from ZIP files with R and Python thanks to the [GDAL Virtual File System](https://gdal.org/user/virtual_file_systems.html).
 
@@ -143,16 +156,20 @@ We can unzip the data in R and Python: it contains spatial information about bus
 
 ## Python
 
+
 ```{python}
 with zipfile.ZipFile(f, 'r') as zip_ref:
     zip_ref.extractall()
 ```
 
+
 ## R
+
 
 ```{r}
 unzip(f)
 ```
+
 
 :::
 
@@ -167,27 +184,33 @@ As shown below, Python and R implemenations to import a shapefile are similar.
 
 ## Python
 
+
 ```{python}
 pol_all = gpd.read_file("zip://data.zip!data/osm/gis_osm_transport_a_free_1.shp")
 pol_all
 ```
 
+
 ## R
+
 
 ```{r}
 pol_all = sf::read_sf("/vsizip/data.zip/data/osm/gis_osm_transport_a_free_1.shp")
 pol_all
 ```
 
+
 :::
 
 Note: in R, you can read-in the dataset from the URL in a single line of code without first downloading the zip file:
+
 
 ```{r}
 #| eval: false
 uz = paste0("/vsizip//vsicurl/", u, "/data/osm/gis_osm_transport_a_free_1.shp")
 pol_all = sf::read_sf(uz)
 ```
+
 
 ## Subsetting by attributes
 
@@ -197,18 +220,22 @@ The following commands select a subset of the data based on attribute values (lo
 
 ## Python
 
+
 ```{python}
 pol = pol_all[pol_all['name'].str.contains('Port*.+Poz', na=False)]
 pol
 ```
 
+
 ## R
+
 
 ```{r}
 pol = pol_all |>
   filter(str_detect(name, "Port*.+Poz"))
 pol
 ```
+
 
 :::
 
@@ -221,15 +248,19 @@ Note that by default, R's `plot()` method for `{sf}` objects creates a plot for 
 
 ## Python
 
+
 ```{python}
 pol.plot();
 ```
 
+
 ## R
+
 
 ```{r}
 plot(pol)
 ```
+
 
 :::
 
@@ -239,15 +270,19 @@ The arguments needed to change the colour of the fill and border are different i
 
 ## Python
 
+
 ```{python}
 pol.plot(color='none', edgecolor='black');
 ```
 
+
 ## R
+
 
 ```{r}
 plot(st_geometry(pol), col = "white", border = "black")
 ```
+
 
 :::
 
@@ -259,6 +294,7 @@ Note that two steps---creating the geometry column and combining it with the ori
 ::: {.panel-tabset group="language"}
 
 ## Python
+
 
 ```{python}
 # Unzip the data.zip file:
@@ -272,7 +308,9 @@ stops = gpd.GeoDataFrame(
 stops
 ```
 
+
 ## R
+
 
 ```{r}
 stops = read_csv("data/gtfs/stops.txt") |>
@@ -280,6 +318,7 @@ stops = read_csv("data/gtfs/stops.txt") |>
   st_as_sf(coords = c("stop_lon", "stop_lat"), crs = "EPSG:4326")
 stops
 ```
+
 
 :::
 
@@ -292,16 +331,20 @@ Note that the **tmap** package is hereby used in R to create these more advanced
 
 ## Python
 
+
 ```{python}
 stops.plot(markersize=1, column='zone_id', legend=True);
 ```
 
+
 ## R
+
 
 ```{r}
 tm_shape(stops) +
   tm_symbols(size = 0.1, col = "zone_id")
 ```
+
 
 :::
 
@@ -311,10 +354,12 @@ We can add basic overlays in both languages as follows.
 
 ## Python
 
+
 ```{python}
 base = stops.plot(markersize=0.1)
 poi.plot(ax=base, color='red');
 ```
+
 
 ## R
 
@@ -322,10 +367,12 @@ poi.plot(ax=base, color='red');
  jn: should the next example use tmap instead of base R? 
 --->
 
+
 ```{r}
 plot(stops$geometry, col = "grey", pch = 20, cex = 0.5)
 plot(poi_sf$geometry, col = "red", add = TRUE)
 ```
+
 
 :::
 
@@ -339,17 +386,21 @@ Note that with **tmap**, you can use the same code to create static and interact
 
 ## Python
 
+
 ```{python}
 stops.explore(column='zone_id', legend=True, cmap='Dark2')
 ```
 
+
 ## R
+
 
 ```{r}
 tmap_mode("view")
 tm_shape(stops) +
   tm_symbols(size = 0.1, col = "zone_id")
 ```
+
 
 :::
 
@@ -361,19 +412,23 @@ The following commands reproject the data to a local projected Coordinate Refere
 
 ## Python
 
+
 ```{python}
 poi.crs
 poi_projected = poi.to_crs(2180)
 stops_projected = stops.to_crs(2180)
 ```
 
+
 ## R
+
 
 ```{r}
 st_crs(poi_sf)
 poi_projected = st_transform(poi_sf, 2180)
 stops_projected = st_transform(stops, 2180)
 ```
+
 
 :::
 
@@ -397,16 +452,20 @@ For buffer operations to work in Python you must reproject the data first (which
 
 To create a new vector layers named `poi_buffer`, in both languages, we can do the following.
 
+
 ```{python}
 poi_buffer = poi.copy()
 poi_buffer.geometry = poi_projected.buffer(150).to_crs(4326)
 ```
 
+
 ## R
+
 
 ```{r}
 poi_buffer = st_buffer(poi_sf, 150)
 ```
+
 
 :::
 
@@ -418,15 +477,19 @@ An interesting difference between R and Python is that the former uses the `unit
 
 ## Python
 
+
 ```{python}
 poi_buffer.to_crs(2180).area
 ```
 
+
 ## R
+
 
 ```{r}
 st_area(poi_buffer)
 ```
+
 
 :::
 
@@ -442,6 +505,7 @@ The R code is more concise because there is a special `[` notation for the speci
 
 ## Python
 
+
 ```{python}
 poi_union = poi_buffer.unary_union
 sel = stops.intersects(poi_union)
@@ -449,12 +513,15 @@ stops_in_b = stops[sel]
 stops_in_b
 ```
 
+
 ## R
+
 
 ```{r}
 stops_in_b = stops[poi_buffer, ]
 stops_in_b
 ```
+
 
 :::
 
@@ -467,17 +534,22 @@ See the [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html#sec-
 
 ## Python
 
+
 ```{python}
 poi_buffer.sjoin(stops, how='left')
 ```
 
+
 ## R
+
 
 ```{r}
 st_join(poi_buffer, stops)
 ```
 
+
 :::
+
 
 ```{python}
 #| eval: false
@@ -500,9 +572,11 @@ buffers = gpd.GeoDataFrame({
 buffers.sjoin(points2, how='left')
 ```
 
+
 # Further reading
 
 <!---
  jn: add geocompr and geocompy here 
 --->
 - A great tutorial that simultaneously covers R and Python is [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23) by Lorena Abad.
+
