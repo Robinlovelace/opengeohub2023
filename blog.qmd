@@ -17,7 +17,7 @@ author:
     orcid: 
     email:
   - name: Jakub Nowosad
-    affiliation: Adam Mickiewicz University in Poznań, Poland
+    affiliation: Adam Mickiewicz University, Poznań, Poland
     orcid: 0000-0002-1057-3721
     email: 
 ---
