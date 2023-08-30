@@ -2,4 +2,113 @@
 title: "Processing large OpenStreetMap datasets for research"
 ---
 
-TBC.
+# Introduction
+
+This practical was developed for the [OpenGeoHub summer school 2023](https://pretalx.earthmonitor.org/opengeohub-summer-school-2023/schedule/).
+
+<!---
+ Abstract
+
+
+OpenGeoHub Summer School 2023
+login
+Processing large OpenStreetMap datasets for geocomputational research
+2023-09-01, 09:00–10:30, Room 18 (Sala 18)
+
+OpenStreetMap (OSM) is a free and openly editable map of the world. Like
+Wikipedia and unlike government or corperation maintained datasets, OSM
+is created and maintained by a community of volunteers, making it the
+premier decentralized and fastest evolving source of geographic vector
+data focussed on features relevant to human activity (e.g. roads,
+buildings, cafes) on planet Earth. Unlike Wikipedia, every data point in
+OSM has a geographic location and attributes must be structured as
+key-value pairs. OSM is a rich source of data for geocomputational
+research, but the decentralized nature of the project and the sheer
+volume of data. ‘Planet.osm’ now has more nodes than there are people on
+Earth, with more than 8 billion
+nodes, and the rate of data
+creation is increasing as the community grows, to 10 million
+users in early 2023. The
+size and rapid evolution of OSM are great strengths, democratising
+geographic knowledge and ensuring resilience. However, these features
+can make it difficult to work with OSM data.
+
+This lecture will provide an introduction to working with OSM and will
+cover the following:
+
+    How and where to download OSM data
+    How to process small amounts of OSM data using the osmdata R package
+    How to process large OSM ‘extracts’ data with the osmextract R
+    package
+    Other command line tools for working with OSM data, including the
+    mature and widely used osmium tool, the pyrosm Python package and
+    the osm2streets web
+    application and Rust codebase
+
+Finally, the lecture will outline ideas for using OSM data. It will
+conclude with a call to action, inspiring the use of this rich resource
+to support policy objectives such as the fast and fair decarbonisation
+of the global economy as societies transition away from inefficient,
+polluting and costly fossil fuels.
+What is your current associations to EU Horizon projects (if any)? –
+Robin Lovelace
+
+Robin Lovelace is Associate Professor of Transport Data Science at the Leeds Institute for Transport Studies (ITS) and Head of Data at the government agency Active Travel England. Robin specializes in geocomputation with a focus on developing geographic methods applied to modeling transport systems, active travel, and decarbonisation. Robin has experience not only researching but deploying transport models in inform sustainable policies and more effective use of transport investment, including as Lead Developer of the Propensity to Cycle Tool (see www.pct.bike), the basis of strategic cycle network plans nationwide. Robin has led numerous data science projects for organizations ranging from the Department for Transport to the World Bank.
+
+Robin is author of popular open source software packages including R packages stplanr, stats19 and abstr. He has authored three reproducible and open source textbooks, Microsimulation with R, Efficient R Programming, and Geocomputation with R.
+This speaker also appears in:
+
+    Tidy geographic data with sf, dplyr, ggplot2, geos and friends (part 1)
+    Tidy geographic data with sf, dplyr, ggplot2, geos and friends (part 2)
+
+powered by pretalx · Contact us · Imprint
+
+
+--->
+
+As outlined in the session abstract, will cover
+
+-  How and where to download OSM data
+-  How to process small amounts of OSM data using the osmdata R package
+-  How to process large OSM ‘extracts’ data with the osmextract R package
+-  Other command line tools for working with OSM data, including the mature and widely used osmium tool, the pyrosm Python package and the osm2streets web application and Rust codebase
+
+Finally, the session will outline ideas for using OSM data to support the fast and fair decarbonisation of the global economy.
+
+# Prerequisites
+
+To participate in the session, all you need is R and following packages:
+
+```r
+pkgs = c(
+    "tidyverse",
+    "osmdata",
+    "osmextract"
+)
+remotes::install_cran(pkgs)
+```
+
+You may want to install the following packages for @command-line and beyond.
+
+# How and where to download OSM data {#download}
+
+As
+...
+
+# How to process small amounts of OSM data using the osmdata R package {#osmdata}
+
+The [osmdata](https://cran.r-project.org/package=osmdata) package is a mature and widely used tool for working with OSM data in R. It is designed to work with small amounts of data, such as the area around a city or a country. It is not designed to work with large amounts of data, such as the whole of Europe or the world. For that, we need a different approach, which is covered in the next section.
+
+
+#  How to process large OSM ‘extracts’ data with the osmextract R package {#osmextract}
+
+...
+
+# Other command line tools for working with OSM data {#command-line}
+
+...
+
+# Ideas for using OSM data {#ideas}
+
+
+# References
