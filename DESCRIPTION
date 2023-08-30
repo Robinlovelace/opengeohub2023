@@ -25,4 +25,5 @@ Imports:
     terra,
     crsuggest,
     osmextract,
-    reticulate
+    reticulate,
+    JuliaCall
