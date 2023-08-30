@@ -160,6 +160,14 @@ pol_all
 
 :::
 
+Note: in R you can read-in the dataset from the URL in a single line of code without first downloading the zip file:
+
+```{r}
+#| eval: false
+uz = paste0("/vsizip//vsicurl/", u, "/data/osm/gis_osm_transport_a_free_1.shp")
+pol_all = sf::read_sf(uz)
+```
+
 ## Subsetting by attributes
 
 The following commands select a subset of the data based on attribute values.
