@@ -1,15 +1,9 @@
 ---
-# This has become sufficiently long that it's worth having a separate post for raster data IMO (RL)
-title: "Geographic data analysis in R and Python: comparing code and outputs for working with vector datasets"
+title: "Geographic data analysis in R and Python: comparing code and outputs for vector data"
 format: html
 # # Alternative title:
 # title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
-# Render on save: true
 ---
-
-<!---
- jn: shorter title proposal: "Geographic data analysis in R and Python: comparision of working with vector datasets" 
---->
 
 ```{r}
 #| include: false
