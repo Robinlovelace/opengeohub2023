@@ -1031,6 +1031,7 @@ install.packages('rsgeo', repos = c('https://josiahparry.r-universe.dev', 'https
 ```
 
 ```{r}
+#| eval: false
 library(rsgeo)
 countries_rs  = as_rsgeo(sf::st_geometry(countries_projected))
 countries_rs
@@ -1039,7 +1040,6 @@ bench::mark(check = FALSE,
   geos = geos::geos_make_collection(geos::geos_unary_union(countries_geos)),
   rsgeo = rsgeo::union_geoms(countries_rs)
 )
-
 ```
 
 ## Arrow
