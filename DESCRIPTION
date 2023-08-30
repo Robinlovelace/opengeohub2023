@@ -26,7 +26,3 @@ Imports:
     crsuggest,
     osmextract,
     reticulate
-Suggests:
-    rsgeo
-Remotes: 
-    JosiahParry/rsgeo

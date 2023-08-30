@@ -467,29 +467,45 @@ stops_in_b
 
 ## Spatial joins
 
-Spatial joins work slightly differently in R and Python.
-In Python, the operation returns the geometry of both 'x' and 'y' objects, which could be useful for further analysis.
+Spatial joins are implemented with similar functions in R and Python and the outputs are the same.
+See the [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html#sec-spatial-join) and R tutorials, and in Geocomputation with R Section [4.2.4](https://r.geocompx.org/spatial-operations#spatial-joining) and Geocomputation with Python [3.3.4](https://py.geocompx.org/04-spatial-operations#sec-spatial-joining) for more details.
 
 ::: {.panel-tabset group="language"}
 
 ## Python
 
 ```{python}
-poi_joined = poi_buffer.sjoin(stops, how='left')
-# Column names:
-poi_joined.columns
-poi_joined[['stop_id', 'point'  ]]
+poi_buffer.sjoin(stops, how='left')
 ```
 
 ## R
 
 ```{r}
-poi_joined = st_join(poi_buffer, stops)
-names(poi_joined)
-poi_joined[c("stop_id", "geometry")]
+st_join(poi_buffer, stops)
 ```
 
 :::
+
+```{python}
+#| eval: false
+#| echo: false
+# Aim: check to see if there's a bug in sjoin
+points = gpd.GeoDataFrame([
+    {"name": "a",        "geometry": Point(0, 0)},
+    {"name": "b",    "geometry": Point(1, 0)},
+    {"name": "c", "geometry": Point(1, 1)},
+], crs=4326)
+
+# First two points:
+points2 = points.iloc[:2, :]
+buffers = points.buffer(0.1)
+# GeoDataFrame of buffers with values of 1 and 2:
+buffers = gpd.GeoDataFrame({
+    "value": [1, 2, 3],
+    "geometry": buffers
+})
+buffers.sjoin(points2, how='left')
+```
 
 
 
