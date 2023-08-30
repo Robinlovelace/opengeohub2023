@@ -537,7 +537,7 @@ It also raises some questions, which we leave unanswered for the community to co
 - Which language is quicker to write code in (the answer likely depends on your prior experience and tastes)?
 
 We welcome input on these questions and any other comments on the above code, the source code of which can be found at [github.com/geocompx/geocompx.org](https://github.com/geocompx/geocompx.org/blob/main/post/2023/rgdal-retirement/index.qmd).
-If you would like to contribute, with ideas, comments, or additional questions, feel free to get in touch via the [geocompx](https://geocompx.org/) website, our [Discord server](https://discord.gg/PMztXYgNxp), in a [GitHub Discussion](https://github.com/geocompx/geocompx.org/discussions), on [Mastodon](https://fosstodon.org/tags/geocompx) or anywhere else.
+If you would like to contribute, with ideas, comments, or additional questions, feel free to get in touch via the [geocompx](https://geocompx.org/) website, our [Discord server](https://discord.gg/PMztXYgNxp), in a [GitHub Discussion](https://github.com/orgs/geocompx/discussions), on [Mastodon](https://fosstodon.org/tags/geocompx) or anywhere else.
 
 # Further reading
 
