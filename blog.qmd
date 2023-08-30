@@ -1,10 +1,15 @@
 ---
 # This has become sufficiently long that it's worth having a separate post for raster data IMO (RL)
 title: "Geographic data analysis in R and Python: comparing code and outputs for working with vector datasets"
+format: html
 # # Alternative title:
 # title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
 # Render on save: true
 ---
+
+<!---
+ jn: shorter title proposal: "Geographic data analysis in R and Python: comparision of working with vector datasets" 
+--->
 
 ```{r}
 #| include: false
@@ -18,7 +23,6 @@ reticulate::py_install(pkgs)
 
 In this blog post, we talk about our experience teaching R and Python for geocomputation.
 The focus of the blog post is on geographic vector data, meaning points, lines, polygons (and their 'multi' variants) and the attributes associated with them.
-
 Geographic data analysis is a broad topic and in a later post we will cover raster data, meaning gridded data such as satellite images.
 
  <!---
@@ -35,12 +39,11 @@ OpenGeoHub 2023 was also a unique chance for the authors of the in-progress open
 The post is based on the following lecture notes, which we recommend checking out for deeper dives into the R and Python implementations of geocomputation:
 
 - [Tidy geographic data with sf, dplyr, ggplot2, geos and friends](https://ogh23.robinlovelace.net/tidy)
-- [Working with Spatial Data in Python](https://geobgu.xyz/presentations/p_2023_ogh/)
+- [Working with spatial data in Python](https://geobgu.xyz/presentations/p_2023_ogh/)
 
 <!---
  TODO: Add video links 
 --->
-
 
 # Comparing R and Python for vector geographic data analysis
 
@@ -48,7 +51,6 @@ The post is based on the following lecture notes, which we recommend checking ou
 
 We will start by loading core packages for working with geographic vector and attribute data.
 See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data) and [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html) implementations in the respective lecture note sections.
-
 
 ::: {.panel-tabset group="language"}
 
@@ -62,6 +64,10 @@ import geopandas as gpd
 
 ## R
 
+<!---
+ jn: I would suggest to use specific packages from tidyverse instead of attaching the whole tidyverse 
+--->
+
 ```{r}
 library(sf)
 library(tidyverse)
@@ -72,7 +78,7 @@ library(tmap)
 
 ## Creating geographic data
 
-The following commands create geographic datasets 'from scratch'.
+The following commands create geographic datasets 'from scratch' representing coordinates of a few hotels in Poznan, Poland.
 Most projects start with pre-generated data, but it's useful to create datasets to understand data structures.
 
 ::: {.panel-tabset group="language"}
@@ -98,10 +104,8 @@ poi_df = tribble(
   "Hotel Lechicka", 16.9308, 52.4437,
   "FairPlayce",     16.9497, 52.4604
 )
-poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"))
-sf::st_crs(poi_sf) = "EPSG:4326"
+poi_sf = sf::st_as_sf(poi_df, coords = c("lon", "lat"), crs = "EPSG:4326")
 ```
-
 
 :::
 
@@ -139,7 +143,7 @@ Note that we can read directly from ZIP files with R and Python thanks to the [G
 
 ## Unzipping data
 
-We can unzip the data using the `unzip` command in R and Python, for reading in bus stops data in a later step.
+We can unzip the data in R and Python: it contains spatial information about bus stops.
 
 ::: {.panel-tabset group="language"}
 
@@ -158,9 +162,11 @@ unzip(f)
 
 :::
 
-
 ## Reading and printing geographic data
 
+<!---
+ jn: I know that shapefiles are so prominent everyone, but given the issues with them, I would suggest to use other formats (e.g. GeoPackage) instead. 
+--->
 As shown below, Python and R implemenations to import a shapefile are similar.
 
 ::: {.panel-tabset group="language"}
@@ -181,7 +187,7 @@ pol_all
 
 :::
 
-Note: in R you can read-in the dataset from the URL in a single line of code without first downloading the zip file:
+Note: in R, you can read-in the dataset from the URL in a single line of code without first downloading the zip file:
 
 ```{r}
 #| eval: false
@@ -191,7 +197,7 @@ pol_all = sf::read_sf(uz)
 
 ## Subsetting by attributes
 
-The following commands select a subset of the data based on attribute values.
+The following commands select a subset of the data based on attribute values (looking for a specific string in the `name` column).
 
 ::: {.panel-tabset group="language"}
 
@@ -246,7 +252,7 @@ pol.plot(color='none', edgecolor='black');
 ## R
 
 ```{r}
-plot(pol$geometry, col = "white", border = "black")
+plot(st_geometry(pol), col = "white", border = "black")
 ```
 
 :::
@@ -254,7 +260,7 @@ plot(pol$geometry, col = "white", border = "black")
 ## Creating geographic data frames from a CSV file
 
 The following commands create a geographic data frame from a CSV file.
-Note that separate steps are needed to grom a GeoSeries to a GeoDataFrame in Python, whereas in R the `sf::st_as_sf()` function can be used to convert a data frame to a spatial data frame directly.
+Note that separate steps are needed to convert a GeoSeries to a GeoDataFrame in Python, whereas in R the `sf::st_as_sf()` function can be used to convert a data frame to a spatial data frame directly.
 
 ::: {.panel-tabset group="language"}
 
@@ -269,6 +275,7 @@ stops = gpd.GeoDataFrame(
     stops.drop(columns=['stop_lon', 'stop_lat', 'stop_code']),
     geometry = gpd.points_from_xy(stops.stop_lon, stops.stop_lat),
     crs = 4326)
+stops
 ```
 
 ## R
@@ -276,7 +283,7 @@ stops = gpd.GeoDataFrame(
 ```{r}
 stops = read_csv("data/gtfs/stops.txt") |>
   select(-stop_code) |>
-  st_as_sf(coords = c("stop_lon", "stop_lat"), crs = 4326)
+  st_as_sf(coords = c("stop_lon", "stop_lat"), crs = "EPSG:4326")
 stops
 ```
 
@@ -285,21 +292,21 @@ stops
 ## Plotting attributes and layers
 
 The following commands plot the bus stops loaded in the previous step.
-Note that the `tmap` package is used in R to create these more advanced plots, as it also supports interactive mapping.
+Note that the **tmap** package is used in R to create these more advanced plots, as it also supports interactive mapping.
 
 ::: {.panel-tabset group="language"}
 
 ## Python
 
 ```{python}
-stops.plot(markersize=1, column='zone_id', legend=True, cmap='Dark2');
+stops.plot(markersize=1, column='zone_id', legend=True);
 ```
 
 ## R
 
 ```{r}
 tm_shape(stops) +
-  tm_dots(size = 0.1, col = "zone_id")
+  tm_symbols(size = 0.1, col = "zone_id")
 ```
 
 :::
@@ -317,6 +324,10 @@ poi.plot(ax=base, color='red');
 
 ## R
 
+<!---
+ jn: should the next example use tmap instead of base R? 
+--->
+
 ```{r}
 plot(stops$geometry, col = "grey", pch = 20, cex = 0.5)
 plot(poi_sf$geometry, col = "red", add = TRUE)
@@ -327,8 +338,8 @@ plot(poi_sf$geometry, col = "red", add = TRUE)
 ## Interactive plots
 
 The following commands create interactive plots, in Python and R respectively.
-The Python code requires `folium` and `mapclassify` packages, which are not installed by default when you install `geopandas`.
-Note that with `{tmap}` you can use the same code to create static and interactive plots, by changing the `tmap_mode()`. 
+The Python code requires **folium** and **mapclassify** packages, which are not installed by default when you install **geopandas**.
+Note that with **tmap**, you can use the same code to create static and interactive plots, by changing the `tmap_mode()`. 
 
 ::: {.panel-tabset group="language"}
 
@@ -343,14 +354,14 @@ stops.explore(column='zone_id', legend=True, cmap='Dark2')
 ```{r}
 tmap_mode("view")
 tm_shape(stops) +
-  tm_dots(size = 0.1, col = "zone_id")
+  tm_symbols(size = 0.1, col = "zone_id")
 ```
 
 :::
 
 ## Reprojecting data
 
-The following commands reproject the data to a local coordinate reference system (CRS).
+The following commands reproject the data to a local projected coordinate reference system (CRS).
 
 ::: {.panel-tabset group="language"}
 
@@ -366,16 +377,19 @@ stops_projected = stops.to_crs(2180)
 
 ```{r}
 st_crs(poi_sf)
-poi_projected = st_transform(poi_sf, 2180)
-stops_projected = st_transform(stops, 2180)
+poi_projected = st_transform(poi_sf, "EPSG:2180")
+stops_projected = st_transform(stops, "EPSG:2180")
 ```
 
 :::
 
 ## Buffers
 
-The following commands create a buffer around the points.
+The following commands create buffers around the points.
 Note that R allows buffer to be created directly from a spatial data frame with geographic (lon/lot) coordinates thanks to its integration with Google's S2 spherical geometry engine.
+<!---
+ jn: maybe add a link to geocompr here? 
+--->
 For buffer operations to work in Python you must reproject the data first (although there plans for GeoPandas to support a spherical geometry backend at some point, as discussed in issue [#2098](https://github.com/geopandas/geopandas/issues/2098)).
 
 
@@ -425,11 +439,11 @@ st_area(poi_buffer)
 
 ## Spatial subsetting
 
-Code to subset the bus stops withing the buffered `poi` points is shown below.
-As shown, the R is more concise because in Python you must undertake a few additional steps:
+Code to subset the bus stops within the buffered `poi` points is shown below.
+The R is more concise because in Python you must undertake a few additional steps:
 
 - Take the unary union of the buffered points before subsetting
-- Create a boolean Series object with the `contains()` or other method and use the boolean Series to subset the data (rather than another geographic object)
+- Create a boolean Series object with the `contains()` or other method, and use the boolean Series to subset the data (rather than another geographic object)
 
 ::: {.panel-tabset group="language"}
 
@@ -497,4 +511,7 @@ buffers.sjoin(points2, how='left')
 
 # Further reading
 
+<!---
+ jn: add geocompr and geocompy here 
+--->
 - A great tutorial that simultaneously covers R and Python is [Tools and packages to query and process Sentinel-1 and Sentinel-2 data with R and Python](https://github.com/loreabad6/ogh23) by Lorena Abad.
