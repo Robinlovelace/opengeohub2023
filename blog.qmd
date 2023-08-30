@@ -130,11 +130,10 @@ u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data
 f = basename(u)
 if (!dir.exists("data")) {
   download.file(u, f)
-  unzip(f)
 }
 ```
 
-Note that, for R, we also unzip the dataset. This is not necessary for Python, since GeoPandas can read directly from ZIP files.
+Note that we can read directly from ZIP files with R and Python thanks to the [GDAL Virtual File System](https://gdal.org/user/virtual_file_systems.html).
 
 :::
 
@@ -154,7 +153,7 @@ pol_all
 ## R
 
 ```{r}
-pol_all = sf::read_sf("data/osm/gis_osm_transport_a_free_1.shp")
+pol_all = sf::read_sf("/vsizip/data.zip/data/osm/gis_osm_transport_a_free_1.shp")
 pol_all
 ```
 
@@ -432,7 +431,7 @@ In Python, the operation returns the geometry of both 'x' and 'y' objects, which
 poi_joined = poi_buffer.sjoin(stops, how='left')
 # Column names:
 poi_joined.columns
-poi_joined[['stop_id', 'point']]
+poi_joined[['stop_id', 'point'  ]]
 ```
 
 ## R
