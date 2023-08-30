@@ -267,12 +267,170 @@ powered by pretalx · Contact us · Imprint
 <ul>
 <li><a href="https://osmcode.org/osmium-tool/">osmium</a></li>
 <li><a href="https://pyrosm.readthedocs.io/en/latest/">pyrosm</a></li>
-<li><a href="https://a-b-street.github.io/osm2streets/#1/0/0">osm2streets</a></li>
+<li><a href="https://a-b-street.github.io/osm2streets/#1/0/0">osm2streets</a> (although this is currently mostly a web UI and does not have a command line interface)</li>
 </ul>
 </section>
 <section id="sec-download" class="level1">
 <h1>How and where to download OSM data</h1>
-<p>As …</p>
+
+<!---
+ This is the docs from osmextract:
+
+ 
+Skip to contents
+rOpenSci
+osmextract
+0.5.0.9000
+
+    Get started
+    Reference
+    Articles
+    Changelog
+
+Comparing the supported OSM providers
+Source: vignettes/providers_comparisons.Rmd
+
+This vignette presents a simple comparison between the OSM providers supported by osmextract, explaining their pros and cons. We decided to write this vignette since, as you will see in the following examples, even if you always start from the same pre-defined place, you can get significantly different OSM extracts according to the chosen provider. Hence, we want to help you choose the best suitable provider for a given situation.
+
+We assume that you are already familiar with the basic functions in osmextract, otherwise please check the “Get Started” vignette for a more detailed introduction. Now, let’s start with an example, but, first of all, we have to load the package:
+
+library(osmextract)
+#> Data (c) OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
+#> Check the package website, https://docs.ropensci.org/osmextract/, for more details.
+library(sf)
+#> Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE
+
+We geocode the coordinates of Lima, the Capital of Peru,
+
+lima = tmaptools::geocode_OSM("Lima, Peru")$coords
+
+and look for a match in the OSM extracts using oe_match():
+
+oe_match(lima, provider = "geofabrik")
+#> $url
+#> [1] "https://download.geofabrik.de/south-america/peru-latest.osm.pbf"
+#> 
+#> $file_size
+#> [1] 1.86e+08
+oe_match(lima, provider = "bbbike")
+#> $url
+#> [1] "https://download.bbbike.org/osm/bbbike/Lima/Lima.osm.pbf"
+#> 
+#> $file_size
+#> [1] 15941307
+oe_match(lima, provider = "openstreetmap_fr")
+#> $url
+#> [1] "http://download.openstreetmap.fr/extracts/south-america-latest.osm.pbf"
+#> 
+#> $file_size
+#> [1] 3559974408
+
+We can see that:
+
+    when we used geofabrik provider (which is also the default provider), then the input place was matched with an OSM extract corresponding to Peru region;
+    when we used the bbbike provider, then the input place was matched with an OSM extract corresponding to the city of Lima;
+    when we used openstreetmap_fr provider, then the input data was matched with an OSM extract covering the whole of South America.
+
+The reason behind these differences is that each OSM provider divides the geographical space into different discrete chunks, and, in the following paragraphs, we will show the tessellation used by each provider.
+Geofabrik
+
+geofabrik is a society that provides map-based services and free downloads of OSM extracts that are updated daily. These extracts are based on a division of the world into different regions, covering a whole continent (plus Russian Federation):
+
+par(mar = rep(0, 4))
+plot(geofabrik_zones[geofabrik_zones$level == 1, "name"], key.pos = NULL, main = NULL)
+
+or several countries all around the world:
+
+plot(geofabrik_zones[geofabrik_zones$level == 2, "name"], key.pos = NULL, main = NULL)
+
+Geofabrik also defines several special zones, such as Alps, Britain and Ireland, Germany, Austria and Switzerland, US Midwest, US Northeast, US Pacific, US South and US West. Moreover, it contains extracts relative to some administrative subregions, mainly in Europe, Russia, Canada and South America:
+
+plot(geofabrik_zones[geofabrik_zones$level == 3, "name"], key.pos = NULL, main = NULL)
+
+Check ?geofabrik_zones and the provider’s webpage for more details.
+Openstreetmap.fr
+
+openstreetmap_fr extracts are taken from http://download.openstreetmap.fr/, a web-service that provides OSM data updated every few minutes. The extracts are based on several regions, such as the continents:
+
+# Russian federation is considered as a level 1 zone
+plot(openstreetmap_fr_zones[openstreetmap_fr_zones$level == 1, "name"], key.pos = NULL, main = NULL)
+
+or some countries around the world (less than geofabrik):
+
+plot(openstreetmap_fr_zones[openstreetmap_fr_zones$level == 2, "name"], key.pos = NULL, main = NULL)
+
+It can be noticed that there are several holes (such as Peru, which is the reason why, in the first example, Lima was matched with South America data), implying that openstreetmap_fr cannot always be used for geographical matching of a place. Nevertheless, it provides extremely detailed extracts for some regions of the world, like China,
+
+plot(openstreetmap_fr_zones[openstreetmap_fr_zones$parent == "china", "name"], key.pos = NULL, main = NULL)
+
+India,
+
+plot(openstreetmap_fr_zones[openstreetmap_fr_zones$parent == "india", "name"], key.pos = NULL, main = NULL)
+
+France,
+
+ids_2 = openstreetmap_fr_zones$parent %in% "france"
+ids_3 = openstreetmap_fr_zones$parent %in% openstreetmap_fr_zones$id[ids_2]
+
+plot(openstreetmap_fr_zones[ids_2 | ids_3, "name"], key.pos = NULL, main = NULL)
+
+and Brazil
+
+ids_2 = openstreetmap_fr_zones$parent %in% "brazil"
+ids_3 = openstreetmap_fr_zones$parent %in% openstreetmap_fr_zones$id[ids_2]
+
+plot(openstreetmap_fr_zones[ids_2 | ids_3, "name"], key.pos = NULL, main = NULL)
+
+BBBike
+
+bbbike provider is based on https://download.bbbike.org/osm/bbbike/. It is quite different from any other provider supported in osmextract since it contains OSM data for more than 200 cities worldwide.
+
+par(mar = rep(0, 4))
+plot(sf::st_geometry(spData::world))
+plot(sf::st_geometry(bbbike_zones), border = "darkred", add = TRUE, lwd = 3)
+
+bbbike provider is the safest choice if you are looking for OSM data relative to a particular city in the world.
+On this page
+
+    Geofabrik
+    Openstreetmap.fr
+    BBBike 
+
+    About
+    About rOpenSci
+    Software Review
+    Our Team
+    Jobs
+    Donate
+    Contact Us
+
+    Community
+    Our Community
+    Community calls
+    Events
+    Join the Discussion
+    Code of conduct
+
+    Resources
+    Packages
+    Use Cases
+    Talks & Publications
+    Documentation
+    Newsletter
+    Cite rOpenSci
+
+rOpenSci is a fiscally sponsored project of NumFOCUS.
+
+
+--->
+<p>As outlined in the <a href="https://docs.ropensci.org/osmextract/articles/providers_comparisons.html"><code>providers_comparison</code></a> vignettte in the <a href="https://docs.ropensci.org/osmextract/"><code>osmextract</code></a> package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:</p>
+<ul>
+<li><a href="https://download.geofabrik.de/">geofabrik</a></li>
+<li><a href="http://download.openstreetmap.fr/">openstreetmap_fr</a></li>
+<li><a href="https://download.bbbike.org/osm/bbbike/">bbbike</a></li>
+</ul>
+<p>These are shown in the figures below, generated by code that can be ‘unfolded’ by clicking on the arrows:</p>
+<p>…</p>
 </section>
 <section id="sec-osmdata" class="level1">
 <h1>How to process small amounts of OSM data using the osmdata R package</h1>
@@ -280,7 +438,52 @@ powered by pretalx · Contact us · Imprint
 </section>
 <section id="sec-osmextract" class="level1">
 <h1>How to process large OSM ‘extracts’ data with the osmextract R package</h1>
-<p>…</p>
+<p>The quickest way to get large OSM datasets in R (and possibly in any data analysis framework) is to use the <a href="https://docs.ropensci.org/osmextract/"><code>osmextract</code></a> package.</p>
+<p>The package makes your life easy by automating many parts of the OSM extract identification, download, and processing pipeline, so you can focus on the analysis and high-impact reasearch!</p>
+<p>Let’s see how it works for the city of Poznan:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Data (c) OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
+Check the package website, https://docs.ropensci.org/osmextract/, for more details.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
+</div>
+</div>
+<p>We geocode the coordinates of Poznan, Poland</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> tmaptools<span class="sc">::</span><span class="fu">geocode_OSM</span>(<span class="st">"Poznan, Poland"</span>)<span class="sc">$</span>coords</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># poznan = c(x = 16.933, y = 52.408)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and look for a match in the OSM extracts using <code>oe_match()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"geofabrik"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$url
+[1] "https://download.geofabrik.de/europe/poland/wielkopolskie-latest.osm.pbf"
+
+$file_size
+[1] 1.26e+08</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"bbbike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$url
+[1] "https://download.bbbike.org/osm/bbbike/Poznan/Poznan.osm.pbf"
+
+$file_size
+[1] 25856507</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"openstreetmap_fr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$url
+[1] "http://download.openstreetmap.fr/extracts/europe/poland/wielkopolskie-latest.osm.pbf"
+
+$file_size
+[1] 143404382</code></pre>
+</div>
+</div>
 </section>
 <section id="sec-command-line" class="level1">
 <h1>Other command line tools for working with OSM data</h1>
