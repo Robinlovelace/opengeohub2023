@@ -179,10 +179,8 @@ unzip(f)
 
 ## Reading and printing geographic data
 
-<!---
- jn: I know that shapefiles are so prominent everyone, but given the issues with them, I would suggest to use other formats (e.g. GeoPackage) instead. 
---->
 As shown below, Python and R implemenations to import a shapefile are similar.
+Note: we recommend using open file formats such as GeoPackage (`.gpkg`), as outlined in [Geocomputation with R](https://r.geocompx.org/read-write) and [Geocomputation with Python](https://py.geocompx.org/08-read-write-plot).
 
 ::: {.panel-tabset group="language"}
 
