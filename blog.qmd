@@ -77,6 +77,10 @@ import geopandas as gpd
 
 <!---
  jn: I would suggest to use specific packages from tidyverse instead of attaching the whole tidyverse 
+
+rl: Why? Tidyverse is popular and it makes life easy.
+Also that's the approach in the teaching materials.
+For the book and for software development that's another matter but for this blog post I think it's fine.
 --->
 
 ```{r}
