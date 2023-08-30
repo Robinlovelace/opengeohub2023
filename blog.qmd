@@ -399,10 +399,7 @@ stops_projected = st_transform(stops, "EPSG:2180")
 ## Buffers
 
 The following commands create buffers around the points.
-Note that R allows buffer to be created directly from a spatial data frame with geographic (lon/lot) coordinates thanks to its integration with Google's S2 spherical geometry engine.
-<!---
- jn: maybe add a link to geocompr here? 
---->
+Note that R allows buffer to be created directly from a spatial data frame with geographic (lon/lot) coordinates thanks to its integration with Google's S2 spherical geometry engine, as outlined in [Geocomputation with R](https://r.geocompx.org/reproj-geo-data#geom-proj).
 For buffer operations to work in Python you must reproject the data first (although there plans for GeoPandas to support a spherical geometry backend at some point, as discussed in issue [#2098](https://github.com/geopandas/geopandas/issues/2098)).
 
 
