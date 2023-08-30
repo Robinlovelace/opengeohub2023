@@ -3,6 +3,23 @@ title: "Geographic data analysis in R and Python: comparing code and outputs for
 format: html
 # # Alternative title:
 # title: "Teaching R and Python for geographic data: shared experiences and lessons learned"
+author: 
+  - name: Robin Lovelace
+    affiliation: University of Leeds, Active Travel England, UK
+    orcid: 0000-0001-5679-6536
+    email: 
+  - name: Anita Graser
+    affiliation: Austrian Institute of Technology, Austria
+    orcid: 0000-0001-5361-2885
+    email: 
+  - name: Michael Dorman
+    affiliation: Ben-Gurion University of the Negev, Israel
+    orcid: 
+    email:
+  - name: Jakub Nowosad
+    affiliation: Adam Mickiewicz University in Poznań, Poland
+    orcid: 0000-0002-1057-3721
+    email: 
 ---
 
 ```{r}
