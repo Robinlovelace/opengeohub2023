@@ -88,27 +88,31 @@ pkgs = c(
 remotes::install_cran(pkgs)
 ```
 
-You may want to install the following packages for @command-line and beyond.
+You may want to install the following packages for @sec-command-line:
 
-# How and where to download OSM data {#download}
+- [osmium](https://osmcode.org/osmium-tool/)
+- [pyrosm](https://pyrosm.readthedocs.io/en/latest/)
+- [osm2streets](https://a-b-street.github.io/osm2streets/#1/0/0)
+
+# How and where to download OSM data {#sec-download}
 
 As
 ...
 
-# How to process small amounts of OSM data using the osmdata R package {#osmdata}
+# How to process small amounts of OSM data using the osmdata R package {#sec-osmdata}
 
 The [osmdata](https://cran.r-project.org/package=osmdata) package is a mature and widely used tool for working with OSM data in R. It is designed to work with small amounts of data, such as the area around a city or a country. It is not designed to work with large amounts of data, such as the whole of Europe or the world. For that, we need a different approach, which is covered in the next section.
 
 
-#  How to process large OSM ‘extracts’ data with the osmextract R package {#osmextract}
+#  How to process large OSM ‘extracts’ data with the osmextract R package {#sec-osmextract}
 
 ...
 
-# Other command line tools for working with OSM data {#command-line}
+# Other command line tools for working with OSM data {#sec-command-line}
 
 ...
 
-# Ideas for using OSM data {#ideas}
+# Ideas for using OSM data {#sec-ideas}
 
 
 # References
