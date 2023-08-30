@@ -137,6 +137,26 @@ Note that we can read directly from ZIP files with R and Python thanks to the [G
 
 :::
 
+## Unzipping data
+
+We can unzip the data using the `unzip` command in R and Python, for reading in bus stops data in a later step.
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+with zipfile.ZipFile(f, 'r') as zip_ref:
+    zip_ref.extractall()
+```
+
+## R
+
+```{r}
+unzip(f)
+```
+
+
 ## Reading and printing geographic data
 
 As shown below, Python and R implemenations to import a shapefile are similar.
@@ -239,6 +259,9 @@ Note that separate steps are needed to grom a GeoSeries to a GeoDataFrame in Pyt
 ## Python
 
 ```{python}
+# Unzip the data.zip file:
+with zipfile.ZipFile(f, 'r') as zip_ref:
+    zip_ref.extractall("data")
 stops = pd.read_csv("data/gtfs/stops.txt")
 stops = gpd.GeoDataFrame(
     stops.drop(columns=['stop_lon', 'stop_lat', 'stop_code']),
