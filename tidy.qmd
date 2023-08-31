@@ -72,7 +72,6 @@ pkgs = c(
     "ggspatial",
     "spData"
 )
-stop()
 ```
 
 ```{r}
