@@ -288,13 +288,19 @@ monaco_osm_points = oe_get("monaco", provider = "bbbike", layer = "points")
 #| message: false
 #| results: "hide"
 # ?oe_get
-monaco_osm_lines = oe_get("monaco", provider = "bbbike", layer = "lines", skip_vectortranslate = TRUE)
-f = list.files(oe_download_directory(), pattern = "monaco", full.names = TRUE)
-monaco = sf::read_sf(f[1])
-monaco = sf::read_sf(f[2], layer = "lines")
+monaco_osm_lines = oe_get("monaco", provider = "bbbike", layer = "lines")
 monaco_osm_mlines = oe_get("monaco", provider = "bbbike", layer = "multilinestrings")
 monaco_osm_polygons = oe_get("monaco", provider = "bbbike", layer = "multipolygons")
 monaco_osm_other = oe_get("monaco", provider = "bbbike", layer = "other_relations")
+```
+
+You can look at the files downloaded as follows:
+
+```{r}
+f = list.files(oe_download_directory(), pattern = "monaco", full.names = TRUE)
+f
+monaco = sf::read_sf(f[1])
+monaco = sf::read_sf(f[2], layer = "lines")
 ```
 
 Let's take a look at the size of each layer, in units of MB:
