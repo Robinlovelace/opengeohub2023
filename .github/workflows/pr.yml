@@ -1,9 +1,9 @@
+# Trigger workflow on all PRs:
 on:
-  workflow_dispatch:
-    pull_request:
-      branches:
-        - main
-name: Quarto Publish
+  pull_request:
+    branches:
+      - main
+name: Quarto PR
 
 jobs:
   build-deploy:
