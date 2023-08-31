@@ -74,7 +74,7 @@ After saving this query as a file (e.g. called `query.txt`), you can download th
 curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d @query.txt https://overpass-api.de/api/interpreter > data.osm
 ```
 
-As outlined in the [`providers_comparison`](https://docs.ropensci.org/osmextract/articles/providers_comparisons.html) vignettte in the [`osmextract`](https://docs.ropensci.org/osmextract/) package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:
+As outlined in the [`providers_comparison`](https://docs.ropensci.org/osmextract/articles/providers_comparisons.html) vignette in the [`osmextract`](https://docs.ropensci.org/osmextract/) package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:
 
 - [geofabrik](https://download.geofabrik.de/)
 - [openstreetmap_fr](http://download.openstreetmap.fr/)
