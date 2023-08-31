@@ -33,6 +33,20 @@ pkgs = c(
 remotes::install_cran(pkgs)
 ```
 
+Note: as of 2023-08-31 you also need to install the development version of `sf` as follows:
+
+```r
+remotes::install_github("r-spatial/sf")
+```
+
+```{r}
+#| include: false
+# For debugging
+# remotes::install_github("r-spatial/sf")
+# remotes::install_version("sf", "1.0-10")
+# remotes::install_dev("osmextract")
+```
+
 You may want to install the following packages for @sec-command-line:
 
 - [osmium](https://osmcode.org/osmium-tool/)
@@ -194,12 +208,6 @@ The package makes your life easy by automating many parts of the OSM extract ide
 
 Let's see how it works for the city of Poznan:
 
-
-```{r}
-library(osmextract)
-library(sf)
-```
-
 We geocode the coordinates of Poznan, Poland
 
 ```{r, eval = FALSE}
@@ -235,7 +243,7 @@ We can download the extract using `oe_get()`, noting the user of `layer = "point
 ```{r, warning = FALSE, message = FALSE}
 #| eval: false
 #| echo: false
-poznan = oe_get("Poznan", provider = "bbbike", type = "points", force_vectortranslate = TRUE)
+poznan = oe_get("Poznan", provider = "bbbike", layer = "points", force_vectortranslate = TRUE)
 # fails with
 # The input place was matched with: Poznan
 # The chosen file was already detected in the download directory. Skip downloading.
@@ -246,29 +254,37 @@ poznan = oe_get("Poznan", provider = "bbbike", type = "points", force_vectortran
 ```
 
 ```{r}
+#| eval: false
 poznan = oe_get("Poznan", provider = "bbbike", force_vectortranslate = TRUE)
 ```
 
 Note: that takes quite a while download, so we will use a smaller extract for the rest of the session:
 
+```{r}
+monaco_osm_points = oe_get("monaco", provider = "bbbike", layer = "points")
+
+```
+
 ```{r, warning = FALSE, message = FALSE}
-#| eval: false
 # ?oe_get
-malta_osm_lines = oe_get("malta", provider = "bbbike", type = "lines")
-malta_osm_mlines = oe_get("malta", provider = "bbbike", type = "multilinestrings")
-malta_osm_polygons = oe_get("malta", provider = "bbbike", type = "mutlipolygons")
-malta_osm_other = oe_get("malta", provider = "bbbike", type = "other_relations")
+monaco_osm_lines = oe_get("monaco", provider = "bbbike", layer = "lines", skip_vectortranslate = TRUE)
+f = list.files(oe_download_directory(), pattern = "monaco", full.names = TRUE)
+monaco = sf::read_sf(f[1])
+monaco = sf::read_sf(f[2], layer = "lines")
+monaco_osm_mlines = oe_get("monaco", provider = "bbbike", layer = "multilinestrings")
+monaco_osm_polygons = oe_get("monaco", provider = "bbbike", layer = "multipolygons")
+monaco_osm_other = oe_get("monaco", provider = "bbbike", layer = "other_relations")
 ```
 
 Let's take a look at the size of each layer, in units of MB:
 
 ```{r}
-#| code-fold: true
-#| eval: false
-sapply(list(malta_osm_points, malta_osm_lines, malta_osm_mlines, malta_osm_polygons, malta_osm_other), function(x) {
+sapply(list(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), function(x) {
     round(object.size(x) / 1e6, 1)
 })
 ```
+
+
 
 # Other command line tools for working with OSM data {#sec-command-line}
 
