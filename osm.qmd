@@ -305,7 +305,41 @@ knitr::kable(size_df)
 
 # Other command line tools for working with OSM data {#sec-command-line}
 
-...
+## pyrosm
+
+Install the Python package `pyrosm` as follows:
+
+```bash
+pip install pyrosm
+```
+
+```{r}
+#| include: false
+# Install pyrosm if not already installed:
+# Installed Python packages:
+py_pkgs = reticulate::py_list_packages()
+py_pkg_names = py_pkgs$package
+if (!"pyrosm" %in% py_pkg_names) {
+    reticulate::py_install("pyrosm")
+}
+```
+
+Search for Poznan in extracts available from `pyrosm` as follows (note: this fails for me currently):
+
+```{python}
+#| eval: false
+import pyrosm
+from pyrosm import OSM
+import geopandas as gpd
+
+poznan_file = pyrosm.get_data("Poznan")
+osm = OSM(poznan_file)
+poznan_cycling = osm.get_network(network_type="cycling")
+poznan_cycling.plot()
+```
+
+```{r}
+```
 
 # Ideas for using OSM data {#sec-ideas}
 
