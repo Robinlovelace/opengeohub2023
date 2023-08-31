@@ -167,7 +167,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#downloading-the-extract" id="toc-downloading-the-extract" class="nav-link" data-scroll-target="#downloading-the-extract">Downloading the extract</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul></li>
-  <li><a href="#sec-command-line" id="toc-sec-command-line" class="nav-link" data-scroll-target="#sec-command-line">Other command line tools for working with OSM data</a></li>
+  <li><a href="#sec-command-line" id="toc-sec-command-line" class="nav-link" data-scroll-target="#sec-command-line">Other command line tools for working with OSM data</a>
+  <ul class="collapse">
+  <li><a href="#pyrosm" id="toc-pyrosm" class="nav-link" data-scroll-target="#pyrosm">pyrosm</a></li>
+  </ul></li>
   <li><a href="#sec-ideas" id="toc-sec-ideas" class="nav-link" data-scroll-target="#sec-ideas">Ideas for using OSM data</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -690,7 +693,7 @@ Checking the other providers.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `points' from data source 
-  `/tmp/RtmpZ2fP89/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+  `/tmp/Rtmpe5nr75/geofabrik_monaco-latest.gpkg' using driver `GPKG'
 Simple feature collection with 3041 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
@@ -782,7 +785,22 @@ Geodetic CRS:  WGS 84</code></pre>
 </section>
 <section id="sec-command-line" class="level1">
 <h1>Other command line tools for working with OSM data</h1>
-<p>…</p>
+<section id="pyrosm" class="level2">
+<h2 class="anchored" data-anchor-id="pyrosm">pyrosm</h2>
+<p>Install the Python package <code>pyrosm</code> as follows:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyrosm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Search for Poznan in extracts available from <code>pyrosm</code> as follows (note: this fails for me currently):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyrosm</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyrosm <span class="im">import</span> OSM</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="op">=</span> pyrosm.get_data(<span class="st">"Poznan"</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>osm <span class="op">=</span> OSM(poznan_file)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>poznan_cycling <span class="op">=</span> osm.get_network(network_type<span class="op">=</span><span class="st">"cycling"</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>poznan_cycling.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 </section>
 <section id="sec-ideas" class="level1">
 <h1>Ideas for using OSM data</h1>
