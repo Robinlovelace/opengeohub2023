@@ -166,6 +166,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#finding-an-extract-to-download" id="toc-finding-an-extract-to-download" class="nav-link" data-scroll-target="#finding-an-extract-to-download">Finding an extract to download</a></li>
   <li><a href="#downloading-the-extract" id="toc-downloading-the-extract" class="nav-link" data-scroll-target="#downloading-the-extract">Downloading the extract</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#more-on-osmextract" id="toc-more-on-osmextract" class="nav-link" data-scroll-target="#more-on-osmextract">More on osmextract</a></li>
+  <li><a href="#clipping-an-area-of-interest" id="toc-clipping-an-area-of-interest" class="nav-link" data-scroll-target="#clipping-an-area-of-interest">Clipping an area of interest</a></li>
   </ul></li>
   <li><a href="#sec-command-line" id="toc-sec-command-line" class="nav-link" data-scroll-target="#sec-command-line">Other command line tools for working with OSM data</a>
   <ul class="collapse">
@@ -432,9 +434,21 @@ $file_size
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">force_vectortranslate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Find where the file is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="ot">=</span> <span class="fu">oe_find</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">return_gpkg =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "/home/robin/data/osm/bbbike_Poznan.osm.pbf"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note: you can check the location where datasets will be downloaded and translated using the <a href="https://docs.ropensci.org/osmextract/reference/oe_download_directory.html"><code>oe_set_download_directory()</code></a> function (see <code>?oe_set_download_directory</code> for details).</p>
+<p>We uploaded data for Poznan to <a href="https://github.com/Robinlovelace/opengeohub2023/releases/tag/v2">github.com/Robinlovelace/opengeohub2023/releases</a>. For future reference, you can access the 25 MB PBF file from https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(poznan_file, <span class="st">"."</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>msg_upload_github <span class="ot">=</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"gh release create v2 {poznan_file}"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(msg_upload_github)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Note: that takes quite a while download, so we will use a smaller extract for the rest of the session:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_points <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"points"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_points <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"points"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>No exact match found for place = monaco and provider = bbbike. Best match is Moscow. 
 Checking the other providers.</code></pre>
@@ -694,7 +708,7 @@ Checking the other providers.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `points' from data source 
-  `/tmp/RtmpgRsIIx/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+  `/tmp/RtmprQgjI6/geofabrik_monaco-latest.gpkg' using driver `GPKG'
 Simple feature collection with 3041 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
@@ -703,31 +717,44 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?oe_get</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>monaco_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"lines"</span>, <span class="at">skip_vectortranslate =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">2</span>], <span class="at">layer =</span> <span class="st">"lines"</span>)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>monaco_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multilinestrings"</span>)</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>monaco_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multipolygons"</span>)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>monaco_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?oe_get</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>monaco_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"lines"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>monaco_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multilinestrings"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>monaco_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multipolygons"</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>monaco_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can look at the files downloaded as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "/tmp/RtmprQgjI6/geofabrik_monaco-latest.gpkg"   
+[2] "/tmp/RtmprQgjI6/geofabrik_monaco-latest.osm.pbf"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in CPL_read_ogr(dsn, layer, query, as.character(options), quiet, :
+automatically selected the first layer in a data source containing more than
+one.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">2</span>], <span class="at">layer =</span> <span class="st">"lines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s take a look at the size of each layer, in units of MB:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sizes_mb <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), <span class="cf">function</span>(x) {</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>layer_names <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"points"</span>, <span class="st">"lines"</span>, <span class="st">"multilinestrings"</span>, <span class="st">"multipolygons"</span>, <span class="st">"other_relations"</span>)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>n_features <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), nrow)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>size_df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> layer_names,</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size_mb =</span> sizes_mb,</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> n_features,</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">kb_per_feature =</span> sizes_mb <span class="sc">/</span> n_features <span class="sc">*</span> <span class="fl">1e3</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sizes_mb <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), <span class="cf">function</span>(x) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>layer_names <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"points"</span>, <span class="st">"lines"</span>, <span class="st">"multilinestrings"</span>, <span class="st">"multipolygons"</span>, <span class="st">"other_relations"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>n_features <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), nrow)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>size_df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> layer_names,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size_mb =</span> sizes_mb,</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> n_features,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">kb_per_feature =</span> sizes_mb <span class="sc">/</span> n_features <span class="sc">*</span> <span class="fl">1e3</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -783,72 +810,93 @@ Geodetic CRS:  WGS 84</code></pre>
 <li>Are there any phenomena that are represented in more than one layer and, if so, thoughts on how to combine them?</li>
 </ul>
 </section>
+<section id="more-on-osmextract" class="level2">
+<h2 class="anchored" data-anchor-id="more-on-osmextract">More on osmextract</h2>
+<p>TODO: complete this section : )</p>
+</section>
+<section id="clipping-an-area-of-interest" class="level2">
+<h2 class="anchored" data-anchor-id="clipping-an-area-of-interest">Clipping an area of interest</h2>
+<p>Rather than read-in the entire extract, you can read-in a subset…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>pois_buffer_simple <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">st_read</span>(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `pois_buffer_simple' from data source 
+  `https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson' 
+  using driver `GeoJSON'
+Simple feature collection with 1 feature and 0 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 16.92972 ymin: 52.45306 xmax: 16.96174 ymax: 52.47165
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="sec-command-line" class="level1">
 <h1>Other command line tools for working with OSM data</h1>
 <section id="pyrosm" class="level2">
 <h2 class="anchored" data-anchor-id="pyrosm">pyrosm</h2>
 <p>Install the Python package <code>pyrosm</code> as follows:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyrosm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyrosm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <!---
  See issue here https://github.com/HTenkanen/pyrosm/issues/217 
 --->
 <p>Search for Poznan in extracts available from <code>pyrosm</code> as follows (note: this fails for me currently as documented in <a href="https://github.com/HTenkanen/pyrosm/issues/217">github.com/HTenkanen/pyrosm/issues/217</a>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyrosm</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyrosm <span class="im">import</span> OSM</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="op">=</span> pyrosm.get_data(<span class="st">"Poznan"</span>)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>osm <span class="op">=</span> OSM(poznan_file)</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>poznan_cycling <span class="op">=</span> osm.get_network(network_type<span class="op">=</span><span class="st">"cycling"</span>)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>poznan_cycling.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyrosm</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyrosm <span class="im">import</span> OSM</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="op">=</span> pyrosm.get_data(<span class="st">"Poznan"</span>)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>osm <span class="op">=</span> OSM(poznan_file)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>poznan_cycling <span class="op">=</span> osm.get_network(network_type<span class="op">=</span><span class="st">"cycling"</span>)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>poznan_cycling.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="osmnx" class="level2">
 <h2 class="anchored" data-anchor-id="osmnx">osmnx</h2>
 <p>Install the Python package <code>osmnx</code> as follows:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install osmnx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install osmnx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> osmnx <span class="im">as</span> ox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> osmnx <span class="im">as</span> ox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>/home/runner/.virtualenvs/r-reticulate/lib/python3.10/site-packages/geopandas/_compat.py:124: UserWarning: The Shapely GEOS version (3.11.1-CAPI-1.17.1) is incompatible with the GEOS version PyGEOS was compiled with (3.10.4-CAPI-1.16.2). Conversions between both will be slow.
   warnings.warn(</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get cycle netework for Poznan</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>poznan_polygon <span class="op">=</span> ox.geocode_to_gdf(<span class="st">"Poznan, Poland"</span>)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>poznan_polygon.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get cycle netework for Poznan</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>poznan_polygon <span class="op">=</span> ox.geocode_to_gdf(<span class="st">"Poznan, Poland"</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>poznan_polygon.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="614"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 <p>That is quite a big network, so let’s get the area of the polygon and use that to get a smaller network from <a href="https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson">GitHub</a>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson:</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>poznan_small <span class="op">=</span> gpd.read_file(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>poznan_small.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson:</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>poznan_small <span class="op">=</span> gpd.read_file(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>poznan_small.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-29-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Download the cycling network as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>G_cycle <span class="op">=</span> ox.graph_from_polygon(poznan_small.geometry[<span class="dv">0</span>], network_type<span class="op">=</span><span class="st">"bike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>G_cycle <span class="op">=</span> ox.graph_from_polygon(poznan_small.geometry[<span class="dv">0</span>], network_type<span class="op">=</span><span class="st">"bike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Plot the results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>ox.plot_graph(G_cycle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>ox.plot_graph(G_cycle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-27-5.png" class="img-fluid" width="768"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-31-5.png" class="img-fluid" width="768"></p>
 </div>
 </div>
 <p>Get basic stats as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> ox.project_gdf(poznan_small).unary_union.area</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> ox.basic_stats(G_cycle, area<span class="op">=</span>area)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>pd.Series(stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> ox.project_gdf(poznan_small).unary_union.area</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> ox.basic_stats(G_cycle, area<span class="op">=</span>area)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>pd.Series(stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>n                                                                             568
 m                                                                            1467
@@ -874,7 +922,7 @@ dtype: object</code></pre>
 <p>Calculate the centrality across the network as follows:</p>
 <p>We can convert the object into a ‘GeoDataFrame’ as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>cycle_gdf <span class="op">=</span> ox.graph_to_gdfs(G_cycle, edges<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>cycle_gdf <span class="op">=</span> ox.graph_to_gdfs(G_cycle, edges<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
