@@ -213,6 +213,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"osmextract"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note: as of 2023-08-31 you also need to install the development version of <code>sf</code> as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"r-spatial/sf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You may want to install the following packages for <a href="#sec-command-line">Section&nbsp;6</a>:</p>
 <ul>
 <li><a href="https://osmcode.org/osmium-tool/">osmium</a></li>
@@ -242,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 );
 out meta;</code></pre>
 <p>After saving this query as a file (e.g.&nbsp;called <code>query.txt</code>), you can download the data using the <code>curl</code> command line tool as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST <span class="at">-H</span> <span class="st">"Content-Type: application/x-www-form-urlencoded"</span> <span class="at">-d</span> @query.txt https://overpass-api.de/api/interpreter <span class="op">&gt;</span> data.osm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST <span class="at">-H</span> <span class="st">"Content-Type: application/x-www-form-urlencoded"</span> <span class="at">-d</span> @query.txt https://overpass-api.de/api/interpreter <span class="op">&gt;</span> data.osm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As outlined in the <a href="https://docs.ropensci.org/osmextract/articles/providers_comparisons.html"><code>providers_comparison</code></a> vignettte in the <a href="https://docs.ropensci.org/osmextract/"><code>osmextract</code></a> package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:</p>
 <ul>
 <li><a href="https://download.geofabrik.de/">geofabrik</a></li>
@@ -250,12 +252,12 @@ out meta;</code></pre>
 <li><a href="https://download.bbbike.org/osm/bbbike/">bbbike</a></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Data (c) OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 Check the package website, https://docs.ropensci.org/osmextract/, for more details.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
 </div>
@@ -268,31 +270,31 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Level 2 contains polygons representing several countries all around the world:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Geofabrik also defines several special zones, such as Alps, Britain and Ireland, Germany, Austria and Switzerland, US Midwest, US Northeast, US Pacific, US South and US West (level 3). Moreover, it contains extracts relative to some administrative subregions, mainly in Europe, Russia, Canada and South America:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">3</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">3</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Check <code>?geofabrik_zones</code> and the <a href="http://download.geofabrik.de/">provider’s webpage</a> for more details.</p>
@@ -303,67 +305,67 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Russian federation is considered as a level 1 zone</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Russian federation is considered as a level 1 zone</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>or some countries around the world (less than <code>geofabrik</code>’s level 2 zones):</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>It can be noticed that there are several holes (such as Peru, which is the reason why, in the first example, Lima was matched with South America data), implying that <code>openstreetmap_fr</code> cannot always be used for geographical matching of a <code>place</code>. Nevertheless, it provides extremely detailed extracts for some regions of the world, like China,</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"china"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"china"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>India,</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"india"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"india"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>France,</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"france"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>and Brazil</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"brazil"</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"france"</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="osm_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>and Brazil</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"brazil"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="osm_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -385,10 +387,6 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <section id="finding-an-extract-to-download" class="level2">
 <h2 class="anchored" data-anchor-id="finding-an-extract-to-download">Finding an extract to download</h2>
 <p>Let’s see how it works for the city of Poznan:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>We geocode the coordinates of Poznan, Poland</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> tmaptools<span class="sc">::</span><span class="fu">geocode_OSM</span>(<span class="st">"Poznan, Poland"</span>)<span class="sc">$</span>coords</span>
@@ -428,8 +426,16 @@ $file_size
 <p>We can download the extract using <code>oe_get()</code>, noting the user of <code>layer = "points"</code> to get the points layer of the OSM data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">force_vectortranslate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note: that takes quite a while download, so we will use a smaller extract for the rest of the session:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_points <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"points"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>The input place was matched with: Poznan</code></pre>
+<pre><code>No exact match found for place = monaco and provider = bbbike. Best match is Moscow. 
+Checking the other providers.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>An exact string match was found using provider = geofabrik.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Downloading the OSM extract:</code></pre>
@@ -439,8 +445,6 @@ $file_size
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |                                                                      |   1%
-  |                                                                            
   |=                                                                     |   1%
   |                                                                            
   |=                                                                     |   2%
@@ -449,57 +453,35 @@ $file_size
   |                                                                            
   |==                                                                    |   3%
   |                                                                            
-  |==                                                                    |   4%
-  |                                                                            
   |===                                                                   |   4%
   |                                                                            
   |===                                                                   |   5%
   |                                                                            
-  |====                                                                  |   5%
-  |                                                                            
   |====                                                                  |   6%
   |                                                                            
-  |=====                                                                 |   6%
-  |                                                                            
   |=====                                                                 |   7%
-  |                                                                            
-  |=====                                                                 |   8%
   |                                                                            
   |======                                                                |   8%
   |                                                                            
   |======                                                                |   9%
   |                                                                            
-  |=======                                                               |   9%
-  |                                                                            
   |=======                                                               |  10%
-  |                                                                            
-  |=======                                                               |  11%
   |                                                                            
   |========                                                              |  11%
   |                                                                            
   |========                                                              |  12%
   |                                                                            
-  |=========                                                             |  12%
-  |                                                                            
   |=========                                                             |  13%
   |                                                                            
-  |=========                                                             |  14%
-  |                                                                            
   |==========                                                            |  14%
-  |                                                                            
-  |==========                                                            |  15%
   |                                                                            
   |===========                                                           |  15%
   |                                                                            
   |===========                                                           |  16%
   |                                                                            
-  |============                                                          |  16%
-  |                                                                            
   |============                                                          |  17%
   |                                                                            
   |============                                                          |  18%
-  |                                                                            
-  |=============                                                         |  18%
   |                                                                            
   |=============                                                         |  19%
   |                                                                            
@@ -507,37 +489,23 @@ $file_size
   |                                                                            
   |==============                                                        |  20%
   |                                                                            
-  |==============                                                        |  21%
-  |                                                                            
   |===============                                                       |  21%
   |                                                                            
   |===============                                                       |  22%
   |                                                                            
-  |================                                                      |  22%
-  |                                                                            
   |================                                                      |  23%
-  |                                                                            
-  |================                                                      |  24%
   |                                                                            
   |=================                                                     |  24%
   |                                                                            
   |=================                                                     |  25%
   |                                                                            
-  |==================                                                    |  25%
-  |                                                                            
   |==================                                                    |  26%
   |                                                                            
-  |===================                                                   |  26%
-  |                                                                            
   |===================                                                   |  27%
-  |                                                                            
-  |===================                                                   |  28%
   |                                                                            
   |====================                                                  |  28%
   |                                                                            
   |====================                                                  |  29%
-  |                                                                            
-  |=====================                                                 |  29%
   |                                                                            
   |=====================                                                 |  30%
   |                                                                            
@@ -545,13 +513,9 @@ $file_size
   |                                                                            
   |======================                                                |  31%
   |                                                                            
-  |======================                                                |  32%
-  |                                                                            
   |=======================                                               |  32%
   |                                                                            
   |=======================                                               |  33%
-  |                                                                            
-  |=======================                                               |  34%
   |                                                                            
   |========================                                              |  34%
   |                                                                            
@@ -561,11 +525,7 @@ $file_size
   |                                                                            
   |=========================                                             |  36%
   |                                                                            
-  |==========================                                            |  36%
-  |                                                                            
   |==========================                                            |  37%
-  |                                                                            
-  |==========================                                            |  38%
   |                                                                            
   |===========================                                           |  38%
   |                                                                            
@@ -575,13 +535,9 @@ $file_size
   |                                                                            
   |============================                                          |  40%
   |                                                                            
-  |============================                                          |  41%
-  |                                                                            
   |=============================                                         |  41%
   |                                                                            
   |=============================                                         |  42%
-  |                                                                            
-  |==============================                                        |  42%
   |                                                                            
   |==============================                                        |  43%
   |                                                                            
@@ -589,13 +545,9 @@ $file_size
   |                                                                            
   |===============================                                       |  44%
   |                                                                            
-  |===============================                                       |  45%
-  |                                                                            
   |================================                                      |  45%
   |                                                                            
   |================================                                      |  46%
-  |                                                                            
-  |=================================                                     |  46%
   |                                                                            
   |=================================                                     |  47%
   |                                                                            
@@ -605,11 +557,7 @@ $file_size
   |                                                                            
   |==================================                                    |  49%
   |                                                                            
-  |===================================                                   |  49%
-  |                                                                            
   |===================================                                   |  50%
-  |                                                                            
-  |===================================                                   |  51%
   |                                                                            
   |====================================                                  |  51%
   |                                                                            
@@ -619,13 +567,9 @@ $file_size
   |                                                                            
   |=====================================                                 |  53%
   |                                                                            
-  |=====================================                                 |  54%
-  |                                                                            
   |======================================                                |  54%
   |                                                                            
   |======================================                                |  55%
-  |                                                                            
-  |=======================================                               |  55%
   |                                                                            
   |=======================================                               |  56%
   |                                                                            
@@ -633,27 +577,17 @@ $file_size
   |                                                                            
   |========================================                              |  57%
   |                                                                            
-  |========================================                              |  58%
-  |                                                                            
   |=========================================                             |  58%
   |                                                                            
   |=========================================                             |  59%
   |                                                                            
-  |==========================================                            |  59%
-  |                                                                            
   |==========================================                            |  60%
-  |                                                                            
-  |==========================================                            |  61%
   |                                                                            
   |===========================================                           |  61%
   |                                                                            
   |===========================================                           |  62%
   |                                                                            
-  |============================================                          |  62%
-  |                                                                            
   |============================================                          |  63%
-  |                                                                            
-  |============================================                          |  64%
   |                                                                            
   |=============================================                         |  64%
   |                                                                            
@@ -663,13 +597,9 @@ $file_size
   |                                                                            
   |==============================================                        |  66%
   |                                                                            
-  |===============================================                       |  66%
-  |                                                                            
   |===============================================                       |  67%
   |                                                                            
   |===============================================                       |  68%
-  |                                                                            
-  |================================================                      |  68%
   |                                                                            
   |================================================                      |  69%
   |                                                                            
@@ -677,37 +607,23 @@ $file_size
   |                                                                            
   |=================================================                     |  70%
   |                                                                            
-  |=================================================                     |  71%
-  |                                                                            
   |==================================================                    |  71%
   |                                                                            
   |==================================================                    |  72%
   |                                                                            
-  |===================================================                   |  72%
-  |                                                                            
   |===================================================                   |  73%
-  |                                                                            
-  |===================================================                   |  74%
   |                                                                            
   |====================================================                  |  74%
   |                                                                            
   |====================================================                  |  75%
   |                                                                            
-  |=====================================================                 |  75%
-  |                                                                            
   |=====================================================                 |  76%
   |                                                                            
-  |======================================================                |  76%
-  |                                                                            
   |======================================================                |  77%
-  |                                                                            
-  |======================================================                |  78%
   |                                                                            
   |=======================================================               |  78%
   |                                                                            
   |=======================================================               |  79%
-  |                                                                            
-  |========================================================              |  79%
   |                                                                            
   |========================================================              |  80%
   |                                                                            
@@ -715,13 +631,9 @@ $file_size
   |                                                                            
   |=========================================================             |  81%
   |                                                                            
-  |=========================================================             |  82%
-  |                                                                            
   |==========================================================            |  82%
   |                                                                            
   |==========================================================            |  83%
-  |                                                                            
-  |==========================================================            |  84%
   |                                                                            
   |===========================================================           |  84%
   |                                                                            
@@ -731,27 +643,17 @@ $file_size
   |                                                                            
   |============================================================          |  86%
   |                                                                            
-  |=============================================================         |  86%
-  |                                                                            
   |=============================================================         |  87%
-  |                                                                            
-  |=============================================================         |  88%
   |                                                                            
   |==============================================================        |  88%
   |                                                                            
   |==============================================================        |  89%
   |                                                                            
-  |===============================================================       |  89%
-  |                                                                            
   |===============================================================       |  90%
-  |                                                                            
-  |===============================================================       |  91%
   |                                                                            
   |================================================================      |  91%
   |                                                                            
   |================================================================      |  92%
-  |                                                                            
-  |=================================================================     |  92%
   |                                                                            
   |=================================================================     |  93%
   |                                                                            
@@ -759,13 +661,9 @@ $file_size
   |                                                                            
   |==================================================================    |  94%
   |                                                                            
-  |==================================================================    |  95%
-  |                                                                            
   |===================================================================   |  95%
   |                                                                            
   |===================================================================   |  96%
-  |                                                                            
-  |====================================================================  |  96%
   |                                                                            
   |====================================================================  |  97%
   |                                                                            
@@ -774,8 +672,6 @@ $file_size
   |===================================================================== |  98%
   |                                                                            
   |===================================================================== |  99%
-  |                                                                            
-  |======================================================================|  99%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -792,30 +688,72 @@ $file_size
 <pre><code>Finished the vectortranslate operations on the input file!</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `lines' from data source `/tmp/RtmpeN9REb/bbbike_Poznan.gpkg' using driver `GPKG'
-Simple feature collection with 169791 features and 9 fields
-Geometry type: LINESTRING
+<pre><code>Reading layer `points' from data source 
+  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+Simple feature collection with 3041 features and 10 fields
+Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 16.62 ymin: 52.24 xmax: 17.26 ymax: 52.54
+Bounding box:  xmin: 7.408202 ymin: 43.51654 xmax: 7.500245 ymax: 43.75175
 Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
-<p>Note: that takes quite a while download, so we will use a smaller extract for the rest of the session:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?oe_get</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>malta_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"malta"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">type =</span> <span class="st">"lines"</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>malta_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"malta"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">type =</span> <span class="st">"multilinestrings"</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>malta_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"malta"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">type =</span> <span class="st">"mutlipolygons"</span>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>malta_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"malta"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">type =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?oe_get</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>monaco_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"lines"</span>, <span class="at">skip_vectortranslate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `lines' from data source 
+  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.osm.pbf' using driver `OSM'
+Simple feature collection with 3023 features and 9 fields
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: 7.401681 ymin: 43.51654 xmax: 7.500245 ymax: 43.75434
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">2</span>], <span class="at">layer =</span> <span class="st">"lines"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>monaco_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multilinestrings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0...10...20...30...40...50...60...70...80...90...100 - done.
+Reading layer `multilinestrings' from data source 
+  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+Simple feature collection with 61 features and 4 fields
+Geometry type: MULTILINESTRING
+Dimension:     XY
+Bounding box:  xmin: 7.401681 ymin: 43.72152 xmax: 7.44801 ymax: 43.75434
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multipolygons"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0...10...20...30...40...50...60...70...80...90...100 - done.
+Reading layer `multipolygons' from data source 
+  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+Simple feature collection with 1699 features and 25 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 7.408537 ymin: 43.72474 xmax: 7.442207 ymax: 43.75323
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0...10...20...30...40...50...60...70...80...90...100 - done.
+Reading layer `other_relations' from data source 
+  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+Simple feature collection with 100 features and 4 fields
+Geometry type: GEOMETRYCOLLECTION
+Dimension:     XY
+Bounding box:  xmin: 7.410602 ymin: 43.7263 xmax: 7.438855 ymax: 43.75166
+Geodetic CRS:  WGS 84</code></pre>
+</div>
 </div>
 <p>Let’s take a look at the size of each layer, in units of MB:</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">list</span>(malta_osm_points, malta_osm_lines, malta_osm_mlines, malta_osm_polygons, malta_osm_other), <span class="cf">function</span>(x) {</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), <span class="cf">function</span>(x) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.0 2.7 1.1 2.1 0.3</code></pre>
+</div>
 </div>
 </section>
 </section>
