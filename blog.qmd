@@ -34,6 +34,13 @@ pkgs = c("geopandas", "shapely", "pandas", "rasterio", "matplotlib", "folium", "
 reticulate::py_install(pkgs)
 ```
 
+```{julia}
+using Pkg
+Pkg.status()
+Pkg.activate(".")
+Pkg.status()
+```
+
 # Introduction
 
 In this blog post, we talk about our experience teaching R and Python for geocomputation.
@@ -95,7 +102,7 @@ library(tmap)
 
 ## Julia
 
-```julia
+```{julia}
 using GeoDataFrames
 ```
 
@@ -164,12 +171,12 @@ if (!dir.exists("data")) {
 
 ## Julia
 
-```julia
+```{julia}
 using Downloads
 u = "https://github.com/Robinlovelace/opengeohub2023/releases/download/data/data.zip"
 f = basename(u)
 if !isfile(f)
-    download(u, f)
+    Downloads.download(u, f)
 end
 ```
 
@@ -221,7 +228,7 @@ pol_all
 
 ## Julia
 
-```julia
+```{julia}
 df = GeoDataFrames.read("/vsizip/data.zip/data/osm/gis_osm_transport_a_free_1.shp")
 df
 ```
