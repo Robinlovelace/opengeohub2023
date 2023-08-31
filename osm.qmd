@@ -265,7 +265,9 @@ monaco_osm_points = oe_get("monaco", provider = "bbbike", layer = "points")
 
 ```
 
-```{r, warning = FALSE, message = FALSE}
+```{r}
+#| message: false
+#| results: "hide"
 # ?oe_get
 monaco_osm_lines = oe_get("monaco", provider = "bbbike", layer = "lines", skip_vectortranslate = TRUE)
 f = list.files(oe_download_directory(), pattern = "monaco", full.names = TRUE)
@@ -279,9 +281,19 @@ monaco_osm_other = oe_get("monaco", provider = "bbbike", layer = "other_relation
 Let's take a look at the size of each layer, in units of MB:
 
 ```{r}
-sapply(list(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), function(x) {
+#| code-fold: true
+sizes_mb = sapply(list(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), function(x) {
     round(object.size(x) / 1e6, 1)
 })
+layer_names = c("points", "lines", "multilinestrings", "multipolygons", "other_relations")
+n_features = sapply(list(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), nrow)
+size_df = data.frame(
+  layer = layer_names,
+  size_mb = sizes_mb,
+  n_features = n_features,
+  kb_per_feature = sizes_mb / n_features * 1e3
+)
+knitr::kable(size_df)
 ```
 
 
