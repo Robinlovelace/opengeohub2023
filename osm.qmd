@@ -228,6 +228,47 @@ oe_match(poznan, provider = "openstreetmap_fr")
 
 As shown above, `bbbike` is the only provide that provides a match for Poznan (the others match with all of Poland).
 
+## Downloading the extract
+
+We can download the extract using `oe_get()`, noting the user of `layer = "points"` to get the points layer of the OSM data:
+
+```{r, warning = FALSE, message = FALSE}
+#| eval: false
+#| echo: false
+poznan = oe_get("Poznan", provider = "bbbike", type = "points", force_vectortranslate = TRUE)
+# fails with
+# The input place was matched with: Poznan
+# The chosen file was already detected in the download directory. Skip downloading.
+# Starting with the vectortranslate operations on the input file!
+# 0...10...20...30...40...50...60...70...80...90...100 - done.
+# Finished the vectortranslate operations on the input file!
+# Error: Not compatible with requested type: [type=character; target=double].
+```
+
+```{r}
+poznan = oe_get("Poznan", provider = "bbbike", force_vectortranslate = TRUE)
+```
+
+Note: that takes quite a while download, so we will use a smaller extract for the rest of the session:
+
+```{r, warning = FALSE, message = FALSE}
+#| eval: false
+# ?oe_get
+malta_osm_lines = oe_get("malta", provider = "bbbike", type = "lines")
+malta_osm_mlines = oe_get("malta", provider = "bbbike", type = "multilinestrings")
+malta_osm_polygons = oe_get("malta", provider = "bbbike", type = "mutlipolygons")
+malta_osm_other = oe_get("malta", provider = "bbbike", type = "other_relations")
+```
+
+Let's take a look at the size of each layer, in units of MB:
+
+```{r}
+#| code-fold: true
+#| eval: false
+sapply(list(malta_osm_points, malta_osm_lines, malta_osm_mlines, malta_osm_polygons, malta_osm_other), function(x) {
+    round(object.size(x) / 1e6, 1)
+})
+```
 
 # Other command line tools for working with OSM data {#sec-command-line}
 
