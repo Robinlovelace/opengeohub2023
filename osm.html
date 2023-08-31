@@ -220,12 +220,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"osmextract"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_cran</span>(pkgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note: as of 2023-08-31 you also need to install the development version of <code>sf</code> as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"r-spatial/sf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You may want to install the following packages for <a href="#sec-command-line">Section&nbsp;6</a>:</p>
 <ul>
-<li><a href="https://osmcode.org/osmium-tool/">osmium</a></li>
 <li><a href="https://pyrosm.readthedocs.io/en/latest/">pyrosm</a></li>
+<li><a href="https://osmnx.readthedocs.io/en/stable/">osmnx</a></li>
+<li><a href="https://osmcode.org/osmium-tool/">osmium</a></li>
 <li><a href="https://a-b-street.github.io/osm2streets/#1/0/0">osm2streets</a> (although this is currently mostly a web UI and does not have a command line interface)</li>
 </ul>
 <p>We will get data representing case study areas:</p>
@@ -251,20 +250,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 );
 out meta;</code></pre>
 <p>After saving this query as a file (e.g.&nbsp;called <code>query.txt</code>), you can download the data using the <code>curl</code> command line tool as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST <span class="at">-H</span> <span class="st">"Content-Type: application/x-www-form-urlencoded"</span> <span class="at">-d</span> @query.txt https://overpass-api.de/api/interpreter <span class="op">&gt;</span> data.osm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>As outlined in the <a href="https://docs.ropensci.org/osmextract/articles/providers_comparisons.html"><code>providers_comparison</code></a> vignettte in the <a href="https://docs.ropensci.org/osmextract/"><code>osmextract</code></a> package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST <span class="at">-H</span> <span class="st">"Content-Type: application/x-www-form-urlencoded"</span> <span class="at">-d</span> @query.txt https://overpass-api.de/api/interpreter <span class="op">&gt;</span> data.osm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As outlined in the <a href="https://docs.ropensci.org/osmextract/articles/providers_comparisons.html"><code>providers_comparison</code></a> vignette in the <a href="https://docs.ropensci.org/osmextract/"><code>osmextract</code></a> package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:</p>
 <ul>
 <li><a href="https://download.geofabrik.de/">geofabrik</a></li>
 <li><a href="http://download.openstreetmap.fr/">openstreetmap_fr</a></li>
 <li><a href="https://download.bbbike.org/osm/bbbike/">bbbike</a></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmextract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Data (c) OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright.
 Check the package website, https://docs.ropensci.org/osmextract/, for more details.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</code></pre>
 </div>
@@ -277,31 +276,31 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Level 2 contains polygons representing several countries all around the world:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Geofabrik also defines several special zones, such as Alps, Britain and Ireland, Germany, Austria and Switzerland, US Midwest, US Northeast, US Pacific, US South and US West (level 3). Moreover, it contains extracts relative to some administrative subregions, mainly in Europe, Russia, Canada and South America:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">3</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(geofabrik_zones[geofabrik_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">3</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Check <code>?geofabrik_zones</code> and the <a href="http://download.geofabrik.de/">provider’s webpage</a> for more details.</p>
@@ -312,67 +311,57 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Russian federation is considered as a level 1 zone</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Russian federation is considered as a level 1 zone</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>or some countries around the world (less than <code>geofabrik</code>’s level 2 zones):</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>level <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>It can be noticed that there are several holes (such as Peru, which is the reason why, in the first example, Lima was matched with South America data), implying that <code>openstreetmap_fr</code> cannot always be used for geographical matching of a <code>place</code>. Nevertheless, it provides extremely detailed extracts for some regions of the world, like China,</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"china"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>India,</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"india"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">==</span> <span class="st">"india"</span>, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>France,</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"france"</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"france"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>and Brazil</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"brazil"</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ids_2 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> <span class="st">"brazil"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ids_3 <span class="ot">=</span> openstreetmap_fr_zones<span class="sc">$</span>parent <span class="sc">%in%</span> openstreetmap_fr_zones<span class="sc">$</span>id[ids_2]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(openstreetmap_fr_zones[ids_2 <span class="sc">|</span> ids_3, <span class="st">"name"</span>], <span class="at">key.pos =</span> <span class="cn">NULL</span>, <span class="at">main =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -396,12 +385,12 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 <p>Let’s see how it works for the city of Poznan:</p>
 <p>We geocode the coordinates of Poznan, Poland</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> tmaptools<span class="sc">::</span><span class="fu">geocode_OSM</span>(<span class="st">"Poznan, Poland"</span>)<span class="sc">$</span>coords</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># poznan = c(x = 16.933, y = 52.408)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> tmaptools<span class="sc">::</span><span class="fu">geocode_OSM</span>(<span class="st">"Poznan, Poland"</span>)<span class="sc">$</span>coords</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># poznan = c(x = 16.933, y = 52.408)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and look for a match in the OSM extracts using <code>oe_match()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"geofabrik"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"geofabrik"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$url
 [1] "https://download.geofabrik.de/europe/poland/wielkopolskie-latest.osm.pbf"
@@ -409,7 +398,7 @@ Check the package website, https://docs.ropensci.org/osmextract/, for more detai
 $file_size
 [1] 1.26e+08</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"bbbike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"bbbike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$url
 [1] "https://download.bbbike.org/osm/bbbike/Poznan/Poznan.osm.pbf"
@@ -417,7 +406,7 @@ $file_size
 $file_size
 [1] 25856507</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"openstreetmap_fr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oe_match</span>(poznan, <span class="at">provider =</span> <span class="st">"openstreetmap_fr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$url
 [1] "http://download.openstreetmap.fr/extracts/europe/poland/wielkopolskie-latest.osm.pbf"
@@ -432,23 +421,23 @@ $file_size
 <h2 class="anchored" data-anchor-id="downloading-the-extract">Downloading the extract</h2>
 <p>We can download the extract using <code>oe_get()</code>, noting the user of <code>layer = "points"</code> to get the points layer of the OSM data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">force_vectortranslate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>poznan <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">force_vectortranslate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Find where the file is as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="ot">=</span> <span class="fu">oe_find</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">return_gpkg =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "/home/robin/data/osm/bbbike_Poznan.osm.pbf"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="ot">=</span> <span class="fu">oe_find</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">return_gpkg =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "/home/robin/data/osm/bbbike_Poznan.osm.pbf"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note: you can check the location where datasets will be downloaded and translated using the <a href="https://docs.ropensci.org/osmextract/reference/oe_download_directory.html"><code>oe_set_download_directory()</code></a> function (see <code>?oe_set_download_directory</code> for details).</p>
 <p>We uploaded data for Poznan to <a href="https://github.com/Robinlovelace/opengeohub2023/releases/tag/v2">github.com/Robinlovelace/opengeohub2023/releases</a>. For future reference, you can access the 25 MB PBF file from https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(poznan_file, <span class="st">"."</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>msg_upload_github <span class="ot">=</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"gh release create v2 {poznan_file}"</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(msg_upload_github)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(poznan_file, <span class="st">"."</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>msg_upload_github <span class="ot">=</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"gh release create v2 {poznan_file}"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(msg_upload_github)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note: that takes quite a while download, so we will use a smaller extract for the rest of the session:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_points <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"points"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_points <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"points"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>No exact match found for place = monaco and provider = bbbike. Best match is Moscow. 
 Checking the other providers.</code></pre>
@@ -708,7 +697,7 @@ Checking the other providers.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `points' from data source 
-  `/tmp/RtmprQgjI6/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+  `/tmp/Rtmp9BmvsT/geofabrik_monaco-latest.gpkg' using driver `GPKG'
 Simple feature collection with 3041 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
@@ -717,44 +706,44 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?oe_get</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>monaco_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"lines"</span>)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>monaco_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multilinestrings"</span>)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>monaco_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multipolygons"</span>)</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>monaco_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?oe_get</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>monaco_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"lines"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>monaco_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multilinestrings"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>monaco_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multipolygons"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>monaco_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can look at the files downloaded as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "/tmp/RtmprQgjI6/geofabrik_monaco-latest.gpkg"   
-[2] "/tmp/RtmprQgjI6/geofabrik_monaco-latest.osm.pbf"</code></pre>
+<pre><code>[1] "/tmp/Rtmp9BmvsT/geofabrik_monaco-latest.gpkg"   
+[2] "/tmp/Rtmp9BmvsT/geofabrik_monaco-latest.osm.pbf"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in CPL_read_ogr(dsn, layer, query, as.character(options), quiet, :
 automatically selected the first layer in a data source containing more than
 one.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">2</span>], <span class="at">layer =</span> <span class="st">"lines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">2</span>], <span class="at">layer =</span> <span class="st">"lines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s take a look at the size of each layer, in units of MB:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sizes_mb <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), <span class="cf">function</span>(x) {</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>layer_names <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"points"</span>, <span class="st">"lines"</span>, <span class="st">"multilinestrings"</span>, <span class="st">"multipolygons"</span>, <span class="st">"other_relations"</span>)</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>n_features <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), nrow)</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>size_df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> layer_names,</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size_mb =</span> sizes_mb,</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> n_features,</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">kb_per_feature =</span> sizes_mb <span class="sc">/</span> n_features <span class="sc">*</span> <span class="fl">1e3</span></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>sizes_mb <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), <span class="cf">function</span>(x) {</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>layer_names <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"points"</span>, <span class="st">"lines"</span>, <span class="st">"multilinestrings"</span>, <span class="st">"multipolygons"</span>, <span class="st">"other_relations"</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>n_features <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), nrow)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>size_df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> layer_names,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size_mb =</span> sizes_mb,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> n_features,</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">kb_per_feature =</span> sizes_mb <span class="sc">/</span> n_features <span class="sc">*</span> <span class="fl">1e3</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -818,7 +807,7 @@ one.</code></pre>
 <h2 class="anchored" data-anchor-id="clipping-an-area-of-interest">Clipping an area of interest</h2>
 <p>Rather than read-in the entire extract, you can read-in a subset…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>pois_buffer_simple <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">st_read</span>(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>pois_buffer_simple <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">st_read</span>(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `pois_buffer_simple' from data source 
   `https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson' 
@@ -837,66 +826,66 @@ Geodetic CRS:  WGS 84</code></pre>
 <section id="pyrosm" class="level2">
 <h2 class="anchored" data-anchor-id="pyrosm">pyrosm</h2>
 <p>Install the Python package <code>pyrosm</code> as follows:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyrosm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyrosm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <!---
  See issue here https://github.com/HTenkanen/pyrosm/issues/217 
 --->
 <p>Search for Poznan in extracts available from <code>pyrosm</code> as follows (note: this fails for me currently as documented in <a href="https://github.com/HTenkanen/pyrosm/issues/217">github.com/HTenkanen/pyrosm/issues/217</a>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyrosm</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyrosm <span class="im">import</span> OSM</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="op">=</span> pyrosm.get_data(<span class="st">"Poznan"</span>)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>osm <span class="op">=</span> OSM(poznan_file)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>poznan_cycling <span class="op">=</span> osm.get_network(network_type<span class="op">=</span><span class="st">"cycling"</span>)</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>poznan_cycling.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyrosm</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyrosm <span class="im">import</span> OSM</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="op">=</span> pyrosm.get_data(<span class="st">"Poznan"</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>osm <span class="op">=</span> OSM(poznan_file)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>poznan_cycling <span class="op">=</span> osm.get_network(network_type<span class="op">=</span><span class="st">"cycling"</span>)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>poznan_cycling.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="osmnx" class="level2">
 <h2 class="anchored" data-anchor-id="osmnx">osmnx</h2>
 <p>Install the Python package <code>osmnx</code> as follows:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install osmnx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install osmnx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> osmnx <span class="im">as</span> ox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> osmnx <span class="im">as</span> ox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>/home/runner/.virtualenvs/r-reticulate/lib/python3.10/site-packages/geopandas/_compat.py:124: UserWarning: The Shapely GEOS version (3.11.1-CAPI-1.17.1) is incompatible with the GEOS version PyGEOS was compiled with (3.10.4-CAPI-1.16.2). Conversions between both will be slow.
   warnings.warn(</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get cycle netework for Poznan</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>poznan_polygon <span class="op">=</span> ox.geocode_to_gdf(<span class="st">"Poznan, Poland"</span>)</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>poznan_polygon.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get cycle netework for Poznan</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>poznan_polygon <span class="op">=</span> ox.geocode_to_gdf(<span class="st">"Poznan, Poland"</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>poznan_polygon.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="614"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="614"></p>
 </div>
 </div>
 <p>That is quite a big network, so let’s get the area of the polygon and use that to get a smaller network from <a href="https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson">GitHub</a>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson:</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>poznan_small <span class="op">=</span> gpd.read_file(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>poznan_small.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson:</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>poznan_small <span class="op">=</span> gpd.read_file(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>poznan_small.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-29-3.png" class="img-fluid" width="672"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-27-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Download the cycling network as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>G_cycle <span class="op">=</span> ox.graph_from_polygon(poznan_small.geometry[<span class="dv">0</span>], network_type<span class="op">=</span><span class="st">"bike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>G_cycle <span class="op">=</span> ox.graph_from_polygon(poznan_small.geometry[<span class="dv">0</span>], network_type<span class="op">=</span><span class="st">"bike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Plot the results:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>ox.plot_graph(G_cycle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>ox.plot_graph(G_cycle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="osm_files/figure-html/unnamed-chunk-31-5.png" class="img-fluid" width="768"></p>
+<p><img src="osm_files/figure-html/unnamed-chunk-29-5.png" class="img-fluid" width="768"></p>
 </div>
 </div>
 <p>Get basic stats as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> ox.project_gdf(poznan_small).unary_union.area</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> ox.basic_stats(G_cycle, area<span class="op">=</span>area)</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>pd.Series(stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> ox.project_gdf(poznan_small).unary_union.area</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> ox.basic_stats(G_cycle, area<span class="op">=</span>area)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>pd.Series(stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>n                                                                             568
 m                                                                            1467
@@ -922,7 +911,7 @@ dtype: object</code></pre>
 <p>Calculate the centrality across the network as follows:</p>
 <p>We can convert the object into a ‘GeoDataFrame’ as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>cycle_gdf <span class="op">=</span> ox.graph_to_gdfs(G_cycle, edges<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>cycle_gdf <span class="op">=</span> ox.graph_to_gdfs(G_cycle, edges<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
