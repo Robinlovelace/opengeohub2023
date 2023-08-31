@@ -324,7 +324,11 @@ if (!"pyrosm" %in% py_pkg_names) {
 }
 ```
 
-Search for Poznan in extracts available from `pyrosm` as follows (note: this fails for me currently):
+<!---
+ See issue here https://github.com/HTenkanen/pyrosm/issues/217 
+--->
+Search for Poznan in extracts available from `pyrosm` as follows (note: this fails for me currently as documented in [github.com/HTenkanen/pyrosm/issues/217](https://github.com/HTenkanen/pyrosm/issues/217)):
+
 
 ```{python}
 #| eval: false
@@ -352,6 +356,8 @@ pip install osmnx
 # Installed Python packages:
 if (!"osmnx" %in% py_pkg_names) {
     reticulate::py_install("osmnx")
+    reticulate::py_install("geopandas")
+    reticulate::py_install("matplotlib")
 }
 ```
 
@@ -367,14 +373,35 @@ poznan_polygon.plot();
 Download the cycling network for Poznan as follows:
 
 ```{python}
-poznan_cycle_network = ox.graph_from_polygon(poznan_polygon.geometry[0], network_type="bike")
+G_cycle = ox.graph_from_polygon(poznan_polygon.geometry[0], network_type="bike")
 ```
 
 Plot the results:
 
 ```{python}
-ox.plot_graph(poznan_cycle_network)
+ox.plot_graph(G_cycle)
 ```
+
+Get basic stats as follows:
+
+```{python}
+stats = ox.basic_stats(G_cycle, area=area)
+pd.Series(stats)
+```
+
+Calculate the centrality across the network as follows:
+
+```{python}
+
+```
+We can convert the object into a 'GeoDataFrame' as follows:
+
+```{python}
+cycle_gdf = ox.graph_to_gdfs(G_cycle, edges=True)
+
+```
+
+```{python}
 
 # Ideas for using OSM data {#sec-ideas}
 
