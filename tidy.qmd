@@ -452,6 +452,16 @@ pois_buffer = poi_sf |>
   st_buffer(dist = 500)
 ```
 
+We'll save the output for future reference:
+
+```{r}
+pois_buffer_simple = pois_buffer |>
+  st_simplify(dTolerance = 10)
+plot(pois_buffer)
+plot(pois_buffer_simple, add = TRUE, border = "blue")
+sf::write_sf(pois_buffer_simple, "pois_buffer_simple.geojson", delete_dsn = TRUE)
+```
+
 ```{r}
 extra_tags = c("maxspeed", "foot", "bicycle")
 ```
