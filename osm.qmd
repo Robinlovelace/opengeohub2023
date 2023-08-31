@@ -33,24 +33,11 @@ pkgs = c(
 remotes::install_cran(pkgs)
 ```
 
-Note: as of 2023-08-31 you also need to install the development version of `sf` as follows:
-
-```r
-remotes::install_github("r-spatial/sf")
-```
-
-```{r}
-#| include: false
-# For debugging
-# remotes::install_github("r-spatial/sf")
-# remotes::install_version("sf", "1.0-10")
-# remotes::install_dev("osmextract")
-```
-
 You may want to install the following packages for @sec-command-line:
 
-- [osmium](https://osmcode.org/osmium-tool/)
 - [pyrosm](https://pyrosm.readthedocs.io/en/latest/)
+- [osmnx](https://osmnx.readthedocs.io/en/stable/)
+- [osmium](https://osmcode.org/osmium-tool/)
 - [osm2streets](https://a-b-street.github.io/osm2streets/#1/0/0) (although this is currently mostly a web UI and does not have a command line interface)
 
 We will get data representing case study areas:
