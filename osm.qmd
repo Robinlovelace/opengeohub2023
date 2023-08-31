@@ -136,14 +136,6 @@ or some countries around the world (less than `geofabrik`'s level 2 zones):
 plot(openstreetmap_fr_zones[openstreetmap_fr_zones$level == 2, "name"], key.pos = NULL, main = NULL)
 ```
 
-It can be noticed that there are several holes (such as Peru, which is the reason why, in the first example, Lima was matched with South America data), implying that `openstreetmap_fr` cannot always be used for geographical matching of a `place`. 
-Nevertheless, it provides extremely detailed extracts for some regions of the world, like China, 
-
-```{r}
-#| code-fold: true
-plot(openstreetmap_fr_zones[openstreetmap_fr_zones$parent == "china", "name"], key.pos = NULL, main = NULL)
-```
-
 India, 
 
 ```{r}
