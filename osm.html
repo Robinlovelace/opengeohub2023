@@ -165,6 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#finding-an-extract-to-download" id="toc-finding-an-extract-to-download" class="nav-link" data-scroll-target="#finding-an-extract-to-download">Finding an extract to download</a></li>
   <li><a href="#downloading-the-extract" id="toc-downloading-the-extract" class="nav-link" data-scroll-target="#downloading-the-extract">Downloading the extract</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul></li>
   <li><a href="#sec-command-line" id="toc-sec-command-line" class="nav-link" data-scroll-target="#sec-command-line">Other command line tools for working with OSM data</a></li>
   <li><a href="#sec-ideas" id="toc-sec-ideas" class="nav-link" data-scroll-target="#sec-ideas">Ideas for using OSM data</a></li>
@@ -689,7 +690,7 @@ Checking the other providers.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `points' from data source 
-  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+  `/tmp/RtmpZ2fP89/geofabrik_monaco-latest.gpkg' using driver `GPKG'
 Simple feature collection with 3041 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
@@ -699,62 +700,84 @@ Geodetic CRS:  WGS 84</code></pre>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?oe_get</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>monaco_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"lines"</span>, <span class="at">skip_vectortranslate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Reading layer `lines' from data source 
-  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.osm.pbf' using driver `OSM'
-Simple feature collection with 3023 features and 9 fields
-Geometry type: LINESTRING
-Dimension:     XY
-Bounding box:  xmin: 7.401681 ymin: 43.51654 xmax: 7.500245 ymax: 43.75434
-Geodetic CRS:  WGS 84</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">2</span>], <span class="at">layer =</span> <span class="st">"lines"</span>)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>monaco_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multilinestrings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0...10...20...30...40...50...60...70...80...90...100 - done.
-Reading layer `multilinestrings' from data source 
-  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
-Simple feature collection with 61 features and 4 fields
-Geometry type: MULTILINESTRING
-Dimension:     XY
-Bounding box:  xmin: 7.401681 ymin: 43.72152 xmax: 7.44801 ymax: 43.75434
-Geodetic CRS:  WGS 84</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multipolygons"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0...10...20...30...40...50...60...70...80...90...100 - done.
-Reading layer `multipolygons' from data source 
-  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
-Simple feature collection with 1699 features and 25 fields
-Geometry type: MULTIPOLYGON
-Dimension:     XY
-Bounding box:  xmin: 7.408537 ymin: 43.72474 xmax: 7.442207 ymax: 43.75323
-Geodetic CRS:  WGS 84</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>monaco_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0...10...20...30...40...50...60...70...80...90...100 - done.
-Reading layer `other_relations' from data source 
-  `/tmp/RtmphOiAt8/geofabrik_monaco-latest.gpkg' using driver `GPKG'
-Simple feature collection with 100 features and 4 fields
-Geometry type: GEOMETRYCOLLECTION
-Dimension:     XY
-Bounding box:  xmin: 7.410602 ymin: 43.7263 xmax: 7.438855 ymax: 43.75166
-Geodetic CRS:  WGS 84</code></pre>
-</div>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>monaco_osm_lines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"lines"</span>, <span class="at">skip_vectortranslate =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">2</span>], <span class="at">layer =</span> <span class="st">"lines"</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>monaco_osm_mlines <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multilinestrings"</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>monaco_osm_polygons <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"multipolygons"</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>monaco_osm_other <span class="ot">=</span> <span class="fu">oe_get</span>(<span class="st">"monaco"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">layer =</span> <span class="st">"other_relations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s take a look at the size of each layer, in units of MB:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), <span class="cf">function</span>(x) {</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.0 2.7 1.1 2.1 0.3</code></pre>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sizes_mb <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), <span class="cf">function</span>(x) {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="fu">object.size</span>(x) <span class="sc">/</span> <span class="fl">1e6</span>, <span class="dv">1</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>layer_names <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"points"</span>, <span class="st">"lines"</span>, <span class="st">"multilinestrings"</span>, <span class="st">"multipolygons"</span>, <span class="st">"other_relations"</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>n_features <span class="ot">=</span> <span class="fu">sapply</span>(<span class="fu">list</span>(monaco_osm_points, monaco_osm_lines, monaco_osm_mlines, monaco_osm_polygons, monaco_osm_other), nrow)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>size_df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer =</span> layer_names,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size_mb =</span> sizes_mb,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_features =</span> n_features,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">kb_per_feature =</span> sizes_mb <span class="sc">/</span> n_features <span class="sc">*</span> <span class="fl">1e3</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(size_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">layer</th>
+<th style="text-align: right;">size_mb</th>
+<th style="text-align: right;">n_features</th>
+<th style="text-align: right;">kb_per_feature</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">points</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">3041</td>
+<td style="text-align: right;">0.6576784</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lines</td>
+<td style="text-align: right;">2.7</td>
+<td style="text-align: right;">3023</td>
+<td style="text-align: right;">0.8931525</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">multilinestrings</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">18.0327869</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">multipolygons</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">1699</td>
+<td style="text-align: right;">1.2360212</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">other_relations</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">3.0000000</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<ul>
+<li>Create maps of the different layers using <code>{tmap}</code>, <code>{ggplot2}</code> or a mapping package of your choice.</li>
+<li>Which layer is most interesting for your research?</li>
+<li>Are there any phenomena that are represented in more than one layer and, if so, thoughts on how to combine them?</li>
+</ul>
 </section>
 </section>
 <section id="sec-command-line" class="level1">
