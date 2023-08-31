@@ -33,24 +33,11 @@ pkgs = c(
 remotes::install_cran(pkgs)
 ```
 
-Note: as of 2023-08-31 you also need to install the development version of `sf` as follows:
-
-```r
-remotes::install_github("r-spatial/sf")
-```
-
-```{r}
-#| include: false
-# For debugging
-# remotes::install_github("r-spatial/sf")
-# remotes::install_version("sf", "1.0-10")
-# remotes::install_dev("osmextract")
-```
-
 You may want to install the following packages for @sec-command-line:
 
-- [osmium](https://osmcode.org/osmium-tool/)
 - [pyrosm](https://pyrosm.readthedocs.io/en/latest/)
+- [osmnx](https://osmnx.readthedocs.io/en/stable/)
+- [osmium](https://osmcode.org/osmium-tool/)
 - [osm2streets](https://a-b-street.github.io/osm2streets/#1/0/0) (although this is currently mostly a web UI and does not have a command line interface)
 
 We will get data representing case study areas:
@@ -87,7 +74,7 @@ After saving this query as a file (e.g. called `query.txt`), you can download th
 curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d @query.txt https://overpass-api.de/api/interpreter > data.osm
 ```
 
-As outlined in the [`providers_comparison`](https://docs.ropensci.org/osmextract/articles/providers_comparisons.html) vignettte in the [`osmextract`](https://docs.ropensci.org/osmextract/) package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:
+As outlined in the [`providers_comparison`](https://docs.ropensci.org/osmextract/articles/providers_comparisons.html) vignette in the [`osmextract`](https://docs.ropensci.org/osmextract/) package, there are several providers of OSM data. The main ones that provide regular extracts without need for logins are:
 
 - [geofabrik](https://download.geofabrik.de/)
 - [openstreetmap_fr](http://download.openstreetmap.fr/)
@@ -147,14 +134,6 @@ or some countries around the world (less than `geofabrik`'s level 2 zones):
 ```{r}
 #| code-fold: true
 plot(openstreetmap_fr_zones[openstreetmap_fr_zones$level == 2, "name"], key.pos = NULL, main = NULL)
-```
-
-It can be noticed that there are several holes (such as Peru, which is the reason why, in the first example, Lima was matched with South America data), implying that `openstreetmap_fr` cannot always be used for geographical matching of a `place`. 
-Nevertheless, it provides extremely detailed extracts for some regions of the world, like China, 
-
-```{r}
-#| code-fold: true
-plot(openstreetmap_fr_zones[openstreetmap_fr_zones$parent == "china", "name"], key.pos = NULL, main = NULL)
 ```
 
 India, 
