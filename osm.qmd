@@ -296,6 +296,11 @@ size_df = data.frame(
 knitr::kable(size_df)
 ```
 
+## Exercises
+
+- Create maps of the different layers using `{tmap}`, `{ggplot2}` or a mapping package of your choice.
+- Which layer is most interesting for your research?
+- Are there any phenomena that are represented in more than one layer and, if so, thoughts on how to combine them?
 
 
 # Other command line tools for working with OSM data {#sec-command-line}
