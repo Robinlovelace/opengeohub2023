@@ -250,12 +250,31 @@ poznan = oe_get("Poznan", provider = "bbbike", layer = "points", force_vectortra
 # Starting with the vectortranslate operations on the input file!
 # 0...10...20...30...40...50...60...70...80...90...100 - done.
 # Finished the vectortranslate operations on the input file!
-# Error: Not compatible with requested type: [type=character; target=double].
 ```
 
 ```{r}
 #| eval: false
 poznan = oe_get("Poznan", provider = "bbbike", force_vectortranslate = TRUE)
+```
+
+Find where the file is as follows:
+
+```{r}
+#| eval: false
+poznan_file = oe_find("Poznan", provider = "bbbike", return_gpkg = FALSE)
+# [1] "/home/robin/data/osm/bbbike_Poznan.osm.pbf"
+```
+
+Note: you can check the location where datasets will be downloaded and translated using the [`oe_set_download_directory()`](https://docs.ropensci.org/osmextract/reference/oe_download_directory.html) function (see `?oe_set_download_directory` for details).
+
+We uploaded data for Poznan to [github.com/Robinlovelace/opengeohub2023/releases](https://github.com/Robinlovelace/opengeohub2023/releases/tag/v2).
+For future reference, you can access the 25 MB PBF file from https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf
+
+```{r}
+#| eval: false
+file.copy(poznan_file, ".")
+msg_upload_github = glue::glue("gh release create v2 {poznan_file}")
+system(msg_upload_github)
 ```
 
 Note: that takes quite a while download, so we will use a smaller extract for the rest of the session:
