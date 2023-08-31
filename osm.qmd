@@ -327,6 +327,20 @@ knitr::kable(size_df)
 - Which layer is most interesting for your research?
 - Are there any phenomena that are represented in more than one layer and, if so, thoughts on how to combine them?
 
+## More on osmextract
+
+TODO: complete this section : )
+
+## Clipping an area of interest
+
+Rather than read-in the entire extract, you can read-in a subset... 
+
+```{r}
+pois_buffer_simple = sf::st_read("https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson")
+```
+
+
+
 
 # Other command line tools for working with OSM data {#sec-command-line}
 
