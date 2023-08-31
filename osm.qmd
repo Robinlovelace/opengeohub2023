@@ -338,7 +338,42 @@ poznan_cycling = osm.get_network(network_type="cycling")
 poznan_cycling.plot()
 ```
 
+## osmnx
+
+Install the Python package `osmnx` as follows:
+
+```bash
+pip install osmnx
+```
+
 ```{r}
+#| include: false
+# Install osmnx if not already installed:
+# Installed Python packages:
+if (!"osmnx" %in% py_pkg_names) {
+    reticulate::py_install("osmnx")
+}
+```
+
+  
+```{python}
+import osmnx as ox
+import geopandas as gpd
+# Get cycle netework for Poznan
+poznan_polygon = ox.geocode_to_gdf("Poznan, Poland")
+poznan_polygon.plot();
+```
+
+Download the cycling network for Poznan as follows:
+
+```{python}
+poznan_cycle_network = ox.graph_from_polygon(poznan_polygon.geometry[0], network_type="bike")
+```
+
+Plot the results:
+
+```{python}
+ox.plot_graph(poznan_cycle_network)
 ```
 
 # Ideas for using OSM data {#sec-ideas}
