@@ -170,6 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-command-line" id="toc-sec-command-line" class="nav-link" data-scroll-target="#sec-command-line">Other command line tools for working with OSM data</a>
   <ul class="collapse">
   <li><a href="#pyrosm" id="toc-pyrosm" class="nav-link" data-scroll-target="#pyrosm">pyrosm</a></li>
+  <li><a href="#osmnx" id="toc-osmnx" class="nav-link" data-scroll-target="#osmnx">osmnx</a></li>
   </ul></li>
   <li><a href="#sec-ideas" id="toc-sec-ideas" class="nav-link" data-scroll-target="#sec-ideas">Ideas for using OSM data</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -693,7 +694,7 @@ Checking the other providers.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `points' from data source 
-  `/tmp/Rtmpe5nr75/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+  `/tmp/RtmpgRsIIx/geofabrik_monaco-latest.gpkg' using driver `GPKG'
 Simple feature collection with 3041 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
@@ -789,7 +790,10 @@ Geodetic CRS:  WGS 84</code></pre>
 <h2 class="anchored" data-anchor-id="pyrosm">pyrosm</h2>
 <p>Install the Python package <code>pyrosm</code> as follows:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyrosm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Search for Poznan in extracts available from <code>pyrosm</code> as follows (note: this fails for me currently):</p>
+<!---
+ See issue here https://github.com/HTenkanen/pyrosm/issues/217 
+--->
+<p>Search for Poznan in extracts available from <code>pyrosm</code> as follows (note: this fails for me currently as documented in <a href="https://github.com/HTenkanen/pyrosm/issues/217">github.com/HTenkanen/pyrosm/issues/217</a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyrosm</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyrosm <span class="im">import</span> OSM</span>
@@ -799,6 +803,78 @@ Geodetic CRS:  WGS 84</code></pre>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>osm <span class="op">=</span> OSM(poznan_file)</span>
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>poznan_cycling <span class="op">=</span> osm.get_network(network_type<span class="op">=</span><span class="st">"cycling"</span>)</span>
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>poznan_cycling.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="osmnx" class="level2">
+<h2 class="anchored" data-anchor-id="osmnx">osmnx</h2>
+<p>Install the Python package <code>osmnx</code> as follows:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install osmnx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> osmnx <span class="im">as</span> ox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/home/runner/.virtualenvs/r-reticulate/lib/python3.10/site-packages/geopandas/_compat.py:124: UserWarning: The Shapely GEOS version (3.11.1-CAPI-1.17.1) is incompatible with the GEOS version PyGEOS was compiled with (3.10.4-CAPI-1.16.2). Conversions between both will be slow.
+  warnings.warn(</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get cycle netework for Poznan</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>poznan_polygon <span class="op">=</span> ox.geocode_to_gdf(<span class="st">"Poznan, Poland"</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>poznan_polygon.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="osm_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="614"></p>
+</div>
+</div>
+<p>That is quite a big network, so let’s get the area of the polygon and use that to get a smaller network from <a href="https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson">GitHub</a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson:</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>poznan_small <span class="op">=</span> gpd.read_file(<span class="st">"https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>poznan_small.plot()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="osm_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Download the cycling network as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>G_cycle <span class="op">=</span> ox.graph_from_polygon(poznan_small.geometry[<span class="dv">0</span>], network_type<span class="op">=</span><span class="st">"bike"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Plot the results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>ox.plot_graph(G_cycle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="osm_files/figure-html/unnamed-chunk-27-5.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>Get basic stats as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> ox.project_gdf(poznan_small).unary_union.area</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> ox.basic_stats(G_cycle, area<span class="op">=</span>area)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>pd.Series(stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>n                                                                             568
+m                                                                            1467
+k_avg                                                                    5.165493
+edge_length_total                                                      101250.782
+edge_length_avg                                                         69.018938
+streets_per_node_avg                                                     2.707746
+streets_per_node_counts                 {0: 0, 1: 126, 2: 1, 3: 355, 4: 85, 5: 1}
+streets_per_node_proportions    {0: 0.0, 1: 0.22183098591549297, 2: 0.00176056...
+intersection_count                                                            442
+street_length_total                                                     51276.381
+street_segment_count                                                          749
+street_length_avg                                                       68.459788
+circuity_avg                                                             1.041883
+self_loop_proportion                                                      0.00267
+node_density_km                                                         178.71231
+intersection_density_km                                                139.068382
+edge_density_km                                                      31856.973767
+street_density_km                                                    16133.310698
+dtype: object</code></pre>
+</div>
+</div>
+<p>Calculate the centrality across the network as follows:</p>
+<p>We can convert the object into a ‘GeoDataFrame’ as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>cycle_gdf <span class="op">=</span> ox.graph_to_gdfs(G_cycle, edges<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
