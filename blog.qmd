@@ -229,8 +229,8 @@ pol_all
 ## Julia
 
 ```{julia}
-df = GeoDataFrames.read("/vsizip/data.zip/data/osm/gis_osm_transport_a_free_1.shp")
-df
+pol_all = GeoDataFrames.read("/vsizip/data.zip/data/osm/gis_osm_transport_a_free_1.shp")
+pol_all
 ```
 
 :::
@@ -238,12 +238,17 @@ df
 <!---
   This should also work in Python and Julia no? It's a GDAL feature.
 --->
-Note: in R, you can read-in the dataset from the URL in a single line of code without first downloading the zip file:
+Note: in R and Julia, you can read-in the dataset from the URL in a single line of code without first downloading the zip file:
 
 ```{r}
 #| eval: false
 uz = paste0("/vsizip//vsicurl/", u, "/data/osm/gis_osm_transport_a_free_1.shp")
 pol_all = sf::read_sf(uz)
+```
+
+```{julia}
+zipurl = "/vsizip/vsicurl/" * u * "/data/osm/gis_osm_transport_a_free_1.shp"
+pol_all = GeoDataFrames.read(zipurl)
 ```
 
 ## Subsetting by attributes
@@ -265,6 +270,13 @@ pol
 pol = pol_all |>
   filter(str_detect(name, "Port*.+Poz"))
 pol
+```
+
+## Julia
+```{julia}
+using DataFrames
+pol = dropmissing(pol_all, :name)
+pol = subset!(pol, :name => n -> occursin.(r"Port*.+Poz", n))
 ```
 
 :::

@@ -43,9 +43,13 @@ jobs:
           # Extra repositories:
           extra-repositories: |
             https://josiahparry.r-universe.dev
+
       - name: R deps
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 2
           extra-packages: |
             any::sf
+
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
