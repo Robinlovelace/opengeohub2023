@@ -428,7 +428,7 @@ $file_size
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>poznan_file <span class="ot">=</span> <span class="fu">oe_find</span>(<span class="st">"Poznan"</span>, <span class="at">provider =</span> <span class="st">"bbbike"</span>, <span class="at">return_gpkg =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "/home/robin/data/osm/bbbike_Poznan.osm.pbf"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note: you can check the location where datasets will be downloaded and translated using the <a href="https://docs.ropensci.org/osmextract/reference/oe_download_directory.html"><code>oe_set_download_directory()</code></a> function (see <code>?oe_set_download_directory</code> for details).</p>
+<p>Note: you can check the location where datasets will be downloaded and translated using the <a href="https://docs.ropensci.org/osmextract/reference/oe_download_directory.html"><code>oe_download_directory()</code></a> function (see <code>?oe_download_directory</code> for details).</p>
 <p>We uploaded data for Poznan to <a href="https://github.com/Robinlovelace/opengeohub2023/releases/tag/v2">github.com/Robinlovelace/opengeohub2023/releases</a>. For future reference, you can access the 25 MB PBF file from https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(poznan_file, <span class="st">"."</span>)</span>
@@ -481,6 +481,8 @@ Checking the other providers.</code></pre>
   |                                                                            
   |=========                                                             |  13%
   |                                                                            
+  |=========                                                             |  14%
+  |                                                                            
   |==========                                                            |  14%
   |                                                                            
   |===========                                                           |  15%
@@ -491,15 +493,17 @@ Checking the other providers.</code></pre>
   |                                                                            
   |============                                                          |  18%
   |                                                                            
-  |=============                                                         |  19%
+  |=============                                                         |  18%
   |                                                                            
-  |==============                                                        |  19%
+  |=============                                                         |  19%
   |                                                                            
   |==============                                                        |  20%
   |                                                                            
   |===============                                                       |  21%
   |                                                                            
   |===============                                                       |  22%
+  |                                                                            
+  |================                                                      |  22%
   |                                                                            
   |================                                                      |  23%
   |                                                                            
@@ -517,17 +521,15 @@ Checking the other providers.</code></pre>
   |                                                                            
   |=====================                                                 |  30%
   |                                                                            
-  |=====================                                                 |  31%
-  |                                                                            
   |======================                                                |  31%
   |                                                                            
-  |=======================                                               |  32%
+  |======================                                                |  32%
   |                                                                            
   |=======================                                               |  33%
   |                                                                            
-  |========================                                              |  34%
+  |=======================                                               |  34%
   |                                                                            
-  |========================                                              |  35%
+  |========================                                              |  34%
   |                                                                            
   |=========================                                             |  35%
   |                                                                            
@@ -535,11 +537,11 @@ Checking the other providers.</code></pre>
   |                                                                            
   |==========================                                            |  37%
   |                                                                            
+  |==========================                                            |  38%
+  |                                                                            
   |===========================                                           |  38%
   |                                                                            
   |===========================                                           |  39%
-  |                                                                            
-  |============================                                          |  39%
   |                                                                            
   |============================                                          |  40%
   |                                                                            
@@ -547,19 +549,17 @@ Checking the other providers.</code></pre>
   |                                                                            
   |=============================                                         |  42%
   |                                                                            
-  |==============================                                        |  43%
+  |==============================                                        |  42%
   |                                                                            
-  |==============================                                        |  44%
+  |==============================                                        |  43%
   |                                                                            
   |===============================                                       |  44%
   |                                                                            
-  |================================                                      |  45%
+  |===============================                                       |  45%
   |                                                                            
   |================================                                      |  46%
   |                                                                            
   |=================================                                     |  47%
-  |                                                                            
-  |=================================                                     |  48%
   |                                                                            
   |==================================                                    |  48%
   |                                                                            
@@ -571,19 +571,19 @@ Checking the other providers.</code></pre>
   |                                                                            
   |====================================                                  |  52%
   |                                                                            
-  |=====================================                                 |  52%
-  |                                                                            
   |=====================================                                 |  53%
+  |                                                                            
+  |=====================================                                 |  54%
   |                                                                            
   |======================================                                |  54%
   |                                                                            
-  |======================================                                |  55%
+  |=======================================                               |  55%
   |                                                                            
   |=======================================                               |  56%
   |                                                                            
-  |========================================                              |  56%
-  |                                                                            
   |========================================                              |  57%
+  |                                                                            
+  |========================================                              |  58%
   |                                                                            
   |=========================================                             |  58%
   |                                                                            
@@ -595,23 +595,21 @@ Checking the other providers.</code></pre>
   |                                                                            
   |===========================================                           |  62%
   |                                                                            
+  |============================================                          |  62%
+  |                                                                            
   |============================================                          |  63%
   |                                                                            
   |=============================================                         |  64%
   |                                                                            
   |=============================================                         |  65%
   |                                                                            
-  |==============================================                        |  65%
-  |                                                                            
   |==============================================                        |  66%
   |                                                                            
   |===============================================                       |  67%
   |                                                                            
-  |===============================================                       |  68%
+  |================================================                      |  68%
   |                                                                            
   |================================================                      |  69%
-  |                                                                            
-  |=================================================                     |  69%
   |                                                                            
   |=================================================                     |  70%
   |                                                                            
@@ -623,11 +621,13 @@ Checking the other providers.</code></pre>
   |                                                                            
   |====================================================                  |  74%
   |                                                                            
-  |====================================================                  |  75%
+  |=====================================================                 |  75%
   |                                                                            
   |=====================================================                 |  76%
   |                                                                            
   |======================================================                |  77%
+  |                                                                            
+  |======================================================                |  78%
   |                                                                            
   |=======================================================               |  78%
   |                                                                            
@@ -635,9 +635,9 @@ Checking the other providers.</code></pre>
   |                                                                            
   |========================================================              |  80%
   |                                                                            
-  |========================================================              |  81%
-  |                                                                            
   |=========================================================             |  81%
+  |                                                                            
+  |=========================================================             |  82%
   |                                                                            
   |==========================================================            |  82%
   |                                                                            
@@ -646,8 +646,6 @@ Checking the other providers.</code></pre>
   |===========================================================           |  84%
   |                                                                            
   |===========================================================           |  85%
-  |                                                                            
-  |============================================================          |  85%
   |                                                                            
   |============================================================          |  86%
   |                                                                            
@@ -664,8 +662,6 @@ Checking the other providers.</code></pre>
   |================================================================      |  92%
   |                                                                            
   |=================================================================     |  93%
-  |                                                                            
-  |=================================================================     |  94%
   |                                                                            
   |==================================================================    |  94%
   |                                                                            
@@ -697,8 +693,8 @@ Checking the other providers.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `points' from data source 
-  `/tmp/Rtmp9BmvsT/geofabrik_monaco-latest.gpkg' using driver `GPKG'
-Simple feature collection with 3041 features and 10 fields
+  `/tmp/RtmpT9fXjt/geofabrik_monaco-latest.gpkg' using driver `GPKG'
+Simple feature collection with 3056 features and 10 fields
 Geometry type: POINT
 Dimension:     XY
 Bounding box:  xmin: 7.408202 ymin: 43.51654 xmax: 7.500245 ymax: 43.75175
@@ -717,8 +713,8 @@ Geodetic CRS:  WGS 84</code></pre>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">=</span> <span class="fu">list.files</span>(<span class="fu">oe_download_directory</span>(), <span class="at">pattern =</span> <span class="st">"monaco"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "/tmp/Rtmp9BmvsT/geofabrik_monaco-latest.gpkg"   
-[2] "/tmp/Rtmp9BmvsT/geofabrik_monaco-latest.osm.pbf"</code></pre>
+<pre><code>[1] "/tmp/RtmpT9fXjt/geofabrik_monaco-latest.gpkg"   
+[2] "/tmp/RtmpT9fXjt/geofabrik_monaco-latest.osm.pbf"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>monaco <span class="ot">=</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(f[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -759,14 +755,14 @@ one.</code></pre>
 <tr class="odd">
 <td style="text-align: left;">points</td>
 <td style="text-align: right;">2.0</td>
-<td style="text-align: right;">3041</td>
-<td style="text-align: right;">0.6576784</td>
+<td style="text-align: right;">3056</td>
+<td style="text-align: right;">0.6544503</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">lines</td>
 <td style="text-align: right;">2.7</td>
-<td style="text-align: right;">3023</td>
-<td style="text-align: right;">0.8931525</td>
+<td style="text-align: right;">3066</td>
+<td style="text-align: right;">0.8806262</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">multilinestrings</td>
@@ -776,9 +772,9 @@ one.</code></pre>
 </tr>
 <tr class="even">
 <td style="text-align: left;">multipolygons</td>
-<td style="text-align: right;">2.1</td>
-<td style="text-align: right;">1699</td>
-<td style="text-align: right;">1.2360212</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">1729</td>
+<td style="text-align: right;">1.2724118</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">other_relations</td>
