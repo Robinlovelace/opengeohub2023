@@ -433,7 +433,8 @@ fi
 Extract only lines that are tagged as `highway=cycleway` as follows:
 
 ```{bash}
-osmium tags-filter bbbike_Poznan.osm.pbf w/highway=cycleway -o poznan_cycleways.osm.pbf
+#| eval: false
+osmium tags-filter bbbike_Poznan.osm.pbf w/highway=cycleway -o poznan_cycleways.osm.pbf --overwrite
 ```
 
 We can check that the operation worked with R or Python, e.g. as follows:
@@ -469,5 +470,3 @@ Download .geojson files representing 2D extrusion of the network and explore in 
 
 Test out the A/B Street game.
 
-
-# References
