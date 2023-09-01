@@ -464,5 +464,10 @@ poznan_cycleways3 = oe_get("Poznan", provider = "bbbike",
 
 # Ideas for using OSM data {#sec-ideas}
 
+Take a look at the [a-b-street/osm2streets repo](https://github.com/a-b-street/osm2streets/) and web app.
+Download .geojson files representing 2D extrusion of the network and explore in R, Python or a tool of your choice.
+
+Test out the A/B Street game.
+
 
 # References
