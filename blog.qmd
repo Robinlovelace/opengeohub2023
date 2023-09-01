@@ -30,9 +30,8 @@ author:
 #| include: false
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 # install python packages needed for this document:
-pkgs = c("geopandas", "shapely", "pandas", "rasterio", "matplotlib", "folium", "mapclassify", "devtools")
+pkgs = c("geopandas", "shapely", "pandas", "rasterio", "matplotlib", "folium", "mapclassify")
 reticulate::py_install(pkgs)
-devtools::install_github("evetion/JuliaCall", force = TRUE)
 x = .libPaths()
 write(x, stderr())
 Sys.setenv(LD_LIBRARY_PATH = "")
