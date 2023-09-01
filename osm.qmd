@@ -425,6 +425,7 @@ cycle_gdf[1].plot();
 Download the [`bbbike_Poznan.osm.pbf`](https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf) file, e.g. as follows:
 
 ```{bash}
+#| eval: false
 if [ ! -f bbbike_Poznan.osm.pbf ]; then
     wget https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf
 fi
