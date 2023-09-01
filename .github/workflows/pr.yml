@@ -32,6 +32,9 @@ jobs:
         with:
           cache-compiled: "true"
           cache-registries: "true"
+      - name: Preload some libraries
+        run: |
+          julia --project -e "using GeoDataFrames"
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
