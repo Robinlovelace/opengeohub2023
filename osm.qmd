@@ -413,19 +413,53 @@ stats = ox.basic_stats(G_cycle, area=area)
 pd.Series(stats)
 ```
 
-Calculate the centrality across the network as follows:
-
-```{python}
-
-```
-
 We can convert the object into a 'GeoDataFrame' as follows:
 
 ```{python}
 cycle_gdf = ox.graph_to_gdfs(G_cycle, edges=True)
+cycle_gdf[1].plot();
 ```
 
-```{python}
+## osmium
+
+Download the [`bbbike_Poznan.osm.pbf`](https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf) file, e.g. as follows:
+
+```{bash}
+if [ ! -f bbbike_Poznan.osm.pbf ]; then
+    wget https://github.com/Robinlovelace/opengeohub2023/releases/download/v2/bbbike_Poznan.osm.pbf
+fi
+```
+
+Extract only lines that are tagged as `highway=cycleway` as follows:
+
+```{bash}
+osmium tags-filter bbbike_Poznan.osm.pbf w/highway=cycleway -o poznan_cycleways.osm.pbf
+```
+
+We can check that the operation worked with R or Python, e.g. as follows:
+
+```{r}
+poznan_cycleways = sf::read_sf("poznan_cycleways.osm.pbf", layer = "lines")
+plot(poznan_cycleways$geometry)
+```
+
+## Exercises
+
+1. Use the `query` argument of `oe_get()` to download only cycleways from the `bbbike` extract of Poznan (note: you may need to use `force_vectortranslate = TRUE` to update the data in the .gpkg file).
+2. Develop a more sophisticated query to get an active travel network for Poznan
+    - Bonus: add highways that are not footways/cycleways etc to 'fill the gaps' in the network generated in the preview step.
+3. Bonus: generate a simple measure of walkability or cyclability, perhaps with reference to the academic literature on 'LTS', the results shown in [acteng/cyclability](https://github.com/acteng/cyclability/), or other source.
+    - Bonus bonus: where would you prioritise new active travel infrastructure in Poznan based on these results?
+
+```{r}
+#| eval: false
+#| echo: false
+# ?vignette("osmextract")
+poznan_file = oe_find("Poznan", provider = "bbbike", return_gpkg = FALSE)
+poznan_cycleways2 = osmextract::oe_read(poznan_file, provider = "bbbike",
+  query = "SELECT * from lines WHERE highway='cycleway'")
+poznan_cycleways3 = oe_get("Poznan", provider = "bbbike",
+  query = "SELECT * from 'lines' WHERE highway IN ('cycleway')", force_vectortranslate = TRUE)
 ```
 
 # Ideas for using OSM data {#sec-ideas}
