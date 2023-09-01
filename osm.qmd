@@ -260,7 +260,6 @@ Note: that takes quite a while download, so we will use a smaller extract for th
 
 ```{r}
 monaco_osm_points = oe_get("monaco", provider = "bbbike", layer = "points")
-
 ```
 
 ```{r}
@@ -305,10 +304,7 @@ knitr::kable(size_df)
 - Create maps of the different layers using `{tmap}`, `{ggplot2}` or a mapping package of your choice.
 - Which layer is most interesting for your research?
 - Are there any phenomena that are represented in more than one layer and, if so, thoughts on how to combine them?
-
-## More on osmextract
-
-TODO: complete this section : )
+- Take a look at the [`demo.Rmd`]() file in the [sfnetworks/OGH2023 repo](https://github.com/sfnetworks/OGH2021) and try to reproduce the results for Poznan.
 
 ## Clipping an area of interest
 
