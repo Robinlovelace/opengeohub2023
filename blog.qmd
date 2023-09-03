@@ -41,9 +41,9 @@ Sys.setenv(LD_LIBRARY_PATH = "")
 using Pkg
 println(stderr, ENV)
 using Libdl
-println.(Libdl.DL_LOAD_PATH);
-println("===")
-println.(Libdl.dllist());
+println.(stderr, Libdl.DL_LOAD_PATH);
+println(stderr, "===")
+println.(stderr, Libdl.dllist());
 Pkg.status()
 Pkg.activate(".")
 Pkg.status()
@@ -86,7 +86,7 @@ See detailed description of [R](https://ogh23.robinlovelace.net/tidy#vector-data
 
 ## Python
 
-```{python}
+```python
 import pandas as pd
 from shapely import Point
 import geopandas as gpd
@@ -125,7 +125,7 @@ Most projects start with pre-generated data, but it's useful to create datasets 
 
 ## Python
 
-```{python}
+```python
 poi = gpd.GeoDataFrame([
     {"name": "Faculty",        "geometry": Point(16.9418, 52.4643)},
     {"name": "Hotel ForZa",    "geometry": Point(16.9474, 52.4436)},
@@ -157,7 +157,7 @@ The following commands download data from the internet.
 
 ## Python
 
-```{python}
+```python
 import urllib.request
 import zipfile
 import os
@@ -200,7 +200,7 @@ We can unzip the data in R and Python: it contains spatial information about bus
 
 ## Python
 
-```{python}
+```python
 with zipfile.ZipFile(f, 'r') as zip_ref:
     zip_ref.extractall()
 ```
@@ -222,7 +222,7 @@ Note: we recommend using open file formats such as GeoPackage (`.gpkg`), as outl
 
 ## Python
 
-```{python}
+```python
 pol_all = gpd.read_file("zip://data.zip!data/osm/gis_osm_transport_a_free_1.shp")
 pol_all
 ```
@@ -267,7 +267,7 @@ The following commands select a subset of the data based on attribute values (lo
 
 ## Python
 
-```{python}
+```python
 pol = pol_all[pol_all['name'].str.contains('Port*.+Poz', na=False)]
 pol
 ```
@@ -276,7 +276,7 @@ pol
 
 ```{r}
 pol = pol_all |>
-  filter(str_detect(name, "Port*.+Poz"))
+    filter(str_detect(name, "Port*.+Poz"))
 pol
 ```
 
@@ -298,7 +298,7 @@ Note that by default, R's `plot()` method for `{sf}` objects creates a plot for 
 
 ## Python
 
-```{python}
+```python
 pol.plot();
 ```
 
@@ -316,7 +316,7 @@ The arguments needed to change the colour of the fill and border are different i
 
 ## Python
 
-```{python}
+```python
 pol.plot(color='none', edgecolor='black');
 ```
 
@@ -337,7 +337,7 @@ Note that two steps---creating the geometry column and combining it with the ori
 
 ## Python
 
-```{python}
+```python
 # Unzip the data.zip file:
 with zipfile.ZipFile(f, 'r') as zip_ref:
     zip_ref.extractall("data")
@@ -353,8 +353,8 @@ stops
 
 ```{r}
 stops = read_csv("data/gtfs/stops.txt") |>
-  select(-stop_code) |>
-  st_as_sf(coords = c("stop_lon", "stop_lat"), crs = "EPSG:4326")
+    select(-stop_code) |>
+    st_as_sf(coords = c("stop_lon", "stop_lat"), crs = "EPSG:4326")
 stops
 ```
 
@@ -369,7 +369,7 @@ Note that the **tmap** package is hereby used in R to create these more advanced
 
 ## Python
 
-```{python}
+```python
 stops.plot(markersize=1, column='zone_id', legend=True);
 ```
 
@@ -377,7 +377,7 @@ stops.plot(markersize=1, column='zone_id', legend=True);
 
 ```{r}
 tm_shape(stops) +
-  tm_symbols(size = 0.1, col = "zone_id")
+    tm_symbols(size = 0.1, col = "zone_id")
 ```
 
 :::
@@ -388,7 +388,7 @@ We can add basic overlays in both languages as follows.
 
 ## Python
 
-```{python}
+```python
 base = stops.plot(markersize=0.1)
 poi.plot(ax=base, color='red');
 ```
@@ -416,7 +416,7 @@ Note that with **tmap**, you can use the same code to create static and interact
 
 ## Python
 
-```{python}
+```python
 stops.explore(column='zone_id', legend=True, cmap='Dark2')
 ```
 
@@ -425,7 +425,7 @@ stops.explore(column='zone_id', legend=True, cmap='Dark2')
 ```{r}
 tmap_mode("view")
 tm_shape(stops) +
-  tm_symbols(size = 0.1, col = "zone_id")
+    tm_symbols(size = 0.1, col = "zone_id")
 ```
 
 :::
@@ -438,7 +438,7 @@ The following commands reproject the data to a local projected Coordinate Refere
 
 ## Python
 
-```{python}
+```python
 poi.crs
 poi_projected = poi.to_crs(2180)
 stops_projected = stops.to_crs(2180)
@@ -470,7 +470,7 @@ For buffer operations to work in Python you must reproject the data first (which
 
 To create a new vector layers named `poi_buffer`, in both languages, we can do the following.
 
-```{python}
+```python
 poi_buffer = poi.copy()
 poi_buffer.geometry = poi_projected.buffer(150).to_crs(4326)
 ```
@@ -491,7 +491,7 @@ An interesting difference between R and Python is that the former uses the `unit
 
 ## Python
 
-```{python}
+```python
 poi_buffer.to_crs(2180).area
 ```
 
@@ -515,7 +515,7 @@ The R code is more concise because there is a special `[` notation for the speci
 
 ## Python
 
-```{python}
+```python
 poi_union = poi_buffer.unary_union
 sel = stops.intersects(poi_union)
 stops_in_b = stops[sel]
@@ -540,7 +540,7 @@ See the [Python](https://geobgu.xyz/presentations/p_2023_ogh/01-vector.html#sec-
 
 ## Python
 
-```{python}
+```python
 poi_buffer.sjoin(stops, how='left')
 ```
 
@@ -552,7 +552,7 @@ st_join(poi_buffer, stops)
 
 :::
 
-```{python}
+```python
 #| eval: false
 #| echo: false
 # Aim: check to see if there's a bug in sjoin
