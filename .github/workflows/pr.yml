@@ -32,6 +32,9 @@ jobs:
         with:
           cache-compiled: "true"
           cache-registries: "true"
+      - name: Preload some libraries
+        run: |
+          julia --project -e "using GeoDataFrames"
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -43,9 +46,13 @@ jobs:
           # Extra repositories:
           extra-repositories: |
             https://josiahparry.r-universe.dev
+
       - name: R deps
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 2
           extra-packages: |
             any::sf
+
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2

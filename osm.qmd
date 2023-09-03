@@ -344,7 +344,7 @@ if (!"pyrosm" %in% py_pkg_names) {
 Search for Poznan in extracts available from `pyrosm` as follows (note: this fails for me currently as documented in [github.com/HTenkanen/pyrosm/issues/217](https://github.com/HTenkanen/pyrosm/issues/217)):
 
 
-```{python}
+```python
 #| eval: false
 import pyrosm
 from pyrosm import OSM
@@ -376,7 +376,7 @@ if (!"osmnx" %in% py_pkg_names) {
 ```
 
   
-```{python}
+```python
 import osmnx as ox
 import pandas as pd
 import geopandas as gpd
@@ -387,7 +387,7 @@ poznan_polygon.plot();
 
 That is quite a big network, so let's get the area of the polygon and use that to get a smaller network from [GitHub](https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson):
 
-```{python}
+```python
 # Get data from https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson:
 poznan_small = gpd.read_file("https://github.com/Robinlovelace/opengeohub2023/raw/main/pois_buffer_simple.geojson")
 poznan_small.plot();
@@ -395,19 +395,19 @@ poznan_small.plot();
 
 Download the cycling network as follows:
 
-```{python}
+```python
 G_cycle = ox.graph_from_polygon(poznan_small.geometry[0], network_type="bike")
 ```
 
 Plot the results:
 
-```{python}
+```python
 ox.plot_graph(G_cycle)
 ```
 
 Get basic stats as follows:
 
-```{python}
+```python
 area = ox.project_gdf(poznan_small).unary_union.area
 stats = ox.basic_stats(G_cycle, area=area)
 pd.Series(stats)
@@ -415,7 +415,7 @@ pd.Series(stats)
 
 We can convert the object into a 'GeoDataFrame' as follows:
 
-```{python}
+```python
 cycle_gdf = ox.graph_to_gdfs(G_cycle, edges=True)
 cycle_gdf[1].plot();
 ```
