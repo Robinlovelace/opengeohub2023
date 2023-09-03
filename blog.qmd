@@ -40,6 +40,10 @@ Sys.setenv(LD_LIBRARY_PATH = "")
 ```{julia}
 using Pkg
 println(stderr, ENV)
+using Libdl
+println.(Libdl.DL_LOAD_PATH);
+println("===")
+println.(Libdl.dllist());
 Pkg.status()
 Pkg.activate(".")
 Pkg.status()
